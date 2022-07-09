@@ -6,4 +6,6 @@ Programming Language: JavaScript
 
 Backend: Nodejs(express)
 
+Database: SQLite
+
 Frontend: JavaScript & Pug
