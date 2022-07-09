@@ -1,13 +1,20 @@
 import { DataSource } from 'typeorm';
 
 class AppDataSource {
-	_dataSource: any = null;
-	initialize(options): Promise<void> {
-		this._dataSource = new DataSource(options);
+	_dataSource;
+	constructor() {
+		this._dataSource = new DataSource({
+			type: 'sqlite',
+			database: './db.sqlite',
+			entities: ['src/entities/*.ts'],
+			synchronize: true,
+		});
+	}
+	initialize(): Promise<void> {
 		return this._dataSource.initialize();
 	}
-	getReository(entityClass) {
+	getRepository(entityClass) {
 		return this._dataSource.getRepository(entityClass);
 	}
 }
-export const dataSource = new AppDataSource();
+export default new AppDataSource();

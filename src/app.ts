@@ -1,5 +1,5 @@
-import express, { Express, Request, Response } from 'express';
-
+import express, { Express } from 'express';
+import csvPathRouter from './routes/csv-path.routes';
 export class App {
 	app: Express;
 	constructor() {
@@ -12,7 +12,7 @@ export class App {
 		this.app.use(express.urlencoded({ extended: true }));
 	}
 	routes() {
-		console.log('routes');
+		this.app.use('/api/csv-path', csvPathRouter);
 	}
 	errorHandler() {
 		console.log('errorHandler');

@@ -1,19 +1,13 @@
 import { config } from 'dotenv';
 import { App } from './app';
-import { dataSource } from './data-source';
-import { FixedProducts } from './entities/fixed-products';
-import { SvcPath } from './entities/svc-path';
+import dataSource from './data-source';
+
 config({ path: './config.env' });
 
 const { app } = new App();
 
 dataSource
-	.initialize({
-		type: 'sqlite',
-		database: './db.sqlite',
-		entity: [FixedProducts, SvcPath],
-		synchronize: true,
-	})
+	.initialize()
 	.then(() => {
 		app.listen(process.env.PORT, () => {
 			console.log(`Server running on port ${process.env.PORT}`);

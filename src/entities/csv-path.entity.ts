@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class SvcPath {
+export class CsvPath {
 	@PrimaryGeneratedColumn()
 	id: number;
 	@Column()
