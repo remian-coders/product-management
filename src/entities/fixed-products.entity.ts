@@ -1,9 +1,9 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class FixedProducts {
-	@PrimaryGeneratedColumn()
-	id: number;
+	@PrimaryColumn()
+	id: string;
 
 	@Column()
 	ticketNo: string;
