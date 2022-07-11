@@ -1,6 +1,7 @@
 import { config } from 'dotenv';
 import { App } from './app';
 import dataSource from './data-source';
+import { cronJob } from './controllers/cron-job.controller';
 
 config({ path: './config.env' });
 
@@ -12,6 +13,7 @@ dataSource
 		app.listen(process.env.PORT, () => {
 			console.log(`Server running on port ${process.env.PORT}`);
 		});
+		cronJob.start();
 	})
 	.catch((err) => {
 		console.error('Error connecting to database', err);

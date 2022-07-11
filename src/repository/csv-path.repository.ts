@@ -12,4 +12,8 @@ export class CsvPathRepository {
 		csvPath.path = path;
 		return await this.csvPathRepo.save(csvPath);
 	}
+	async getPath() {
+		const csvPath = await this.csvPathRepo.findOneBy({ id: 1 });
+		return csvPath.path;
+	}
 }
