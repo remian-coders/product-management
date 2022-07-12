@@ -10,9 +10,7 @@ export class FixedProductsRepository {
 	async getAll() {
 		return await this.fixedProductsRepo.find();
 	}
-	async getById(id: string) {
-		return await this.fixedProductsRepo.findOneBy({ id });
-	}
+
 	async create(fixedProducts: FixedProducts) {
 		return await this.fixedProductsRepo.save(fixedProducts);
 	}

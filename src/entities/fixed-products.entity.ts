@@ -5,12 +5,18 @@ export class FixedProducts {
 	@PrimaryColumn()
 	id: string;
 
-	@Column()
+	@Column({
+		nullable: false,
+	})
 	ticketNo: string;
 
-	@Column()
+	@Column({
+		default: 0,
+	})
 	cost: number;
 
-	@Column()
+	@Column({
+		nullable: false,
+	})
 	technician: string;
 }
