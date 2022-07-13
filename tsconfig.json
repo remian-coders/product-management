@@ -1,6 +1,7 @@
 {
 	"compilerOptions": {
 		"module": "commonjs",
+		"typeRoots": ["src/definations"],
 		"declaration": true,
 		"allowSyntheticDefaultImports": true,
 		"experimentalDecorators": true,

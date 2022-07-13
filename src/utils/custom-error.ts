@@ -1,4 +1,4 @@
-export default class CustomErrorGenerator extends Error {
+export class CustomError extends Error {
 	status: 'fail' | 'error';
 	isOperational: boolean;
 	constructor(public message: string, public statusCode: number) {

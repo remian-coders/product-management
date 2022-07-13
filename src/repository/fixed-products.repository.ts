@@ -1,6 +1,6 @@
+import { Repository } from 'typeorm';
 import dataSource from '../data-source';
 import { FixedProducts } from '../entities/fixed-products.entity';
-import { Repository } from 'typeorm';
 
 export class FixedProductsRepository {
 	fixedProductsRepo: Repository<FixedProducts>;
