@@ -2,7 +2,7 @@
 
 Application Stack
 
-Programming Language: JavaScript
+Programming Language: TypeScript
 
 Backend: Nodejs(express)
 
