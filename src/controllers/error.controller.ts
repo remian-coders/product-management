@@ -32,6 +32,11 @@ const prodError = (res: Response, err: CustomError) => {
 			400
 		);
 	}
+	if (error.name === 'TokenExpiredError')
+		error = new CustomError('You are not logged in, please log in.', 401);
+	if (error.name === 'JsonWebTokenError')
+		error = new CustomError('You are not logged in please log in.', 401);
+
 	if (error.isOperational) {
 		res.status(error.statusCode).json({
 			status: error.status,
