@@ -1,7 +1,5 @@
 import { Entity, Column, PrimaryColumn } from 'typeorm';
 
-type UserRole = 'admin' | 'user';
-
 @Entity()
 export class User {
 	@PrimaryColumn()
@@ -19,12 +17,15 @@ export class User {
 	password: string;
 
 	@Column({
-		enum: ['admin', 'user'],
-		default: 'user',
-	})
-	role?: UserRole;
-	@Column({
 		nullable: true,
 	})
 	passwordChangedAt?: Date;
+	@Column({
+		nullable: true,
+	})
+	passwordResetToken?: string;
+	@Column({
+		nullable: true,
+	})
+	passwordResetExpires?: Date;
 }

@@ -26,6 +26,8 @@ export const createUser = catchAsyncError(
 		});
 		user.password = undefined;
 		user.passwordChangedAt = undefined;
+		user.passwordResetExpires = undefined;
+		user.passwordResetToken = undefined;
 		res.status(201).json({
 			message: 'User created successfully',
 			data: {
@@ -37,13 +39,13 @@ export const createUser = catchAsyncError(
 
 export const getUsers = catchAsyncError(async (req: Request, res: Response) => {
 	const usersRepo = new UsersRepository();
-	const users = await usersRepo.getAll(req.user.id);
-	if (users) {
-		users.forEach((user) => {
-			user.password = undefined;
-			user.passwordChangedAt = undefined;
-		});
-	}
+	const id = req.user.id;
+	const users = await usersRepo.getAll(id, [
+		'user.id',
+		'user.name',
+		'user.email',
+	]);
+
 	res.status(200).json({
 		message: 'Users fetched successfully',
 		data: {
@@ -57,7 +59,9 @@ export const deleteUser = catchAsyncError(
 		if (req.user.id === req.params.id) {
 			return next(
 				new CustomError(
-					`Please go ${req.hostname}/admin/delete-me to delete your account!`,
+					`Please go ${req.protocol}://${req.get(
+						'host'
+					)}/admin/delete-me to delete your account!`,
 					400
 				)
 			);
@@ -75,11 +79,13 @@ export const deleteUser = catchAsyncError(
 export const updateMe = catchAsyncError(
 	async (req: Request, res: Response, next: express.NextFunction) => {
 		const usersRepo = new UsersRepository();
-		const prohibited = ['password', 'role', 'passwordChangedAt'];
+		const prohibited = ['password', 'passwordChangedAt'];
 		if (req.body.password) {
 			return next(
 				new CustomError(
-					`Please go ${req.hostname}/admin/update-password to change you password.`,
+					`Please go ${req.protocol}://${req.get(
+						'host'
+					)}/admin/update-password to change you password.`,
 					400
 				)
 			);
