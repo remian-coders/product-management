@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+    <title>IP Address</title>
+  </head>
+  <body>
+    <nav class="navbar bg-light fixed-top">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">IP Address</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasNavbar"
+          aria-controls="offcanvasNavbar"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div
+          class="offcanvas offcanvas-end"
+          tabindex="-1"
+          id="offcanvasNavbar"
+          aria-labelledby="offcanvasNavbarLabel"
+        >
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="offcanvas"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="offcanvas-body">
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="admin.html"
+                  >Emails</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="user.html">Create User</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="ip_address.html">IP Address</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="csv_upload.html">CSV File Upload</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="csv_update.html">CSV File Update</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="password.html">Update password</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container mt-5 py-5">
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="example: 192.168.1.1"
+          aria-label="IP Address"
+          aria-describedby="button-addon2"
+        />
+        <button
+          class="btn btn-outline-success"
+          type="button"
+          id="button-addon2"
+        >
+          Add
+        </button>
+      </div>
+    </div>
+
+    <div class="container">
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">IP Address</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>1</th>
+            <td>192.168.1.1</td>
+            <td class="d-flex justify-content-center">
+              <button type="button" class="btn btn-outline-danger">
+                Delete
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <th>2</th>
+            <td>192.168.1.1</td>
+            <td class="d-flex justify-content-center">
+              <button type="button" class="btn btn-outline-danger">
+                Delete
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <th>3</th>
+            <td>192.168.1.1</td>
+            <td class="d-flex justify-content-center">
+              <button type="button" class="btn btn-outline-danger">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
+    integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js"
+    integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy"
+    crossorigin="anonymous"
+  ></script>
+</html>
