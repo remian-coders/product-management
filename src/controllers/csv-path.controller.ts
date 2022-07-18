@@ -6,7 +6,7 @@ import { CsvPathRepository } from '../repository/csv-path.repository';
 import { catchAsyncError } from './utils/catch-async-error';
 import { CustomError } from '../utils/custom-error';
 
-export const updatePath = catchAsyncError(
+export const addPath = catchAsyncError(
 	async (req: Request, res: Response, next: express.NextFunction) => {
 		const { path } = req.body;
 		const isExist = await access(path, constants.R_OK | constants.W_OK)

@@ -1,9 +1,9 @@
-import { Entity, Column, PrimaryColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class ClientRegister {
-	@PrimaryColumn()
-	id: string;
+export class Register {
+	@PrimaryGeneratedColumn()
+	id?: number;
 	@Column({ nullable: false })
 	ticketNo: string;
 	@Column({ nullable: false })
@@ -11,8 +11,9 @@ export class ClientRegister {
 	@Column({
 		enum: ['cash', 'card'],
 	})
-	@Column()
 	paymentType: string;
+	@Column({ nullable: true })
+	admin: string;
 	@Column()
 	date: Date;
 	@Column({
