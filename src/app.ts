@@ -4,6 +4,7 @@ import errorHandler from './controllers/error.controller';
 import { CustomError } from './utils/custom-error';
 import clientRegisterRouter from './routes/client-register.routes';
 import adminRouter from './routes/admin.routes';
+import viewRouter from './routes/view.routes';
 export class App {
 	app: Express;
 	constructor() {
@@ -15,14 +16,15 @@ export class App {
 	}
 	settings() {
 		this.app.set('view engine', 'pug');
-		this.app.set('views', path.join(__dirname, 'src/views'));
+		this.app.set('views', path.join(__dirname, '/views'));
 	}
 	middlewares() {
 		this.app.use(express.json());
 		this.app.use(express.urlencoded({ extended: true }));
-		this.app.use(express.static(path.join(__dirname, 'src/public')));
+		this.app.use(express.static(path.join(__dirname, '/public')));
 	}
 	routes() {
+		this.app.use('/', viewRouter);
 		this.app.use('/api/client-register', clientRegisterRouter);
 		this.app.use('/api/admin', adminRouter);
 		this.app.use('*', (req, res, next) => {

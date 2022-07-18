@@ -1,0 +1,10 @@
+extends base
+block content
+    .container.mt-5.py-5
+        .input-group.mb-3
+            input#formFile.form-control(type='text' placeholder='CSV file path' aria-describedby='button-addon2')
+            button#button-addon2.btn.btn-outline-success(type='button')  Update
+    .container.mt-5.py-5
+        .input-group.mb-3
+            input#formFile.form-control(type='file' aria-describedby='button-addon2')
+            button#button-addon2.btn.btn-outline-success(type='button') Upload

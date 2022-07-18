@@ -1,6 +1,6 @@
 import dataSource from '../data-source';
 import { CsvPath } from '../entities/csv-path.entity';
-import { Repository } from 'typeorm';
+import { Repository, Not, IsNull } from 'typeorm';
 
 export class CsvPathRepository {
 	csvPathRepo: Repository<CsvPath>;
@@ -8,13 +8,25 @@ export class CsvPathRepository {
 		this.csvPathRepo = dataSource.getRepository(CsvPath);
 	}
 	async updatePath(path: string) {
-		const csvPath = await this.csvPathRepo.findOneBy({ id: 1 });
-		csvPath.path = path;
+		let csvPath = await this.csvPathRepo.findOne({
+			where: {
+				path: Not(IsNull()),
+			},
+		});
+		if (csvPath) {
+			csvPath.path = path;
+		} else {
+			csvPath = { path };
+		}
 		return await this.csvPathRepo.save(csvPath);
 	}
 
 	async getPath() {
-		const csvPath = await this.csvPathRepo.findOneBy({ id: 1 });
+		const csvPath = await this.csvPathRepo.findOne({
+			where: {
+				path: Not(IsNull()),
+			},
+		});
 		return csvPath.path;
 	}
 }
