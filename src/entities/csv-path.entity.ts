@@ -4,6 +4,8 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 export class CsvPath {
 	@PrimaryGeneratedColumn()
 	id: number;
-	@Column()
+	@Column({
+		unique: true,
+	})
 	path: string;
 }
