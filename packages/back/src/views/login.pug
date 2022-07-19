@@ -1,0 +1,14 @@
+extends simple-base
+block content
+    .container.text-center.p-5
+        form.col-12.col-sm-8.col-md-6.col-lg-4.m-auto.p-5.mt-5.border.rounded
+            h3.mb-3 Welcome to the Admin Page
+            .form-floating.mb-3
+                input#floatingInput.form-control(type='email' placeholder='name@example.com')
+                label(for='floatingInput') Email address
+            .form-floating.mb-3
+                input#floatingPassword.form-control(type='password' placeholder='Password')
+                label(for='floatingPassword') Password
+            .mb-3
+                a.text-decoration-none(href='/admin/forgot-password') Forgot password?
+            button.btn.btn-primary(type='submit') Log in

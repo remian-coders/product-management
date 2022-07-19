@@ -18,10 +18,6 @@ export const createClientRegister = catchAsyncError(
 		};
 		const registerRepo = new RegisterRepository();
 		await registerRepo.save(register);
-		const now = new Date();
-		const date = new Date(
-			now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate()
-		);
 		res.status(200).json({
 			message: 'Register created',
 		});
