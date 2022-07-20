@@ -112,29 +112,11 @@ export const forgotPassword = catchAsyncError(
 			passwordResetToken: tempToken,
 			passwordResetExpires: new Date(Date.now() + 10 * 60 * 1000),
 		});
-		const url = `${req.protocol}://${req.get(
-			'host'
-		)}/admin/reset-password/${tempToken}`;
-		const sendMail = new Mail();
-		const info = await sendMail.resetPassword(user.email, url);
-		console.log(info);
-		if (!info.response.startsWith('250')) {
-			await usersRepo.update(user.id, {
-				passwordResetToken: null,
-				passwordResetExpires: null,
-			});
-			return next(
-				new CustomError(
-					'Something went wrong! Please contact admin.',
-					500
-				)
-			);
-		}
 		res.status(200).json({
 			status: 'success',
 			message:
 				'Resent password link has been sent to your email! The link will expire in 10 minutes.',
-			data: randomBytes,
+			data: { token: randomBytes },
 		});
 	}
 );
