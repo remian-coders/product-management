@@ -1,5 +1,5 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import {
   UserCreate,
   Emails,
@@ -10,7 +10,17 @@ import {
   PasswordUpdate,
 } from "../components";
 
-const Admin = () => {
+const Admin = ({ isLoggedIn }) => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate("/login");
+    } else {
+      navigate("/admin");
+    }
+  }, [isLoggedIn, navigate]);
+
   return (
     <>
       <Navbar />
