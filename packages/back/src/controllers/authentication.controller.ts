@@ -6,7 +6,7 @@ import { UsersRepository } from '../repository/users.repository';
 import { CustomError } from '../utils/custom-error';
 import { jwtSign, jwtVerify } from './utils/jwt';
 import { catchAsyncError } from './utils/catch-async-error';
-import { Mail } from '../utils/mail';
+
 export const login = catchAsyncError(
 	async (req: Request, res: Response, next: express.NextFunction) => {
 		const usersRepo = new UsersRepository();
@@ -114,8 +114,7 @@ export const forgotPassword = catchAsyncError(
 		});
 		res.status(200).json({
 			status: 'success',
-			message:
-				'Resent password link has been sent to your email! The link will expire in 10 minutes.',
+			message: 'Reset password token',
 			data: { token: randomBytes },
 		});
 	}
@@ -123,8 +122,8 @@ export const forgotPassword = catchAsyncError(
 
 export const resetPassword = catchAsyncError(
 	async (req: Request, res: Response, next: express.NextFunction) => {
-		const password = req.body.password;
-		const resetToken = req.params.resetToken;
+		const { password, token: resetToken } = req.body;
+
 		if (!password)
 			return next(new CustomError('Please provide password!', 400));
 		if (!resetToken) return next(new CustomError('Please try again!', 400));
