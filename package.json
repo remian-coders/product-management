@@ -7,7 +7,12 @@
 		"prod": "lerna run prod --stream --no-bail"
 	},
 	"devDependencies": {
+		"@types/cors": "^2.8.12",
+		"@types/multer": "^1.4.7",
 		"lerna": "^5.1.8",
 		"nx": "^9999.0.1"
+	},
+	"dependencies": {
+		"cors": "^2.8.5"
 	}
 }

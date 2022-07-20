@@ -1,4 +1,4 @@
-import { Repository, IsNull, Not, Raw } from 'typeorm';
+import { Repository, IsNull, Not, Raw, Between } from 'typeorm';
 import dataSource from '../data-source';
 import { Register } from '../entities/register.entity';
 
@@ -10,17 +10,17 @@ export class RegisterRepository {
 	async save(register: Register) {
 		return await this.registerRepo.save(register);
 	}
-	async findDailyClientRegister(date: Date) {
+	async findDailyClientRegister(from: Date, to: Date) {
 		return await this.registerRepo.find({
 			where: {
-				date: Raw((alias) => `${alias} >= :date`, { date }),
+				date: Between(from, to),
 				admin: IsNull(),
 			},
 		});
 	}
-	async findDailyAdminRegister(date: Date) {
+	async findDailyAdminRegister(from: Date, to: Date) {
 		return await this.registerRepo.findBy({
-			date: Raw((alias) => `${alias} > :date`, { date }),
+			date: Between(from, to),
 			admin: Not(IsNull()),
 		});
 

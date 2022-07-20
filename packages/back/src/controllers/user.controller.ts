@@ -39,8 +39,8 @@ export const createUser = catchAsyncError(
 
 export const getUsers = catchAsyncError(async (req: Request, res: Response) => {
 	const usersRepo = new UsersRepository();
-	// const id = req.user.id;
-	const users = await usersRepo.getAll([
+	const id = req.user.id;
+	const users = await usersRepo.getAll(id, [
 		'user.id',
 		'user.name',
 		'user.email',

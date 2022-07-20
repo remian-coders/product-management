@@ -27,7 +27,8 @@ import {
 	deleteEmail,
 } from '../controllers/email.controller';
 
-import { addPath, uploadFile } from '../controllers/csv-path.controller';
+import { addPath, uploadFile } from '../controllers/csv-file.controller';
+import { multipartFileUpload } from '../utils/multer-file-upload';
 const router = Router();
 
 router.post('/login', login);
@@ -43,8 +44,13 @@ router.route('/ip-address-config').get(getIPs).post(addIP);
 router.delete('/ip-address-config/:id', deleteIP);
 router.route('/email-address-config').get(getEmails).post(addEmail);
 router.delete('/email-address-config/:id', deleteEmail);
-router.patch('/csv-file-config', addPath);
-// router.post('/csv-file-upload', uploadFile);
+router.patch('/update-csv-path', addPath);
+router.post(
+	'/upload-csv-file',
+	multipartFileUpload.single('csvFile'),
+	uploadFile
+);
+
 // router.patch('/update-me', updateMe);
 // router.delete('/delete-me', deleteMe);
 // router.get('/get-users', getUsers);

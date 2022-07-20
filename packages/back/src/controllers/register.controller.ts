@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
 import express, { Request, Response, Router } from 'express';
 import { catchAsyncError } from './utils/catch-async-error';
 import { RegisterRepository } from '../repository/register.repository';
@@ -27,11 +26,22 @@ export const createClientRegister = catchAsyncError(
 export const getDailyClientRegister = catchAsyncError(
 	async (req: Request, res: Response, next: express.NextFunction) => {
 		const now = new Date();
-		const date = new Date(
-			now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate()
+		const dateStr =
+			(req.query.date as string) ||
+			now.getFullYear() +
+				'-' +
+				(now.getMonth() + 1) +
+				'-' +
+				now.getDate();
+		const from = new Date(dateStr);
+		const to = new Date(
+			`${from.getFullYear()}-${
+				from.getMonth() + 1
+			}-${from.getDate()} 23:59:00`
 		);
+		console.log(from, to);
 		const registerRepo = new RegisterRepository();
-		const registers = await registerRepo.findDailyClientRegister(date);
+		const registers = await registerRepo.findDailyClientRegister(from, to);
 		res.status(200).json({
 			message: 'Daily Client Register',
 			data: { registers },
@@ -67,11 +77,21 @@ export const createAdminRegister = catchAsyncError(
 export const getDailyAdminRegister = catchAsyncError(
 	async (req: Request, res: Response, next: express.NextFunction) => {
 		const now = new Date();
-		const date = new Date(
-			now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate()
+		const dateStr =
+			(req.query.date as string) ||
+			now.getFullYear() +
+				'-' +
+				(now.getMonth() + 1) +
+				'-' +
+				now.getDate();
+		const from = new Date(dateStr);
+		const to = new Date(
+			`${from.getFullYear()}-${
+				from.getMonth() + 1
+			}-${from.getDate()} 23:59:00`
 		);
 		const registerRepo = new RegisterRepository();
-		const registers = await registerRepo.findDailyAdminRegister(date);
+		const registers = await registerRepo.findDailyAdminRegister(from, to);
 		res.status(200).json({
 			message: 'Daily Client Register',
 			data: { registers },

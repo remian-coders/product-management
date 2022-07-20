@@ -36,7 +36,12 @@ const prodError = (res: Response, err: CustomError) => {
 		error = new CustomError('You are not logged in, please log in.', 401);
 	if (error.name === 'JsonWebTokenError')
 		error = new CustomError('You are not logged in please log in.', 401);
-
+	if (error.code === 'LIMIT_FILE_SIZE') {
+		error = new CustomError(
+			'File size should not be more than 100MG!',
+			400
+		);
+	}
 	if (error.isOperational) {
 		res.status(error.statusCode).json({
 			status: error.status,

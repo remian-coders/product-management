@@ -7,11 +7,11 @@ export class UsersRepository {
 	constructor() {
 		this.usersRepo = dataSource.getRepository(User);
 	}
-	async getAll(select: string[]) {
+	async getAll(id: string, select: string[]) {
 		return await this.usersRepo
 			.createQueryBuilder('user')
 			.select(select)
-			// .where('user.id != :id', { id })
+			.where('user.id != :id', { id })
 			.getMany();
 	}
 	async findOne(query: object) {
