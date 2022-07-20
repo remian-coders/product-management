@@ -1,6 +1,8 @@
 import express, { Request, Response, Router } from 'express';
 import { catchAsyncError } from './utils/catch-async-error';
 import { RegisterRepository } from '../repository/register.repository';
+import { IPRepository } from '../repository/ip.repository';
+import { CustomError } from '../utils/custom-error';
 
 export const createClientRegister = catchAsyncError(
 	async (req: Request, res: Response, next: express.NextFunction) => {
@@ -39,7 +41,6 @@ export const getDailyClientRegister = catchAsyncError(
 				from.getMonth() + 1
 			}-${from.getDate()} 23:59:00`
 		);
-		console.log(from, to);
 		const registerRepo = new RegisterRepository();
 		const registers = await registerRepo.findDailyClientRegister(from, to);
 		res.status(200).json({
@@ -99,11 +100,18 @@ export const getDailyAdminRegister = catchAsyncError(
 	}
 );
 
-export const isRegisterClosed = (
+export const isAvailable = async (
 	req: Request,
 	res: Response,
 	next: express.NextFunction
 ) => {
+	const ipRepo = new IPRepository();
+	const ip = req.ip;
+	const isAllowedIP = await ipRepo.findByIP(ip);
+	console.log(isAllowedIP);
+	if (!isAllowedIP) {
+		return next(new CustomError('IP not allowed', 403));
+	}
 	const now = new Date();
 	const closingTime = new Date(
 		now.getFullYear(),
@@ -114,8 +122,9 @@ export const isRegisterClosed = (
 		0
 	);
 	if (now > closingTime) {
-		res.status(400).send('Daily register is closed');
-		return;
+		return next(
+			new CustomError('The page is available between 8:00 and 18:15', 400)
+		);
 	}
 	next();
 };

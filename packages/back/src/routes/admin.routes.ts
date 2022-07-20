@@ -8,8 +8,6 @@ import {
 } from '../controllers/authentication.controller';
 import {
 	createUser,
-	deleteMe,
-	updateMe,
 	deleteUser,
 	getUsers,
 } from '../controllers/user.controller';
@@ -50,10 +48,8 @@ router.post(
 	multipartFileUpload.single('csvFile'),
 	uploadFile
 );
-
-// router.patch('/update-me', updateMe);
-// router.delete('/delete-me', deleteMe);
-// router.get('/get-users', getUsers);
-// router.delete('/delete-user/:id', deleteUser);
+router.patch('/working-hours');
+router.get('/get-users', getUsers);
+router.delete('/delete-user/:id', deleteUser);
 
 export default router;

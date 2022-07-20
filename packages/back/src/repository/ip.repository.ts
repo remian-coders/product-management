@@ -13,6 +13,11 @@ export class IPRepository {
 	async findAll() {
 		return await this.ipRepository.find();
 	}
+	async findByIP(ip: string) {
+		return await this.ipRepository.findOne({
+			where: { ip },
+		});
+	}
 	async deleteById(id) {
 		return await this.ipRepository.delete(id);
 	}

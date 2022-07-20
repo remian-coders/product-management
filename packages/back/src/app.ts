@@ -11,11 +11,13 @@ export class App {
 		this.middlewares();
 		this.routes();
 		this.errorHandler();
+		this.settings();
 	}
+	settings() {}
 	middlewares() {
+		this.app.use(cors());
 		this.app.use(express.json());
 		this.app.use(express.urlencoded({ extended: true }));
-		this.app.use(cors());
 	}
 	routes() {
 		this.app.use('/api/client-register', clientRegisterRouter);

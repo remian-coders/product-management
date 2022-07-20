@@ -1,12 +1,12 @@
 import express, { Request, Response, Router } from 'express';
 import {
 	createClientRegister,
-	isRegisterClosed,
+	isAvailable,
 	getDailyClientRegister,
 } from '../controllers/register.controller';
 const router = Router();
 
-router.post('/:registerType', isRegisterClosed, createClientRegister);
-router.get('/', isRegisterClosed, getDailyClientRegister);
+router.post('/:registerType', isAvailable, createClientRegister);
+router.get('/', getDailyClientRegister);
 
 export default router;
