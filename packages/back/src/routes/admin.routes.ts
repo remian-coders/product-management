@@ -31,7 +31,7 @@ const router = Router();
 
 router.post('/login', login);
 router.post('/forgot-password', forgotPassword);
-router.patch('/reset-password/:resetToken', resetPassword);
+router.patch('/reset-password', resetPassword);
 
 router.use(guard);
 router.patch('/update-password', updatePassword);
