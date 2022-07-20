@@ -1,28 +1,35 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const RecoveryForm = () => {
+const RecoveryForm = ({ password1, password2, recoveryHandler }) => {
   return (
     <div className="container text-center p-5">
-      <form className="col-12 col-sm-8 col-md-6 col-lg-4 m-auto p-5 mt-5 border rounded">
+      <form
+        onSubmit={recoveryHandler}
+        className="col-12 col-sm-8 col-md-6 col-lg-4 m-auto p-5 mt-5 border rounded"
+      >
         <h3 className="mb-3">Updating your password</h3>
         <div className="form-floating mb-3">
           <input
+            ref={password1}
             type="password"
             className="form-control"
             id="floatingPassword"
             placeholder="Password"
+            required
           />
-          <label for="floatingPassword">New Password</label>
+          <label htmlFor="floatingPassword">New Password</label>
         </div>
         <div className="form-floating mb-3">
           <input
+            ref={password2}
             type="password"
             className="form-control"
             id="floatingConfirmPassword"
             placeholder="Confirm Password"
+            required
           />
-          <label for="floatingConfirmPassword">Confirm Password</label>
+          <label htmlFor="floatingConfirmPassword">Confirm Password</label>
         </div>
         <div className="mb-3">
           <Link to="/login" className="text-decoration-none">
