@@ -8,7 +8,8 @@ Backend: Nodejs(express)
 
 Database: SQLite
 
-Frontend: React.js
+
+Frontend: JavaScript & Reactjs
 
 # ask about date
 
@@ -17,3 +18,4 @@ Frontend: React.js
 # ask about style
 
 # ask about admin delete
+
