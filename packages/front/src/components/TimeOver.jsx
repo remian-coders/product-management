@@ -1,19 +1,19 @@
 import React from "react";
 
-const NotFoundPage = () => {
+const TimeOver = () => {
   return (
     <div className="d-flex align-items-center justify-content-center vh-100">
       <div className="text-center">
-        <h1 className="display-1 fw-bold">403</h1>
+        <h1 className="display-1 fw-bold">503</h1>
         <p className="fs-3">
-          <span className="text-danger">Opps!</span> Unauthorized request.
+          <span className="text-danger">Opps!</span> Page is closed.
         </p>
         <p className="lead">
-          The page you’re looking for can be accessed by certian people.
+          The page you’re looking for can be accessed during the work hours.
         </p>
       </div>
     </div>
   );
 };
 
-export default NotFoundPage;
+export default TimeOver;

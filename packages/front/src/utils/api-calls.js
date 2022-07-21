@@ -28,3 +28,13 @@ export const resetPassword = async function (data) {
     return error.response;
   }
 };
+
+export const fetchRegisters = async function () {
+  try {
+    let response = await api.get("/client-register");
+
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};

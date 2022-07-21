@@ -16,9 +16,9 @@ const IncasareModal = (props) => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form>
+          <form onSubmit={props.incasareHandle}>
             <div className="row mb-3">
-              <label for="inputTichet" className="col-sm-3 col-form-label">
+              <label htmlFor="inputTichet" className="col-sm-3 col-form-label">
                 Tichet
               </label>
               <div className="col-sm-9">
@@ -26,7 +26,7 @@ const IncasareModal = (props) => {
               </div>
             </div>
             <div className="row mb-3">
-              <label for="inputCost" className="col-sm-3 col-form-label">
+              <label htmlFor="inputCost" className="col-sm-3 col-form-label">
                 Cost(RON)
               </label>
               <div className="col-sm-9">
@@ -34,7 +34,7 @@ const IncasareModal = (props) => {
               </div>
             </div>
             <div className="row mb-3">
-              <label for="inputPlata" className="col-sm-3 col-form-label">
+              <label htmlFor="inputPlata" className="col-sm-3 col-form-label">
                 Tip plata
               </label>
               <div className="col-sm-9">
@@ -48,7 +48,10 @@ const IncasareModal = (props) => {
               </div>
             </div>
             <div className="row mb-3">
-              <label for="inputMentiune" className="col-sm-3 col-form-label">
+              <label
+                htmlFor="inputMentiune"
+                className="col-sm-3 col-form-label"
+              >
                 Mentiune
               </label>
               <div className="col-sm-9">

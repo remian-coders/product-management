@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import {
   Header,
@@ -8,26 +8,58 @@ import {
   PlataModal,
   Loading,
   NotFoundPage,
+  TimeOver,
 } from "../components";
+
+import { fetchRegisters } from "../utils/api-calls";
 
 const Home = () => {
   const [incasare, setIncasare] = useState(false);
   const [plata, setPlata] = useState(false);
 
   const [loading, setLoading] = useState(true);
+  const [registers, setRegisters] = useState([]);
+  const [status, setStatus] = useState("data");
 
   useEffect(() => {
-    setLoading(false);
+    const getRegisters = async () => {
+      const response = await fetchRegisters();
+      console.log(response);
+      if (response.status === 200) {
+        setRegisters(response.data.data);
+        setLoading(false);
+      } else if (response.status === 403) {
+        setLoading(false);
+        setStatus("not found");
+      } else {
+        setLoading(false);
+        setStatus("closed");
+      }
+    };
+
+    getRegisters(); // run it, run it
+
+    return () => {
+      // this now gets called when the component unmounts
+    };
   }, []);
+
+  const incasareHandle = async (e) => {
+    e.preventDefault();
+  };
+
+  const plataHandle = async (e) => {
+    e.preventDefault();
+  };
   return (
     <>
       {loading ? (
         <Loading />
-      ) : (
+      ) : status === "data" ? (
         <>
           <Header />
           <Finalizer />
-          <HomeTable />
+          <HomeTable registers={registers} />
           <div className="container px-4 mt-5">
             <div className="row">
               <div className="col">
@@ -50,12 +82,22 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <IncasareModal show={incasare} onHide={() => setIncasare(false)} />
-          <PlataModal show={plata} onHide={() => setPlata(false)} />
+          <IncasareModal
+            show={incasare}
+            onHide={() => setIncasare(false)}
+            incasareHandle={incasareHandle}
+          />
+          <PlataModal
+            show={plata}
+            onHide={() => setPlata(false)}
+            plataHandle={plataHandle}
+          />
         </>
+      ) : status === "not found" ? (
+        <NotFoundPage />
+      ) : (
+        <TimeOver />
       )}
-
-      <NotFoundPage />
     </>
   );
 };
