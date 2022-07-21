@@ -7,8 +7,9 @@ import { CustomError } from '../utils/custom-error';
 
 export const createClientRegister = catchAsyncError(
 	async (req: Request, res: Response, next: express.NextFunction) => {
-		const registerType = req.params.registerType;
-		const { ticketNo, cost, paymentType, others } = req.body;
+		let { ticketNo, cost, paymentType, others } = req.body;
+		const registerType = cost >= 0 ? 'income' : 'expense';
+		paymentType = cost <= 0 ? 'cash' : paymentType;
 		const register = {
 			ticketNo,
 			cost,
@@ -53,8 +54,8 @@ export const getDailyClientRegister = catchAsyncError(
 
 export const createAdminRegister = catchAsyncError(
 	async (req: Request, res: Response, next: express.NextFunction) => {
-		const registerType = req.params.registerType;
 		const { ticketNo, cost, paymentType, others } = req.body;
+		const registerType = cost >= 0 ? 'income' : 'expense';
 		const register = {
 			ticketNo,
 			cost,
@@ -64,6 +65,7 @@ export const createAdminRegister = catchAsyncError(
 			date: new Date(Date.now()),
 			others,
 		};
+		console.log(paymentType);
 		const registerRepo = new RegisterRepository();
 		await registerRepo.save(register);
 		const now = new Date();
@@ -109,29 +111,28 @@ export const isAvailable = async (
 	const ipRepo = new IPRepository();
 	const ip = req.ip;
 	const isAllowedIP = await ipRepo.findByIP(ip);
-	console.log(isAllowedIP);
 	if (!isAllowedIP) {
 		return next(new CustomError('IP not allowed', 403));
 	}
 
-	const workingHoursRepo = new WorkingHoursRepository();
-	const { startingHour, endingHour, startingMinute, endingMinute } =
-		await workingHoursRepo.getWorkingHours();
-	const now = new Date();
-	const currentHour = now.getHours();
-	const currentMinute = now.getMinutes();
-	if (
-		currentHour < startingHour ||
-		currentHour > endingHour ||
-		(currentHour === startingHour && startingMinute > currentMinute) ||
-		(currentHour === endingHour && currentMinute > endingMinute)
-	) {
-		return next(
-			new CustomError(
-				`The page is available between ${startingHour}:${startingMinute} - ${endingHour}:${endingMinute}`,
-				503
-			)
-		);
-	}
+	// const workingHoursRepo = new WorkingHoursRepository();
+	// const { startingHour, endingHour, startingMinute, endingMinute } =
+	// 	await workingHoursRepo.getWorkingHours();
+	// const now = new Date();
+	// const currentHour = now.getHours();
+	// const currentMinute = now.getMinutes();
+	// if (
+	// 	currentHour < startingHour ||
+	// 	currentHour > endingHour ||
+	// 	(currentHour === startingHour && startingMinute > currentMinute) ||
+	// 	(currentHour === endingHour && currentMinute > endingMinute)
+	// ) {
+	// 	return next(
+	// 		new CustomError(
+	// 			`The page is available between ${startingHour}:${startingMinute} - ${endingHour}:${endingMinute}`,
+	// 			503
+	// 		)
+	// 	);
+	// }
 	next();
 };

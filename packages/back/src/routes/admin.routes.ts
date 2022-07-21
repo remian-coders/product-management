@@ -39,11 +39,11 @@ router.post('/login', login);
 router.post('/forgot-password', forgotPassword);
 router.patch('/reset-password', resetPassword);
 
-router.use(guard);
+// router.use(guard);
 router.patch('/update-password', updatePassword);
 router.post('/create-user', createUser);
 router.get('/register', getDailyAdminRegister);
-router.post('/register/:registerType', createAdminRegister);
+router.post('/register', createAdminRegister);
 router.route('/ip-address-config').get(getIPs).post(addIP);
 router.delete('/ip-address-config/:id', deleteIP);
 router.route('/email-address-config').get(getEmails).post(addEmail);
