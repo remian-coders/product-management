@@ -27,6 +27,12 @@ import {
 
 import { addPath, uploadFile } from '../controllers/csv-file.controller';
 import { multipartFileUpload } from '../utils/multer-file-upload';
+
+import {
+	getWorkingHours,
+	updateWorkingHours,
+} from '../controllers/working-hours.controller';
+
 const router = Router();
 
 router.post('/login', login);
@@ -48,7 +54,7 @@ router.post(
 	multipartFileUpload.single('csvFile'),
 	uploadFile
 );
-router.patch('/working-hours');
+router.route('/working-hours').patch(updateWorkingHours).get(getWorkingHours);
 router.get('/get-users', getUsers);
 router.delete('/delete-user/:id', deleteUser);
 

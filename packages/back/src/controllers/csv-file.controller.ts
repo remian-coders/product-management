@@ -6,6 +6,7 @@ import { CsvPathRepository } from '../repository/csv-path.repository';
 import { catchAsyncError } from './utils/catch-async-error';
 import { CustomError } from '../utils/custom-error';
 import { job } from './cron-job.controller';
+
 export const addPath = catchAsyncError(
 	async (req: Request, res: Response, next: express.NextFunction) => {
 		const { path } = req.body;
@@ -20,7 +21,11 @@ export const addPath = catchAsyncError(
 		const csvPathRepo = new CsvPathRepository();
 		const updatedPath = await csvPathRepo.updatePath(path);
 		res.status(200).json({
+			status: 'success',
 			message: 'Path updated successfully',
+			data: {
+				path: updatedPath.path,
+			},
 		});
 	}
 );
@@ -38,6 +43,7 @@ export const uploadFile = catchAsyncError(
 		await writeFile(fullPath, buffer);
 		await job()();
 		res.status(200).json({
+			status: 'success',
 			message: 'File uploaded successfully',
 		});
 	}
