@@ -8,4 +8,4 @@ Backend: Nodejs(express)
 
 Database: SQLite
 
-Frontend: JavaScript & Pug
+Frontend: JavaScript & Reactjs
