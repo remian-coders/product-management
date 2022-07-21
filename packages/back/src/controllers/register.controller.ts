@@ -2,6 +2,7 @@ import express, { Request, Response, Router } from 'express';
 import { catchAsyncError } from './utils/catch-async-error';
 import { RegisterRepository } from '../repository/register.repository';
 import { IPRepository } from '../repository/ip.repository';
+import { WorkingHoursRepository } from '../repository/working-hours.repository';
 import { CustomError } from '../utils/custom-error';
 
 export const createClientRegister = catchAsyncError(
@@ -112,18 +113,24 @@ export const isAvailable = async (
 	if (!isAllowedIP) {
 		return next(new CustomError('IP not allowed', 403));
 	}
+
+	const workingHoursRepo = new WorkingHoursRepository();
+	const { startingHour, endingHour, startingMinute, endingMinute } =
+		await workingHoursRepo.getWorkingHours();
 	const now = new Date();
-	const closingTime = new Date(
-		now.getFullYear(),
-		now.getMonth(),
-		now.getDate(),
-		18,
-		15,
-		0
-	);
-	if (now > closingTime) {
+	const currentHour = now.getHours();
+	const currentMinute = now.getMinutes();
+	if (
+		currentHour < startingHour ||
+		currentHour > endingHour ||
+		(currentHour === startingHour && startingMinute > currentMinute) ||
+		(currentHour === endingHour && currentMinute > endingMinute)
+	) {
 		return next(
-			new CustomError('The page is available between 8:00 and 18:15', 400)
+			new CustomError(
+				`The page is available between ${startingHour}:${startingMinute} - ${endingHour}:${endingMinute}`,
+				503
+			)
 		);
 	}
 	next();
