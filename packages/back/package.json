@@ -1,0 +1,53 @@
+{
+	"name": "product-management",
+	"version": "1.0.0",
+	"description": "",
+	"main": "server.js",
+	"scripts": {
+		"build": "tsc --project ./",
+		"dev": "NODE_ENV=development  ts-node-dev --files ./src/server.ts",
+		"prod": "NODE_ENV=production ts-node-dev --files ./src/server.ts"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/remian-coders/product-management.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/remian-coders/product-management/issues"
+	},
+	"homepage": "https://github.com/remian-coders/product-management#readme",
+	"dependencies": {
+		"bcryptjs": "^2.4.3",
+		"class-validator": "^0.13.2",
+		"cors": "^2.8.5",
+		"cron": "^2.0.0",
+		"csv-parse": "^5.2.2",
+		"express": "^4.18.1",
+		"jsonwebtoken": "^8.5.1",
+		"multer": "^1.4.5-lts.1",
+		"nodemailer": "^6.7.7",
+		"pug": "^3.0.2",
+		"reflect-metadata": "^0.1.13",
+		"sqlite3": "^5.0.8",
+		"typeorm": "^0.3.7",
+		"uuid": "^8.3.2"
+	},
+	"devDependencies": {
+		"@types/bcryptjs": "^2.4.2",
+		"@types/cors": "^2.8.12",
+		"@types/cron": "^2.0.0",
+		"@types/express": "^4.17.13",
+		"@types/jsonwebtoken": "^8.5.8",
+		"@types/multer": "^1.4.7",
+		"@types/node": "^18.0.3",
+		"@types/nodemailer": "^6.4.4",
+		"@types/uuid": "^8.3.4",
+		"dotenv": "^16.0.1",
+		"googleapis": "^105.0.0",
+		"ts-node-dev": "^2.0.0",
+		"typescript": "^4.7.4"
+	}
+}
