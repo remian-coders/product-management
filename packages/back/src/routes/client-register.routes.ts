@@ -5,8 +5,7 @@ import {
 	getDailyClientRegister,
 } from '../controllers/register.controller';
 const router = Router();
-
-router.post('/:registerType', isAvailable, createClientRegister);
-router.get('/', getDailyClientRegister);
+router.use(isAvailable);
+router.route('/').post(createClientRegister).get(getDailyClientRegister);
 
 export default router;
