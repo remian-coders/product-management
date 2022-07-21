@@ -13,3 +13,5 @@ export { default as PasswordUpdate } from "./PasswordUpdate";
 export { default as ForgotForm } from "./ForgotForm";
 export { default as LoginForm } from "./LoginForm";
 export { default as RecoveryForm } from "./RecoveryForm";
+export { default as Loading } from "./Loading";
+export { default as NotFoundPage } from "./NotFoundPage";
