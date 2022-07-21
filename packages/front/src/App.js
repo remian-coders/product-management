@@ -29,7 +29,12 @@ function App() {
           }
         />
         <Route path="/admin/*" element={<Admin isLoggedIn={isLoggedIn} />} />
-        <Route path="/" element={<Home />} />
+        <Route
+          path="/"
+          element={
+            <Home setMessage={setMessage} setShow={setShow} setType={setType} />
+          }
+        />
       </Routes>
       <ToastContainer className="p-3" position="top-center">
         <Toast

@@ -1,6 +1,6 @@
 import React from "react";
 
-const HomeTable = (props) => {
+const HomeTable = ({ registers }) => {
   return (
     <>
       <div className="container">
@@ -15,27 +15,17 @@ const HomeTable = (props) => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th>602225</th>
-              <td>225</td>
-              <td>Cash</td>
-              <td>10:01</td>
-              <td>smth</td>
-            </tr>
-            <tr>
-              <th>Payment xx</th>
-              <td>-100</td>
-              <td>------</td>
-              <td>14:05</td>
-              <td>smth</td>
-            </tr>
-            <tr>
-              <th>602214</th>
-              <td>50</td>
-              <td>Card</td>
-              <td>14:11</td>
-              <td>smth</td>
-            </tr>
+            {registers.map(
+              ({ id, ticketNo, cost, paymentType, date, others }) => (
+                <tr key={id}>
+                  <th>{ticketNo}</th>
+                  <td>{cost}</td>
+                  <td>{paymentType}</td>
+                  <td>{date}</td>
+                  <td>{others}</td>
+                </tr>
+              )
+            )}
           </tbody>
         </table>
       </div>

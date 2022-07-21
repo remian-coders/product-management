@@ -38,3 +38,13 @@ export const fetchRegisters = async function () {
     return error.response;
   }
 };
+
+export const createRegister = async function (data) {
+  try {
+    let response = await api.post("/client-register", data);
+
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
