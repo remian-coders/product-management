@@ -9,7 +9,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  
 
 
-
+cd /home/ec2-user/promos
 npm install --g lerna
 npm install
 lerna exec npm install
