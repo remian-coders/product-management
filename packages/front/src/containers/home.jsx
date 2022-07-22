@@ -32,7 +32,7 @@ const Home = ({ setMessage, setType, setShow }) => {
 
   const getRegisters = useCallback(async () => {
     const response = await fetchRegisters();
-    console.log(response);
+
     if (response.status === 200) {
       setRegisters(response.data.data.registers);
       setLoading(false);

@@ -63,7 +63,6 @@ const PlataModal = ({
                 type="text"
                 className="form-control"
                 id="inputMentiune"
-                required
               />
             </div>
           </div>

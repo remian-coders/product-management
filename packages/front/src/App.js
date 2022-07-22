@@ -13,6 +13,7 @@ function App() {
     "Woohoo, you're reading this text in a Toast!"
   );
   const [type, setType] = useState("success");
+  const [token, setToken] = useState(null);
 
   return (
     <div className="App">
@@ -25,10 +26,22 @@ function App() {
               setMessage={setMessage}
               setShow={setShow}
               setType={setType}
+              setToken={setToken}
             />
           }
         />
-        <Route path="/admin/*" element={<Admin isLoggedIn={isLoggedIn} />} />
+        <Route
+          path="/admin/*"
+          element={
+            <Admin
+              isLoggedIn={isLoggedIn}
+              token={token}
+              setMessage={setMessage}
+              setShow={setShow}
+              setType={setType}
+            />
+          }
+        />
         <Route
           path="/"
           element={
