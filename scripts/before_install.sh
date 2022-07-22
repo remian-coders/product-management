@@ -2,7 +2,7 @@
 
 
 
-DIR="/home/ubuntu/promos"
+DIR="/home/ec2-user/promos"
 if [ -d "$DIR" ]; then
   echo "${DIR} exists"
 else
