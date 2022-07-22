@@ -1,13 +1,18 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 
 import { ForgotForm, LoginForm, RecoveryForm } from "../components";
 import { login, forgotPassword, resetPassword } from "../utils/api-calls";
 
-const Login = ({ setIsLoggedIn, setShow, setMessage, setType }) => {
+const Login = ({
+  setIsLoggedIn,
+  setShow,
+  setMessage,
+  setType,
+  setToken,
+  token,
+}) => {
   const navigate = useNavigate();
-
-  const [token, setToken] = useState(null);
 
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -27,6 +32,7 @@ const Login = ({ setIsLoggedIn, setShow, setMessage, setType }) => {
       setIsLoggedIn(true);
       navigate("/admin");
       setMessage(response.data.message);
+      setToken(response.data.token);
       setType("success");
       setShow(true);
     } else {

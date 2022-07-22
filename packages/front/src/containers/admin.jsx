@@ -5,8 +5,7 @@ import {
   Emails,
   Navbar,
   IpAddress,
-  CsvUpload,
-  CsvUpdate,
+  CsvFile,
   PasswordUpdate,
 } from "../components";
 
@@ -26,10 +25,19 @@ const Admin = ({ isLoggedIn, token, setMessage, setType, setShow }) => {
     <>
       <Navbar />
       <Routes>
-        <Route path="/csv-upload" element={<CsvUpload />} />
-        <Route path="/csv-update" element={<CsvUpdate />} />
+        <Route path="/csv" element={<CsvFile />} />
         <Route path="/password-update" element={<PasswordUpdate />} />
-        <Route path="/ip-address" element={<IpAddress />} />
+        <Route
+          path="/ip-address"
+          element={
+            <IpAddress
+              token={token}
+              setMessage={setMessage}
+              setShow={setShow}
+              setType={setType}
+            />
+          }
+        />
         <Route
           path="/user"
           element={

@@ -23,8 +23,7 @@ const NavbarM = () => {
               <NavLink to="./">Email</NavLink>
               <NavLink to="./user">Create user</NavLink>
               <NavLink to="./ip-address">IP Address</NavLink>
-              <NavLink to="./csv-upload">CSV File Upload</NavLink>
-              <NavLink to="./csv-update">CSV File Update</NavLink>
+              <NavLink to="./csv">CSV File</NavLink>
               <NavLink to="./password-update">Update Password</NavLink>
             </Nav>
           </Offcanvas.Body>
