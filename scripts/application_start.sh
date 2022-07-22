@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo chown -R ubuntu /home/ubuntu/ellty
+sudo chown -R ubuntu /home/ubuntu/promos
 
 cd /home/ubuntu/promos
 

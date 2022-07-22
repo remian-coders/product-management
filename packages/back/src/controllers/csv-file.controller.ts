@@ -32,16 +32,16 @@ export const addPath = catchAsyncError(
 
 export const uploadFile = catchAsyncError(
 	async (req: Request, res: Response, next: express.NextFunction) => {
-		const csvPathRepo = new CsvPathRepository();
-		const path = await csvPathRepo.getPath();
-		const now = new Date();
-		const date = ('0' + now.getDate()).slice(-2);
-		const month = ('0' + (now.getMonth() + 1)).slice(-2);
-		const year = now.getFullYear();
-		const fullPath = path + `/realizari_${date}_${month}_${year}.csv`;
-		const { buffer } = req.file;
-		await writeFile(fullPath, buffer);
-		await job()();
+		// const csvPathRepo = new CsvPathRepository();
+		// const path = await csvPathRepo.getPath();
+		// const now = new Date();
+		// const date = ('0' + now.getDate()).slice(-2);
+		// const month = ('0' + (now.getMonth() + 1)).slice(-2);
+		// const year = now.getFullYear();
+		// const fullPath = path + `/realizari_${date}_${month}_${year}.csv`;
+		// const { buffer } = req.file;
+		// await writeFile(fullPath, buffer);
+		// await job()();
 		res.status(200).json({
 			status: 'success',
 			message: 'File uploaded successfully',
