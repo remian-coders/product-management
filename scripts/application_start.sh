@@ -21,4 +21,4 @@ cd /home/ec2-user/promos/packages/back
 npm install
 cd /home/ec2-user/promos
 
-npm run prod
+npm run dev
