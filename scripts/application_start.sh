@@ -1,7 +1,7 @@
 #!/bin/bash
 
 sudo chmod -R 777 /home/ec2-user/promos
-
+echo 'Starting application...'
 cd /home/ec2-user/promos
 
 #some changes here 
