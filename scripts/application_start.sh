@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo chmod -R 777 /home/ec2-user/express-app
+sudo chmod -R 777 /home/ec2-user/promos
 
 cd /home/ec2-user/promos
 
