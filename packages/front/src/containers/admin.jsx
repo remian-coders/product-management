@@ -10,15 +10,16 @@ import {
   PasswordUpdate,
 } from "../components";
 
-const Admin = ({ isLoggedIn }) => {
+const Admin = ({ isLoggedIn, token, setMessage, setType, setShow }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!isLoggedIn) {
       navigate("/login");
-    } else {
-      navigate("/admin");
     }
+    // else {
+    //   navigate("/admin");
+    // }
   }, [isLoggedIn, navigate]);
 
   return (
@@ -29,8 +30,28 @@ const Admin = ({ isLoggedIn }) => {
         <Route path="/csv-update" element={<CsvUpdate />} />
         <Route path="/password-update" element={<PasswordUpdate />} />
         <Route path="/ip-address" element={<IpAddress />} />
-        <Route path="/user" element={<UserCreate />} />
-        <Route path="/*" element={<Emails />} />
+        <Route
+          path="/user"
+          element={
+            <UserCreate
+              token={token}
+              setMessage={setMessage}
+              setShow={setShow}
+              setType={setType}
+            />
+          }
+        />
+        <Route
+          path="/*"
+          element={
+            <Emails
+              token={token}
+              setMessage={setMessage}
+              setShow={setShow}
+              setType={setType}
+            />
+          }
+        />
       </Routes>
     </>
   );

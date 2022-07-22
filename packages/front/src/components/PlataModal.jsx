@@ -1,27 +1,40 @@
 import React from "react";
 import { Modal, Alert, Button } from "react-bootstrap";
 
-const PlataModal = (props) => {
+const PlataModal = ({
+  show,
+  submitHandler,
+  onHide,
+  ticket,
+  cost,
+  mentiune,
+}) => {
   return (
     <Modal
-      {...props}
+      show={show}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-      <Modal.Header closeButton>
+      <Modal.Header closeButton onClick={onHide}>
         <Modal.Title id="contained-modal-title-vcenter">
           Inregistrare incasare noua
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-        <form>
+      <form onSubmit={submitHandler}>
+        <Modal.Body>
           <div className="row mb-3">
             <label htmlFor="inputTichet" className="col-sm-3 col-form-label">
               Tichet
             </label>
             <div className="col-sm-9">
-              <input type="text" className="form-control" id="inputTichet" />
+              <input
+                ref={ticket}
+                type="text"
+                className="form-control"
+                id="inputTichet"
+                required
+              />
             </div>
           </div>
           <div className="row mb-3">
@@ -29,7 +42,14 @@ const PlataModal = (props) => {
               Cost(RON)
             </label>
             <div className="col-sm-9">
-              <input type="number" className="form-control" id="inputCost" />
+              <input
+                ref={cost}
+                type="number"
+                className="form-control"
+                id="inputCost"
+                min="0"
+                required
+              />
             </div>
           </div>
 
@@ -38,20 +58,27 @@ const PlataModal = (props) => {
               Mentiune
             </label>
             <div className="col-sm-9">
-              <input type="text" className="form-control" id="inputMentiune" />
+              <input
+                ref={mentiune}
+                type="text"
+                className="form-control"
+                id="inputMentiune"
+              />
             </div>
           </div>
           <div className="row px-2">
             <Alert variant="warning">Toate campurile sunt obligatorii!</Alert>
           </div>
-        </form>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="primary">Save</Button>
-        <Button variant="secondary" onClick={props.onHide}>
-          Close
-        </Button>
-      </Modal.Footer>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" type="submit">
+            Save
+          </Button>
+          <Button variant="secondary" onClick={onHide}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </form>
     </Modal>
   );
 };
