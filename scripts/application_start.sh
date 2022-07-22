@@ -10,6 +10,7 @@ export NVM_DIR="$HOME/.nvm"
 
 
 cd /home/ec2-user/promos
+npm install npm@8.15.0
 npm install --g lerna
 npm install
 lerna exec npm install
