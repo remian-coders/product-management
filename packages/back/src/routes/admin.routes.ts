@@ -13,7 +13,7 @@ import {
 } from '../controllers/user.controller';
 
 import {
-	createAdminRegister,
+	createRegister,
 	getDailyAdminRegister,
 } from '../controllers/register.controller';
 
@@ -39,11 +39,12 @@ router.post('/login', login);
 router.post('/forgot-password', forgotPassword);
 router.patch('/reset-password', resetPassword);
 
-// router.use(guard);
+router.use(guard);
 router.patch('/update-password', updatePassword);
-router.post('/create-user', createUser);
+router.route('/user').post(createUser).get(getUsers);
+router.delete('/user/:id', deleteUser);
 router.get('/register', getDailyAdminRegister);
-router.post('/register', createAdminRegister);
+router.post('/register', createRegister);
 router.route('/ip-address-config').get(getIPs).post(addIP);
 router.delete('/ip-address-config/:id', deleteIP);
 router.route('/email-address-config').get(getEmails).post(addEmail);

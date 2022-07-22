@@ -6,7 +6,7 @@
 	"scripts": {
 		"build": "tsc --project ./",
 		"dev": "NODE_ENV=development  ts-node-dev --files ./src/server.ts",
-		"prod": "NODE_ENV=production ts-node-dev --files ./src/server.ts"
+		"prod": "NODE_ENV=production ts-node-dev --files ./src/server.ts > app.out.log 2> app.err.log"
 	},
 	"repository": {
 		"type": "git",
@@ -26,6 +26,7 @@
 		"cron": "^2.0.0",
 		"csv-parse": "^5.2.2",
 		"express": "^4.18.1",
+		"ip-address": "^8.1.0",
 		"jsonwebtoken": "^8.5.1",
 		"multer": "^1.4.5-lts.1",
 		"nodemailer": "^6.7.7",

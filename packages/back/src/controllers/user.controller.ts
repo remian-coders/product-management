@@ -57,14 +57,7 @@ export const getUsers = catchAsyncError(async (req: Request, res: Response) => {
 export const deleteUser = catchAsyncError(
 	async (req: Request, res: Response, next: express.NextFunction) => {
 		if (req.user.id === req.params.id) {
-			return next(
-				new CustomError(
-					`Please go ${req.protocol}://${req.get(
-						'host'
-					)}/admin/delete-me to delete your account!`,
-					400
-				)
-			);
+			return next(new CustomError(`You can't delete your account!`, 400));
 		}
 		const { id } = req.params;
 		const usersRepo = new UsersRepository();

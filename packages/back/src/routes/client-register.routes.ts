@@ -1,11 +1,11 @@
 import express, { Request, Response, Router } from 'express';
 import {
-	createClientRegister,
+	createRegister,
 	isAvailable,
 	getDailyClientRegister,
 } from '../controllers/register.controller';
 const router = Router();
 router.use(isAvailable);
-router.route('/').post(createClientRegister).get(getDailyClientRegister);
+router.route('/').post(createRegister).get(getDailyClientRegister);
 
 export default router;
