@@ -116,3 +116,36 @@ export const deleteUser = async function (token, id) {
     return error.response;
   }
 };
+export const fetchIps = async function (token) {
+  try {
+    let response = await api.get("/admin/ip-address-config", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const createIp = async function (token, data) {
+  try {
+    let response = await api.post("/admin/ip-address-config", data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const deleteIp = async function (token, id) {
+  try {
+    let response = await api.delete(`/admin/ip-address-config/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
