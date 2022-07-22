@@ -12,7 +12,7 @@ export NVM_DIR="$HOME/.nvm"
 cd /home/ec2-user/promos
 npm install --g lerna
 npm install
-lerna exec npm i
+lerna exec npm install
 
 
 cd /home/ec2-user/promos/packages/front
