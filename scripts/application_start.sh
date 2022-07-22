@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo chown -R ubuntu /home/ec2-user/promos
+sudo chmod -R 777 /home/ec2-user/express-app
 
 cd /home/ec2-user/promos
 
