@@ -29,7 +29,17 @@ const Admin = ({ isLoggedIn, token, setMessage, setType, setShow }) => {
         <Route path="/csv-upload" element={<CsvUpload />} />
         <Route path="/csv-update" element={<CsvUpdate />} />
         <Route path="/password-update" element={<PasswordUpdate />} />
-        <Route path="/ip-address" element={<IpAddress />} />
+        <Route
+          path="/ip-address"
+          element={
+            <IpAddress
+              token={token}
+              setMessage={setMessage}
+              setShow={setShow}
+              setType={setType}
+            />
+          }
+        />
         <Route
           path="/user"
           element={

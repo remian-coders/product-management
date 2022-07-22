@@ -97,7 +97,18 @@ export const fetchUsers = async function (token) {
 
 export const createUser = async function (token, data) {
   try {
-    let response = await api.post("/admin/email-address-config", data, {
+    let response = await api.post("/admin/user", data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const deleteUser = async function (token, id) {
+  try {
+    let response = await api.delete(`/admin/user/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response;
