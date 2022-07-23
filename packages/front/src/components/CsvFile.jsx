@@ -23,6 +23,7 @@ const CsvFile = ({ token, setMessage, setType, setShow }) => {
               className="form-control"
               id="formFile"
               aria-describedby="button-addon2"
+              accept=".csv"
               required
             />
             <button

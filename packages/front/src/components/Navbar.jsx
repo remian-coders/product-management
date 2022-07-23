@@ -25,6 +25,7 @@ const NavbarM = () => {
               <NavLink to="./ip-address">IP Address</NavLink>
               <NavLink to="./csv">CSV File</NavLink>
               <NavLink to="./password-update">Update Password</NavLink>
+              <NavLink to="./incasare">Admin Incasare</NavLink>
             </Nav>
           </Offcanvas.Body>
         </Navbar.Offcanvas>
