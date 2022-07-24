@@ -1,6 +1,6 @@
 import React from "react";
 
-const HomeTable = ({ registers }) => {
+const HomeTable = ({ registers, report }) => {
   return (
     <>
       <div className="container">
@@ -36,10 +36,10 @@ const HomeTable = ({ registers }) => {
             <h4>Raport:</h4>
           </div>
           <div className="col border">
-            <h4>Cash: 115 RON</h4>
+            <h4>Cash: {report.cash ? report.cash : 0} RON</h4>
           </div>
           <div className="col border">
-            <h4>Card: 50 RON</h4>
+            <h4>Card: {report.card ? report.cash : 0} RON</h4>
           </div>
         </div>
       </div>

@@ -19,6 +19,7 @@ const Home = ({ setMessage, setType, setShow }) => {
 
   const [loading, setLoading] = useState(true);
   const [registers, setRegisters] = useState([]);
+  const [report, setReport] = useState({});
   const [status, setStatus] = useState("data");
 
   const incasareTicket = useRef();
@@ -35,6 +36,7 @@ const Home = ({ setMessage, setType, setShow }) => {
 
     if (response.status === 200) {
       setRegisters(response.data.data.registers);
+      setReport(response.data.data.report);
       setLoading(false);
     } else if (response.status === 403) {
       setLoading(false);
@@ -119,7 +121,7 @@ const Home = ({ setMessage, setType, setShow }) => {
         <>
           <Header />
           <Finalizer />
-          <HomeTable registers={registers} />
+          <HomeTable registers={registers} report={report} />
           <div className="container px-4 mt-5">
             <div className="row">
               <div className="col">

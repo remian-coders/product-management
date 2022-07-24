@@ -14,6 +14,7 @@ const AdminIncasare = ({ token, setMessage, setType, setShow }) => {
 
   const [loading, setLoading] = useState(false);
   const [registers, setRegisters] = useState([]);
+  const [report, setReport] = useState({});
 
   const incasareTicket = useRef();
   const incasareCost = useRef();
@@ -34,6 +35,7 @@ const AdminIncasare = ({ token, setMessage, setType, setShow }) => {
     const response = await fetchRegisters(params);
     if (response.status === 200) {
       setRegisters(response.data.data.registers);
+      setReport(response.data.data.report);
       setLoading(false);
     } else {
       setRegisters([]);
@@ -46,6 +48,7 @@ const AdminIncasare = ({ token, setMessage, setType, setShow }) => {
       const response = await getAdminRegister(token, params);
       if (response.status === 200) {
         setRegisters(response.data.data.registers);
+        setReport(response.data.data.report);
         setLoading(false);
       } else {
         setRegisters([]);
@@ -216,7 +219,11 @@ const AdminIncasare = ({ token, setMessage, setType, setShow }) => {
         </form>
       </div>
 
-      {loading ? <Loading height=" " /> : <HomeTable registers={registers} />}
+      {loading ? (
+        <Loading height=" " />
+      ) : (
+        <HomeTable registers={registers} report={report} />
+      )}
       <div className="container px-4 mt-5">
         <div className="row">
           <div className="col">
