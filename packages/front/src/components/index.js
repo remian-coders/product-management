@@ -15,3 +15,4 @@ export { default as RecoveryForm } from "./RecoveryForm";
 export { default as Loading } from "./Loading";
 export { default as NotFoundPage } from "./NotFoundPage";
 export { default as TimeOver } from "./TimeOver";
+export { default as AdminIncasare } from "./AdminIncasare";

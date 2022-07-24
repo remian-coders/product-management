@@ -6,7 +6,7 @@ const NavbarM = () => {
   return (
     <Navbar bg="light" expand={false} className="mb-3">
       <Container fluid>
-        <Navbar.Brand href="#">Admin</Navbar.Brand>
+        <Navbar.Brand>Admin</Navbar.Brand>
         <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${false}`} />
         <Navbar.Offcanvas
           id={`offcanvasNavbar-expand-${false}`}
@@ -20,12 +20,12 @@ const NavbarM = () => {
           </Offcanvas.Header>
           <Offcanvas.Body>
             <Nav className="justify-content-end flex-grow-1 pe-3">
-              <NavLink to="./">Email</NavLink>
+              <NavLink to="./">Admin Incasare</NavLink>
+              <NavLink to="./emails">Email</NavLink>
               <NavLink to="./user">Create user</NavLink>
               <NavLink to="./ip-address">IP Address</NavLink>
               <NavLink to="./csv">CSV File</NavLink>
               <NavLink to="./password-update">Update Password</NavLink>
-              <NavLink to="./incasare">Admin Incasare</NavLink>
             </Nav>
           </Offcanvas.Body>
         </Navbar.Offcanvas>

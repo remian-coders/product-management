@@ -18,6 +18,8 @@ const PasswordUpdate = ({ token, setToken, setMessage, setShow, setType }) => {
       setMessage(response.data.message);
       setType("success");
       setShow(true);
+      oldPasswordRef.current.value = "";
+      newPasswordRef.current.value = "";
     } else {
       setMessage(response.data.message);
       setType("error");

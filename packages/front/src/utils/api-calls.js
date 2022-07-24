@@ -29,9 +29,9 @@ export const resetPassword = async function (data) {
   }
 };
 
-export const fetchRegisters = async function () {
+export const fetchRegisters = async function (params = null) {
   try {
-    let response = await api.get("/client-register");
+    let response = await api.get("/client-register", { params: params });
 
     return response;
   } catch (error) {
@@ -175,6 +175,40 @@ export const uploadCsvFile = async function (token, data) {
 export const updateCsvFile = async function (token, data) {
   try {
     let response = await api.patch("/admin/update-csv-path", data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const getAdminRegister = async function (token, params) {
+  try {
+    let response = await api.get(`/admin/register`, {
+      headers: { Authorization: `Bearer ${token}` },
+      params: params,
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const postAdminRegister = async function (token, data) {
+  try {
+    let response = await api.post("/admin/register", data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const setWorkingHours = async function (token, data) {
+  try {
+    let response = await api.patch("/admin/working-hours", data, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response;

@@ -21,7 +21,7 @@ const HomeTable = ({ registers }) => {
                   <th>{ticketNo}</th>
                   <td>{cost}</td>
                   <td>{paymentType}</td>
-                  <td>{date}</td>
+                  <td>{new Date(date).toTimeString().split(" ")[0]}</td>
                   <td>{others}</td>
                 </tr>
               )
