@@ -45,10 +45,11 @@ export const getDailyClientRegister = catchAsyncError(
 			}-${from.getDate()} 23:59:59`
 		);
 		const registerRepo = new RegisterRepository();
-		const registers = await registerRepo.findDailyClientRegister(from, to);
+		const { registers, card, cash } =
+			await registerRepo.findDailyClientRegister(from, to);
 		res.status(200).json({
 			message: 'Daily Client Register',
-			data: { registers },
+			data: { registers, report: { card, cash } },
 		});
 	}
 );
@@ -70,12 +71,12 @@ export const getDailyAdminRegister = catchAsyncError(
 				from.getMonth() + 1
 			}-${from.getDate()} 23:59:00`
 		);
-		console.log(from, to);
 		const registerRepo = new RegisterRepository();
-		const registers = await registerRepo.findDailyAdminRegister(from, to);
+		const { registers, cash, card } =
+			await registerRepo.findDailyAdminRegister(from, to);
 		res.status(200).json({
 			message: 'Daily Client Register',
-			data: { registers },
+			data: { registers, report: { card, cash } },
 		});
 	}
 );
