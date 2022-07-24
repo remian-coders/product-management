@@ -4,9 +4,8 @@
 	"description": "",
 	"main": "server.js",
 	"scripts": {
-		"build": "tsc --project ./",
-		"dev": "NODE_ENV=development  --max-old-space-size=8192 npm run build ts-node-dev --files ./src/server.ts",
-		"prod": "NODE_ENV=production --max-old-space-size=8192 npm run build ts-node-dev --files ./src/server.ts > app.out.log 2> app.err.log"
+		"dev": "NODE_ENV=development ts-node-dev --files ./src/server.ts",
+		"prod": "NODE_ENV=production ts-node-dev --files ./src/server.ts > app.out.log 2> app.err.log"
 	},
 	"repository": {
 		"type": "git",

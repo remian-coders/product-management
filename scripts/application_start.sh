@@ -1,24 +1,24 @@
 #!/bin/bash
 
-sudo chmod -R 777 /home/ec2-user/promos
-echo 'Starting application...'
-cd /home/ec2-user/promos
+sudo chown -R ubuntu /home/ubuntu/ellty
 
-export NVM_DIR="$HOME/.nvm"	
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  
+cd /home/ubuntu/ellty
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
 
-cd /home/ec2-user/promos
-npm install npm@8.15.0
+cd /home/ubuntu/ellty
 npm install --g lerna
 npm install
-lerna exec npm install
+lerna exec npm i
 
 
-cd /home/ec2-user/promos/packages/front
+cd /home/ubuntu/ellty/packages/front
 npm install
-cd /home/ec2-user/promos/packages/back
+cd /home/ubuntu/ellty/packages/back
 npm install
-cd /home/ec2-user/promos
-npm run dev
+cd /home/ubuntu/ellty
+
+npm run start
