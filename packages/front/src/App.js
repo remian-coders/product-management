@@ -39,6 +39,7 @@ function App() {
               setMessage={setMessage}
               setShow={setShow}
               setType={setType}
+              setToken={setToken}
             />
           }
         />

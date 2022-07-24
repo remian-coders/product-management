@@ -149,3 +149,36 @@ export const deleteIp = async function (token, id) {
     return error.response;
   }
 };
+
+export const updatePassword = async function (token, data) {
+  try {
+    let response = await api.patch("/admin/update-password", data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const uploadCsvFile = async function (token, data) {
+  try {
+    let response = await api.post("/admin/upload-csv-file", data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const updateCsvFile = async function (token, data) {
+  try {
+    let response = await api.patch("/admin/update-csv-path", data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};

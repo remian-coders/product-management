@@ -8,8 +8,16 @@ import {
   CsvFile,
   PasswordUpdate,
 } from "../components";
+import AdminIncasare from "../components/AdminIncasare";
 
-const Admin = ({ isLoggedIn, token, setMessage, setType, setShow }) => {
+const Admin = ({
+  isLoggedIn,
+  token,
+  setMessage,
+  setType,
+  setShow,
+  setToken,
+}) => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,8 +33,30 @@ const Admin = ({ isLoggedIn, token, setMessage, setType, setShow }) => {
     <>
       <Navbar />
       <Routes>
-        <Route path="/csv" element={<CsvFile />} />
-        <Route path="/password-update" element={<PasswordUpdate />} />
+        <Route path="/incasare" element={<AdminIncasare />} />
+        <Route
+          path="/csv"
+          element={
+            <CsvFile
+              token={token}
+              setMessage={setMessage}
+              setShow={setShow}
+              setType={setType}
+            />
+          }
+        />
+        <Route
+          path="/password-update"
+          element={
+            <PasswordUpdate
+              token={token}
+              setMessage={setMessage}
+              setShow={setShow}
+              setType={setType}
+              setToken={setToken}
+            />
+          }
+        />
         <Route
           path="/ip-address"
           element={
