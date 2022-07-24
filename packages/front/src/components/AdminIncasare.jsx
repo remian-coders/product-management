@@ -116,7 +116,6 @@ const AdminIncasare = ({ token, setMessage, setType, setShow }) => {
   };
 
   const handleWorkingHours = async (e) => {
-    
     e.preventDefault();
 
     const from = fromRef.current.value;
@@ -146,17 +145,13 @@ const AdminIncasare = ({ token, setMessage, setType, setShow }) => {
     if (select === "admin") {
       setLoading(true);
       getRegisters({ date });
-      dateRef.current.value = "";
-      selectRef.current.value = "";
     } else {
       setLoading(true);
       getHomeRegisters({ date });
     }
   };
 
-  return loading ? (
-    <Loading />
-  ) : (
+  return (
     <>
       <Finalizer />
       <div className="container pb-5">
@@ -220,7 +215,8 @@ const AdminIncasare = ({ token, setMessage, setType, setShow }) => {
           </div>
         </form>
       </div>
-      <HomeTable registers={registers} />
+
+      {loading ? <Loading height=" " /> : <HomeTable registers={registers} />}
       <div className="container px-4 mt-5">
         <div className="row">
           <div className="col">

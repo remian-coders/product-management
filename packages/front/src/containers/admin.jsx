@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import React from "react";
+import { Routes, Route } from "react-router-dom";
 import {
   UserCreate,
   Emails,
@@ -7,8 +7,9 @@ import {
   IpAddress,
   CsvFile,
   PasswordUpdate,
+  AdminIncasare,
 } from "../components";
-import AdminIncasare from "../components/AdminIncasare";
+import Protected from "../utils/protected";
 
 const Admin = ({
   isLoggedIn,
@@ -18,14 +19,6 @@ const Admin = ({
   setShow,
   setToken,
 }) => {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!isLoggedIn) {
-      navigate("/login");
-    }
-  }, [isLoggedIn, navigate]);
-
   return (
     <>
       <Navbar />
@@ -33,68 +26,80 @@ const Admin = ({
         <Route
           path="/csv"
           element={
-            <CsvFile
-              token={token}
-              setMessage={setMessage}
-              setShow={setShow}
-              setType={setType}
-            />
+            <Protected isLoggedIn={isLoggedIn}>
+              <CsvFile
+                token={token}
+                setMessage={setMessage}
+                setShow={setShow}
+                setType={setType}
+              />
+            </Protected>
           }
         />
         <Route
           path="/password-update"
           element={
-            <PasswordUpdate
-              token={token}
-              setMessage={setMessage}
-              setShow={setShow}
-              setType={setType}
-              setToken={setToken}
-            />
+            <Protected isLoggedIn={isLoggedIn}>
+              <PasswordUpdate
+                token={token}
+                setMessage={setMessage}
+                setShow={setShow}
+                setType={setType}
+                setToken={setToken}
+              />
+            </Protected>
           }
         />
         <Route
           path="/ip-address"
           element={
-            <IpAddress
-              token={token}
-              setMessage={setMessage}
-              setShow={setShow}
-              setType={setType}
-            />
+            <Protected isLoggedIn={isLoggedIn}>
+              <IpAddress
+                token={token}
+                setMessage={setMessage}
+                setShow={setShow}
+                setType={setType}
+              />
+            </Protected>
           }
         />
         <Route
           path="/user"
           element={
-            <UserCreate
-              token={token}
-              setMessage={setMessage}
-              setShow={setShow}
-              setType={setType}
-            />
+            <Protected isLoggedIn={isLoggedIn}>
+              <UserCreate
+                token={token}
+                setMessage={setMessage}
+                setShow={setShow}
+                setType={setType}
+              />
+            </Protected>
           }
         />
         <Route
           path="/emails"
           element={
-            <Emails
-              token={token}
-              setMessage={setMessage}
-              setShow={setShow}
-              setType={setType}
-            />
+            <Protected isLoggedIn={isLoggedIn}>
+              <Emails
+                token={token}
+                setMessage={setMessage}
+                setShow={setShow}
+                setType={setType}
+              />
+            </Protected>
           }
         />
         <Route
           path="/*"
           element={
-            <AdminIncasare
-              token={token}
-              setMessage={setMessage}
-              setShow={setShow}
-              setType={setType}
-            />
+            <Protected isLoggedIn={isLoggedIn}>
+              <AdminIncasare
+                token={token}
+                setMessage={setMessage}
+                setShow={setShow}
+                setType={setType}
+              />
+            </Protected>
           }
         />
       </Routes>
