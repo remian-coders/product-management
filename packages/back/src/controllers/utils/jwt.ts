@@ -1,4 +1,4 @@
-import { sign, verify, SignOptions } from 'jsonwebtoken';
+import { sign, verify } from 'jsonwebtoken';
 
 export const jwtSign = (id: string): Promise<string> => {
 	return new Promise((resolve, reject) => {

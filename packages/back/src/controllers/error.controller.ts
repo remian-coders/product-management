@@ -23,6 +23,7 @@ const devError = (res: Response, err: CustomError) => {
 };
 const prodError = (res: Response, err: CustomError) => {
 	let error = Object.create(err);
+	console.log(error);
 	if (
 		error.message ===
 		'SQLITE_CONSTRAINT: UNIQUE constraint failed: user.email'

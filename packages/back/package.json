@@ -4,8 +4,10 @@
 	"description": "",
 	"main": "server.js",
 	"scripts": {
+		"build": "tsc",
 		"dev": "NODE_ENV=development ts-node-dev --files ./src/server.ts",
-		"prod": "NODE_ENV=production ts-node-dev --files ./src/server.ts > app.out.log 2> app.err.log"
+		"prod": "NODE_ENV=production node  dist/server.js ",
+		"postinstall": "npm run build"
 	},
 	"repository": {
 		"type": "git",

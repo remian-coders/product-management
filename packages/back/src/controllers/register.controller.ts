@@ -11,12 +11,13 @@ export const createRegister = catchAsyncError(
 		let { ticketNo, cost, paymentType, others } = req.body;
 		const registerType = cost >= 0 ? 'income' : 'expense';
 		paymentType = cost <= 0 ? 'cash' : paymentType;
+		const admin = req.user ? req.user.name : null;
 		const register = {
 			ticketNo,
 			cost,
 			paymentType,
 			registerType,
-			admin: req.user.name || null,
+			admin,
 			date: new Date(Date.now()),
 			others,
 		};

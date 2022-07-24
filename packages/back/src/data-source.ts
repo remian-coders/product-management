@@ -6,7 +6,7 @@ class AppDataSource {
 		this._dataSource = new DataSource({
 			type: 'sqlite',
 			database: './db.sqlite',
-			entities: ['src/entities/*.ts'],
+			entities: [__dirname + '/**/*.entity{.ts,.js}'],
 			synchronize: true,
 		});
 	}
