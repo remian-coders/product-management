@@ -16,7 +16,7 @@ export const createRegister = catchAsyncError(
 			cost,
 			paymentType,
 			registerType,
-			admin: null,
+			admin: req.user.name || null,
 			date: new Date(Date.now()),
 			others,
 		};
