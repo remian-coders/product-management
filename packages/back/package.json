@@ -6,7 +6,7 @@
 	"scripts": {
 		"build": "tsc",
 		"dev": "NODE_ENV=development ts-node-dev --files ./src/server.ts",
-		"prod": "NODE_ENV=production  node ./dist/server.js > app.out.log 2> app.err.log"
+		"prod": "NODE_ENV=production  node ./dist/server.js > app.out.log 2> app.err.log < /dev/null &"
 	},
 	"repository": {
 		"type": "git",
