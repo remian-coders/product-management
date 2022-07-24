@@ -6,15 +6,21 @@ import { CustomError } from '../utils/custom-error';
 export const updateWorkingHours = catchAsyncError(
 	async (req: Request, res: Response, next: express.NextFunction) => {
 		const workingHoursRepo = new WorkingHoursRepository();
-		const { startingHour, startingMinut, endingHour, endingMinut } =
-			req.body;
-		if (!startingHour || !startingMinut || !endingHour || !endingMinut) {
+		let { from, to } = req.body;
+		const now = new Date();
+
+		if (!from || !to) {
 			return next(new CustomError('Please provide all the fields', 400));
 		}
-		if (
-			startingHour > endingHour ||
-			(startingHour === endingHour && startingMinut >= endingMinut)
-		) {
+		from = new Date(
+			`${now.getFullYear()}-${
+				now.getMonth() + 1
+			}-${now.getDate()} ${from}`
+		);
+		to = new Date(
+			`${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()} ${to}`
+		);
+		if (from > to) {
 			return next(
 				new CustomError(
 					'Starting hour must be before ending hour!',
@@ -22,15 +28,10 @@ export const updateWorkingHours = catchAsyncError(
 				)
 			);
 		}
-		const newWorkingHours = {
-			startingHour: startingHour as number,
-			startingMinute: startingMinut as number,
-			endingHour: endingHour as number,
-			endingMinute: endingMinut as number,
-		};
-		const updatedWorkingHours = await workingHoursRepo.updateWorkingHours(
-			newWorkingHours
-		);
+		const updatedWorkingHours = await workingHoursRepo.updateWorkingHours({
+			from,
+			to,
+		});
 		res.status(200).json({
 			status: 'success',
 			message: 'Working hours updated',
@@ -46,7 +47,7 @@ export const getWorkingHours = catchAsyncError(
 		res.status(200).json({
 			status: 'success',
 			message: 'Working hours retrieved',
-			data: workingHours,
+			data: { workingHours },
 		});
 	}
 );

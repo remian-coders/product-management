@@ -5,11 +5,7 @@ export class WorkingHours {
 	@PrimaryGeneratedColumn()
 	id?: number;
 	@Column()
-	startingHour: number;
+	from: Date;
 	@Column()
-	startingMinute: number;
-	@Column()
-	endingHour: number;
-	@Column()
-	endingMinute: number;
+	to: Date;
 }

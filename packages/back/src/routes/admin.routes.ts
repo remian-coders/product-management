@@ -15,6 +15,7 @@ import {
 import {
 	createRegister,
 	getDailyAdminRegister,
+	getDailyClientRegister,
 } from '../controllers/register.controller';
 
 import { addIP, getIPs, deleteIP } from '../controllers/ip.controller';

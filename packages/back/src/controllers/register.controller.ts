@@ -30,7 +30,6 @@ export const createRegister = catchAsyncError(
 
 export const getDailyClientRegister = catchAsyncError(
 	async (req: Request, res: Response, next: express.NextFunction) => {
-		if (req.originalUrl === '/api/client-register') req.params.date = null;
 		const now = new Date();
 		const dateStr =
 			(req.query.date as string) ||
@@ -64,12 +63,14 @@ export const getDailyAdminRegister = catchAsyncError(
 				(now.getMonth() + 1) +
 				'-' +
 				now.getDate();
+
 		const from = new Date(dateStr);
 		const to = new Date(
 			`${from.getFullYear()}-${
 				from.getMonth() + 1
 			}-${from.getDate()} 23:59:00`
 		);
+		console.log(from, to);
 		const registerRepo = new RegisterRepository();
 		const registers = await registerRepo.findDailyAdminRegister(from, to);
 		res.status(200).json({
