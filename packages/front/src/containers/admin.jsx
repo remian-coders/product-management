@@ -24,16 +24,12 @@ const Admin = ({
     if (!isLoggedIn) {
       navigate("/login");
     }
-    // else {
-    //   navigate("/admin");
-    // }
   }, [isLoggedIn, navigate]);
 
   return (
     <>
       <Navbar />
       <Routes>
-        <Route path="/incasare" element={<AdminIncasare />} />
         <Route
           path="/csv"
           element={
@@ -80,9 +76,20 @@ const Admin = ({
           }
         />
         <Route
-          path="/*"
+          path="/emails"
           element={
             <Emails
+              token={token}
+              setMessage={setMessage}
+              setShow={setShow}
+              setType={setType}
+            />
+          }
+        />
+        <Route
+          path="/*"
+          element={
+            <AdminIncasare
               token={token}
               setMessage={setMessage}
               setShow={setShow}
