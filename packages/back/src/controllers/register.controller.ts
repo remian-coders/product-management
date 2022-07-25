@@ -32,6 +32,7 @@ export const createRegister = catchAsyncError(
 export const getDailyClientRegister = catchAsyncError(
 	async (req: Request, res: Response, next: express.NextFunction) => {
 		const now = new Date();
+		console.log(req.ip);
 		const dateStr =
 			(req.query.date as string) ||
 			now.getFullYear() +
