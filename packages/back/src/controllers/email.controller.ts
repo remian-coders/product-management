@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { Email } from '../entities/email.enitity';
+import { Email } from '../entities/email.entity';
 import { EmailRepository } from '../repository/email.repository';
 import { catchAsyncError } from './utils/catch-async-error';
 

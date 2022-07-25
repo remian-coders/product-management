@@ -1,4 +1,4 @@
-import { Email } from '../entities/email.enitity';
+import { Email } from '../entities/email.entity';
 import { Repository } from 'typeorm';
 import dataSource from '../data-source';
 
