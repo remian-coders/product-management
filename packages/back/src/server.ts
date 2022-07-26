@@ -11,7 +11,7 @@ dataSource
 	.initialize()
 	.then(async () => {
 		await dataSource.addDefaultUser();
-		app.listen(process.env.PORT || 5000, () => {
+		app.listen({ port: process.env.PORT || 5000, host: '0.0.0.0' }, () => {
 			cronJob.start();
 			console.log(`Server running on port ${process.env.PORT}`);
 		});
