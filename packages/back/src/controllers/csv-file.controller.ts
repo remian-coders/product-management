@@ -24,7 +24,7 @@ export const addPath = catchAsyncError(
 			status: 'success',
 			message: 'Path updated successfully',
 			data: {
-				path: updatedPath.path,
+				path: updatedPath,
 			},
 		});
 	}

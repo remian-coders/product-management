@@ -19,18 +19,10 @@ export class App {
 		this.app.use(cors());
 		this.app.use(express.json());
 		this.app.use(express.urlencoded({ extended: true }));
-		this.app.use(
-			express.static(path.resolve(__dirname, '../../front/build'))
-		);
 	}
 	routes() {
 		this.app.use('/api/client-register', clientRegisterRouter);
 		this.app.use('/api/admin', adminRouter);
-		this.app.use('*', (req, res, next) => {
-			res.status(200).sendFile(
-				path.resolve(__dirname, '../../front/build', 'index.html')
-			);
-		});
 		this.app.use('*', (req, res, next) => {
 			next(new CustomError('there is no such route', 404));
 		});

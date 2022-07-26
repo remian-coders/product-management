@@ -78,9 +78,15 @@ export const guard = catchAsyncError(
 				)
 			);
 		const decoded = await jwtVerify(token);
+		console.log(decoded.id);
 		const user = await usersRepo.findOne({ where: { id: decoded.id } });
 		if (!user)
-			return next(new CustomError('The user does not  exist!', 401));
+			return next(
+				new CustomError(
+					`You don't have an account please create an account.`,
+					401
+				)
+			);
 		if (Date.parse(`${user.passwordChangedAt}`) / 1000 > decoded.iat) {
 			return next(new CustomError('Please login again!', 401));
 		}
