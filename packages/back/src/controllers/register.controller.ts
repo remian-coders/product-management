@@ -88,8 +88,6 @@ export const isAvailable = async (
 	res: Response,
 	next: express.NextFunction
 ) => {
-	console.log('socket ip', req.socket.remoteAddress);
-	console.log('****req.ip***', req.ip);
 	const ipRepo = new IPRepository();
 	const ip = req.ip;
 	const isAllowedIP = await ipRepo.findByIP(ip);
