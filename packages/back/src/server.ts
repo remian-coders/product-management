@@ -9,11 +9,12 @@ const { app } = new App();
 
 dataSource
 	.initialize()
-	.then(() => {
+	.then(async () => {
+		await dataSource.addDefaultUser();
 		app.listen(process.env.PORT || 5000, () => {
+			cronJob.start();
 			console.log(`Server running on port ${process.env.PORT}`);
 		});
-		cronJob.start();
 	})
 	.catch((err) => {
 		console.error('Error connecting to database', err);
