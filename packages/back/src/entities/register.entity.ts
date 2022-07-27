@@ -4,7 +4,7 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 export class Register {
 	@PrimaryGeneratedColumn()
 	id?: number;
-	@Column({ nullable: false })
+	@Column({ nullable: false, unique: true })
 	ticketNo: string;
 	@Column({ nullable: false })
 	cost: number;

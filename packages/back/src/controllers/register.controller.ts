@@ -1,5 +1,4 @@
 import express, { Request, Response, Router } from 'express';
-import { Address4, Address6 } from 'ip-address';
 import { catchAsyncError } from './utils/catch-async-error';
 import { RegisterRepository } from '../repository/register.repository';
 import { IPRepository } from '../repository/ip.repository';

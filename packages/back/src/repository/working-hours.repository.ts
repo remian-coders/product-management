@@ -8,14 +8,17 @@ export class WorkingHoursRepository {
 		this.workingHoursRepository = dataSource.getRepository(WorkingHours);
 	}
 	async getWorkingHours() {
-		const workingHours = [];
-		const todayWorkingHours = await this.workingHoursRepository.find();
-		for (const el of todayWorkingHours) {
-			if (el.type === 'today' && `${el.date}` !== `${date().today}`)
-				continue;
+		const workingHours = {
+			today:
+				(await this.workingHoursRepository.findOne({
+					where: { type: 'today', date: date().today },
+				})) || null,
+			daily:
+				(await this.workingHoursRepository.findOne({
+					where: { type: 'daily' },
+				})) || null,
+		};
 
-			workingHours.push(el);
-		}
 		return workingHours;
 	}
 	async getTodaysWorkingHours() {

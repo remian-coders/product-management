@@ -1,7 +1,7 @@
 import { config } from 'dotenv';
 import { App } from './app';
 import dataSource from './data-source';
-import { cronJob } from './controllers/cron-job.controller';
+import { cronJob } from './cron-job/cron-job';
 
 config({ path: './config.env' });
 
