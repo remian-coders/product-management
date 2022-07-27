@@ -5,12 +5,20 @@ import { writeFile } from 'fs/promises';
 import { CsvPathRepository } from '../repository/csv-path.repository';
 import { catchAsyncError } from './utils/catch-async-error';
 import { CustomError } from '../utils/custom-error';
-import { job } from './cron-job.controller';
+import { job } from '../cron-job/job';
+import path from 'path';
 
 export const addPath = catchAsyncError(
 	async (req: Request, res: Response, next: express.NextFunction) => {
-		const { path } = req.body;
-		const isExist = await access(path, constants.R_OK | constants.W_OK)
+		const { path: csvFolder } = req.body;
+		const csvFilePath = path.join(
+			path.parse(process.env.PWD).dir,
+			`../${csvFolder}`
+		);
+		const isExist = await access(
+			csvFilePath,
+			constants.R_OK | constants.W_OK
+		)
 			.then(() => true)
 			.catch(() => false);
 		if (!isExist) {
@@ -19,13 +27,25 @@ export const addPath = catchAsyncError(
 			);
 		}
 		const csvPathRepo = new CsvPathRepository();
-		const updatedPath = await csvPathRepo.updatePath(path);
+		const updatedPath = await csvPathRepo.updatePath(csvFilePath);
 		res.status(200).json({
 			status: 'success',
 			message: 'Path updated successfully',
 			data: {
 				path: updatedPath,
 			},
+		});
+	}
+);
+
+export const getPath = catchAsyncError(
+	async (req: Request, res: Response, next: express.NextFunction) => {
+		const csvPathRepo = new CsvPathRepository();
+		const path = await csvPathRepo.getPath();
+		res.status(200).json({
+			status: 'success',
+			message: 'Path retrieved successfully',
+			data: { path },
 		});
 	}
 );
@@ -48,7 +68,7 @@ export const uploadFile = catchAsyncError(
 		const fullPath = path + `/realizari_${date}_${month}_${year}.csv`;
 		const { buffer } = req.file;
 		await writeFile(fullPath, buffer);
-		await job()();
+		// await job()();
 		res.status(200).json({
 			status: 'success',
 			message: 'File uploaded successfully',

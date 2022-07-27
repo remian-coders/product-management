@@ -15,7 +15,6 @@ import {
 import {
 	createRegister,
 	getDailyAdminRegister,
-	getDailyClientRegister,
 } from '../controllers/register.controller';
 
 import { addIP, getIPs, deleteIP } from '../controllers/ip.controller';
@@ -26,13 +25,16 @@ import {
 	deleteEmail,
 } from '../controllers/email.controller';
 
-import { addPath, uploadFile } from '../controllers/csv-file.controller';
+import {
+	addPath,
+	uploadFile,
+	getPath,
+} from '../controllers/csv-file.controller';
 import { multipartFileUpload } from '../utils/multer-file-upload';
 
 import {
 	getWorkingHours,
 	updateWorkingHours,
-	finalizeDay,
 } from '../controllers/working-hours.controller';
 
 const router = Router();
@@ -50,7 +52,7 @@ router.route('/ip-address-config').get(getIPs).post(addIP);
 router.delete('/ip-address-config/:id', deleteIP);
 router.route('/email-address-config').get(getEmails).post(addEmail);
 router.delete('/email-address-config/:id', deleteEmail);
-router.patch('/update-csv-path', addPath);
+router.route('/csv-path').get(getPath).patch(addPath);
 router.post(
 	'/upload-csv-file',
 	multipartFileUpload.single('csvFile'),

@@ -7,6 +7,7 @@ export class FixedProducts {
 
 	@Column({
 		nullable: false,
+		unique: true,
 	})
 	ticketNo: string;
 
