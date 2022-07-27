@@ -47,19 +47,21 @@ export const getPath = catchAsyncError(
 export const uploadFile = catchAsyncError(
 	async (req: Request, res: Response, next: express.NextFunction) => {
 		const csvPathRepo = new CsvPathRepository();
-		const path = await csvPathRepo.getPath();
-		if (!path)
+		const filePath = await csvPathRepo.getPath();
+		if (!filePath) {
 			return next(
 				new CustomError(
 					'CSV file folder path is not defined. Please define it first ',
 					400
 				)
 			);
+		}
 		const now = new Date();
 		const date = ('0' + now.getDate()).slice(-2);
 		const month = ('0' + (now.getMonth() + 1)).slice(-2);
 		const year = now.getFullYear();
-		const fullPath = path + `/realizari_${date}_${month}_${year}.csv`;
+		const fullPath =
+			filePath.path + `/realizari_${date}_${month}_${year}.csv`;
 		const { buffer } = req.file;
 		await writeFile(fullPath, buffer);
 		// await job()();
