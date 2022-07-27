@@ -78,7 +78,6 @@ export const guard = catchAsyncError(
 				)
 			);
 		const decoded = await jwtVerify(token);
-		console.log(decoded.id);
 		const user = await usersRepo.findOne({ where: { id: decoded.id } });
 		if (!user)
 			return next(
