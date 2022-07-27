@@ -3,7 +3,6 @@ import { open } from 'node:fs/promises';
 import { CronJob } from 'cron';
 import { CsvPathRepository } from '../repository/csv-path.repository';
 import { FixedProductsRepository } from '../repository/fixed-products.repository';
-import { v4 as uuid4 } from 'uuid';
 
 export const job = () => {
 	return async () => {
@@ -13,11 +12,11 @@ export const job = () => {
 		const date = ('0' + now.getDate()).slice(-2);
 		const month = ('0' + (now.getMonth() + 1)).slice(-2);
 		const year = now.getFullYear();
-		const fullPath = dir + `/realizari_${date}_${month}_${year}.csv`;
-		const fd = await open(fullPath, 'r');
+		const filePath = dir + `/realizari_${date}_${month}_${year}.csv`;
+		const fd = await open(filePath, 'r');
 		if (!fd) {
-			console.log('Error opening file');
-			//handle the error
+			//send email to admin about missing file
+			return;
 		}
 		const stream = fd
 			.createReadStream()
@@ -25,9 +24,7 @@ export const job = () => {
 		//1. save the scv into the database
 		stream.on('data', async (fixedProduct) => {
 			try {
-				console.log(fixedProduct);
 				// const row = await fixedProductsRepo.create({
-				// 	id: uuid4(),
 				// 	ticketNo: fixedProduct.ticketNo,
 				// 	cost: Number(fixedProduct.cost) ? NaN : null,
 				// 	technician: fixedProduct.technician,
