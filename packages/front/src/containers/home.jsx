@@ -11,7 +11,11 @@ import {
   TimeOver,
 } from "../components";
 
-import { fetchRegisters, createRegister } from "../utils/api-calls";
+import {
+  fetchRegisters,
+  createRegister,
+  finalizeRegister,
+} from "../utils/api-calls";
 
 const Home = ({ setMessage, setType, setShow }) => {
   const [incasare, setIncasare] = useState(false);
@@ -113,6 +117,20 @@ const Home = ({ setMessage, setType, setShow }) => {
       setShow(true);
     }
   };
+
+  const finalizeHandle = async (e) => {
+    const response = await finalizeRegister();
+
+    if (response.status === 200) {
+      setMessage("Finalizare realizata cu succes!");
+      setType("success");
+      setShow(true);
+    } else {
+      setMessage("Eroare la finalizare!");
+      setType("error");
+      setShow(true);
+    }
+  };
   return (
     <>
       {loading ? (
@@ -120,7 +138,7 @@ const Home = ({ setMessage, setType, setShow }) => {
       ) : status === "data" ? (
         <>
           <Header />
-          <Finalizer />
+          <Finalizer finalizeHandle={finalizeHandle} />
           <HomeTable registers={registers} report={report} />
           <div className="container px-4 mt-5">
             <div className="row">

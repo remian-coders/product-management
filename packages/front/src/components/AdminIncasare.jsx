@@ -6,6 +6,7 @@ import {
   getAdminRegister,
   postAdminRegister,
   setWorkingHours,
+  finalizeRegister,
 } from "../utils/api-calls";
 
 const AdminIncasare = ({ token, setMessage, setType, setShow }) => {
@@ -154,9 +155,23 @@ const AdminIncasare = ({ token, setMessage, setType, setShow }) => {
     }
   };
 
+  const finalizeHandle = async (e) => {
+    const response = await finalizeRegister();
+
+    if (response.status === 200) {
+      setMessage("Finalizare realizata cu succes!");
+      setType("success");
+      setShow(true);
+    } else {
+      setMessage("Eroare la finalizare!");
+      setType("error");
+      setShow(true);
+    }
+  };
+
   return (
     <>
-      <Finalizer />
+      <Finalizer finalizeHandle={finalizeHandle} />
       <div className="container pb-5">
         <form onSubmit={handleWorkingHours}>
           <div className="input-group mb-3">
@@ -183,7 +198,38 @@ const AdminIncasare = ({ token, setMessage, setType, setShow }) => {
               type="submit"
               id="button-addon2"
             >
-              Open Incasare
+              Set today's working hours
+            </button>
+          </div>
+        </form>
+      </div>
+      <div className="container pb-5">
+        <form onSubmit={handleWorkingHours}>
+          <div className="input-group mb-3">
+            <input
+              ref={fromRef}
+              type="time"
+              className="form-control"
+              placeholder="From"
+              aria-label="time"
+              aria-describedby="button-addon2"
+              required
+            />
+            <input
+              ref={toRef}
+              type="time"
+              className="form-control"
+              placeholder="To"
+              aria-label="time"
+              aria-describedby="button-addon2"
+              required
+            />
+            <button
+              className="btn btn-outline-success"
+              type="submit"
+              id="button-addon2"
+            >
+              Set daily working hours
             </button>
           </div>
         </form>

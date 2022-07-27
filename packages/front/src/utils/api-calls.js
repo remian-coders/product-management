@@ -216,3 +216,12 @@ export const setWorkingHours = async function (token, data) {
     return error.response;
   }
 };
+
+export const finalizeRegister = async function () {
+  try {
+    let response = await api.patch("/client-register/finalize");
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};

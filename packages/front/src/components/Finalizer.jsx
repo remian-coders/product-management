@@ -1,6 +1,6 @@
 import React from "react";
 
-const Finalizer = (props) => {
+const Finalizer = ({ finalizeHandle }) => {
   const date = new Date().toISOString().slice(0, 10);
   return (
     <div className="container px-4 py-4">
@@ -17,7 +17,11 @@ const Finalizer = (props) => {
         </div>
         <div className="col">
           <div className="p-3">
-            <button type="button" className="btn btn-danger btn-lg">
+            <button
+              type="button"
+              className="btn btn-danger btn-lg"
+              onClick={finalizeHandle}
+            >
               Finalizare zi
             </button>
           </div>
