@@ -15,6 +15,7 @@ export const addPath = catchAsyncError(
 			path.parse(process.env.PWD).dir,
 			`../${csvFolder}`
 		);
+		console.log('******', csvFilePath);
 		const isExist = await access(
 			csvFilePath,
 			constants.R_OK | constants.W_OK
