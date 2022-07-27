@@ -1,8 +1,8 @@
-import React from "react";
+import React, { forwardRef } from "react";
 
-const HomeTable = ({ registers, report }) => {
+const HomeTable = forwardRef(({ registers, report }, ref) => {
   return (
-    <>
+    <div ref={ref}>
       <div className="container">
         <table className="table table-bordered table-hover">
           <thead>
@@ -43,8 +43,8 @@ const HomeTable = ({ registers, report }) => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
-};
+});
 
 export default HomeTable;

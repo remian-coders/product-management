@@ -15,5 +15,5 @@ const getBaseUrl = () => {
 };
 
 export default axios.create({
-  baseURL: getBaseUrl(),
+  baseURL: "http://43.200.179.237:5000/api",
 });
