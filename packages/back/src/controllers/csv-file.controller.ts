@@ -11,15 +11,8 @@ import path from 'path';
 export const addPath = catchAsyncError(
 	async (req: Request, res: Response, next: express.NextFunction) => {
 		const { path: csvFolder } = req.body;
-		const csvFilePath = path.join(
-			path.parse(process.env.PWD).dir,
-			`../${csvFolder}`
-		);
-		console.log('******', csvFilePath);
-		const isExist = await access(
-			csvFilePath,
-			constants.R_OK | constants.W_OK
-		)
+		console.log('******', csvFolder);
+		const isExist = await access(csvFolder, constants.R_OK | constants.W_OK)
 			.then(() => true)
 			.catch(() => false);
 		if (!isExist) {
@@ -28,7 +21,7 @@ export const addPath = catchAsyncError(
 			);
 		}
 		const csvPathRepo = new CsvPathRepository();
-		const updatedPath = await csvPathRepo.updatePath(csvFilePath);
+		const updatedPath = await csvPathRepo.updatePath(csvFolder);
 		res.status(200).json({
 			status: 'success',
 			message: 'Path updated successfully',
