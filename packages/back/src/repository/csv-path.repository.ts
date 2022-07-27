@@ -19,6 +19,6 @@ export class CsvPathRepository {
 
 	async getPath() {
 		const [csvPath] = await this.csvPathRepo.find();
-		return csvPath.path;
+		return csvPath;
 	}
 }

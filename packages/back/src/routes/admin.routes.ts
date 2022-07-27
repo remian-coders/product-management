@@ -32,15 +32,15 @@ import { multipartFileUpload } from '../utils/multer-file-upload';
 import {
 	getWorkingHours,
 	updateWorkingHours,
+	finalizeDay,
 } from '../controllers/working-hours.controller';
 
 const router = Router();
-
 router.post('/login', login);
 router.post('/forgot-password', forgotPassword);
 router.patch('/reset-password', resetPassword);
 
-// router.use(guard);
+router.use(guard);
 router.patch('/update-password', updatePassword);
 router.route('/user').post(createUser).get(getUsers);
 router.delete('/user/:id', deleteUser);

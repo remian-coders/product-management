@@ -5,6 +5,7 @@ import { RegisterRepository } from '../repository/register.repository';
 import { IPRepository } from '../repository/ip.repository';
 import { WorkingHoursRepository } from '../repository/working-hours.repository';
 import { CustomError } from '../utils/custom-error';
+import { date } from '../utils/date';
 
 export const createRegister = catchAsyncError(
 	async (req: Request, res: Response, next: express.NextFunction) => {
@@ -31,15 +32,8 @@ export const createRegister = catchAsyncError(
 
 export const getDailyClientRegister = catchAsyncError(
 	async (req: Request, res: Response, next: express.NextFunction) => {
-		const now = new Date();
-		console.log(req.ip);
-		const dateStr =
-			(req.query.date as string) ||
-			now.getFullYear() +
-				'-' +
-				(now.getMonth() + 1) +
-				'-' +
-				now.getDate();
+		console.log('user ip address *******', req.ip);
+		const dateStr = (req.query.date as string) || date().today;
 		const from = new Date(dateStr);
 		const to = new Date(
 			`${from.getFullYear()}-${
@@ -59,13 +53,7 @@ export const getDailyClientRegister = catchAsyncError(
 export const getDailyAdminRegister = catchAsyncError(
 	async (req: Request, res: Response, next: express.NextFunction) => {
 		const now = new Date();
-		const dateStr =
-			(req.query.date as string) ||
-			now.getFullYear() +
-				'-' +
-				(now.getMonth() + 1) +
-				'-' +
-				now.getDate();
+		const dateStr = (req.query.date as string) || date().today;
 
 		const from = new Date(dateStr);
 		const to = new Date(
@@ -88,8 +76,6 @@ export const isAvailable = async (
 	res: Response,
 	next: express.NextFunction
 ) => {
-	console.log('socket ip', req.socket.remoteAddress);
-	console.log('****req.ip***', req.ip);
 	const ipRepo = new IPRepository();
 	const ip = req.ip;
 	const isAllowedIP = await ipRepo.findByIP(ip);
@@ -97,24 +83,32 @@ export const isAvailable = async (
 		return next(new CustomError('IP not allowed', 403));
 	}
 
-	// const workingHoursRepo = new WorkingHoursRepository();
-	// const { startingHour, endingHour, startingMinute, endingMinute } =
-	// 	await workingHoursRepo.getWorkingHours();
-	// const now = new Date();
-	// const currentHour = now.getHours();
-	// const currentMinute = now.getMinutes();
-	// if (
-	// 	currentHour < startingHour ||
-	// 	currentHour > endingHour ||
-	// 	(currentHour === startingHour && startingMinute > currentMinute) ||
-	// 	(currentHour === endingHour && currentMinute > endingMinute)
-	// ) {
-	// 	return next(
-	// 		new CustomError(
-	// 			`The page is available between ${startingHour}:${startingMinute} - ${endingHour}:${endingMinute}`,
-	// 			503
-	// 		)
-	// 	);
-	// }
+	const workingHoursRepo = new WorkingHoursRepository();
+	const todaysWorkingHours = await workingHoursRepo.getTodaysWorkingHours();
+	if (!todaysWorkingHours)
+		return next(
+			new CustomError('Working hours should be set from admin page!', 403)
+		);
+	const from = new Date(todaysWorkingHours.from);
+	const to = new Date(todaysWorkingHours.to);
+	const startingHour = from.getHours();
+	const startingMinute = from.getMinutes();
+	const endingHour = to.getHours();
+	const endingMinute = to.getMinutes();
+	const currentHour = date().currentHour;
+	const currentMinute = date().currentMinute;
+	if (
+		currentHour < startingHour ||
+		currentHour > endingHour ||
+		(currentHour === startingHour && startingMinute > currentMinute) ||
+		(currentHour === endingHour && currentMinute >= endingMinute)
+	) {
+		return next(
+			new CustomError(
+				`The page is available between ${startingHour}:${startingMinute} - ${endingHour}:${endingMinute}`,
+				503
+			)
+		);
+	}
 	next();
 };
