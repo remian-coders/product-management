@@ -1,4 +1,6 @@
 import React, { useState, useRef, useCallback, useEffect } from "react";
+import { Container } from "react-bootstrap";
+import { useReactToPrint } from "react-to-print";
 
 import { Finalizer, HomeTable, IncasareModal, PlataModal, Loading } from ".";
 import {
@@ -7,9 +9,17 @@ import {
   postAdminRegister,
   setWorkingHours,
   finalizeRegister,
+  getHours,
 } from "../utils/api-calls";
 
-const AdminIncasare = ({ token, setMessage, setType, setShow }) => {
+const AdminIncasare = ({
+  token,
+  setMessage,
+  setType,
+  setShow,
+  setDaily,
+  setToday,
+}) => {
   const [incasare, setIncasare] = useState(false);
   const [plata, setPlata] = useState(false);
 
@@ -28,9 +38,15 @@ const AdminIncasare = ({ token, setMessage, setType, setShow }) => {
 
   const fromRef = useRef();
   const toRef = useRef();
+  const typeRef = useRef();
 
   const dateRef = useRef();
   const selectRef = useRef();
+
+  const printCompRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => printCompRef.current,
+  });
 
   const getHomeRegisters = useCallback(async (params = null) => {
     const response = await fetchRegisters(params);
@@ -59,13 +75,26 @@ const AdminIncasare = ({ token, setMessage, setType, setShow }) => {
     [token]
   );
 
+  const getWorkingHours = useCallback(async () => {
+    const response = await getHours(token);
+
+    if (response.status === 200) {
+      setDaily(response.data.data.workingHours?.daily);
+      setToday(response.data.data.workingHours?.today);
+    } else {
+      setDaily(null);
+      setToday(null);
+    }
+  }, [token, setDaily, setToday]);
+
   useEffect(() => {
     getRegisters(); // run it, run it
+    getWorkingHours();
 
     return () => {
       // this now gets called when the component unmounts
     };
-  }, [getRegisters]);
+  }, [getRegisters, getWorkingHours]);
 
   const incasareHandle = async (e) => {
     e.preventDefault();
@@ -81,7 +110,7 @@ const AdminIncasare = ({ token, setMessage, setType, setShow }) => {
     });
 
     if (response.status === 200) {
-      setMessage("Incasare realizata cu succes!");
+      setMessage(response.data?.message);
       setType("success");
       setShow(true);
       setIncasare(false);
@@ -91,8 +120,8 @@ const AdminIncasare = ({ token, setMessage, setType, setShow }) => {
       incasareMentiune.current.value = "";
       incasareType.current.value = "";
     } else {
-      setMessage("Eroare la incasare!");
-      setType("error");
+      setMessage(response.data?.message);
+      setType("danger");
       setShow(true);
     }
   };
@@ -104,7 +133,7 @@ const AdminIncasare = ({ token, setMessage, setType, setShow }) => {
     const others = plataMentiune.current.value;
     const response = await postAdminRegister(token, { ticketNo, cost, others });
     if (response.status === 200) {
-      setMessage("Plata realizata cu succes!");
+      setMessage(response.data?.message);
       setType("success");
       setShow(true);
       setPlata(false);
@@ -113,8 +142,8 @@ const AdminIncasare = ({ token, setMessage, setType, setShow }) => {
       plataCost.current.value = "";
       plataMentiune.current.value = "";
     } else {
-      setMessage("Eroare la plata!");
-      setType("error");
+      setMessage(response.data?.message);
+      setType("danger");
       setShow(true);
     }
   };
@@ -124,18 +153,20 @@ const AdminIncasare = ({ token, setMessage, setType, setShow }) => {
 
     const from = fromRef.current.value;
     const to = toRef.current.value;
+    const type = typeRef.current.value;
 
-    const response = await setWorkingHours(token, { from, to });
+    const response = await setWorkingHours(token, { from, to, type });
 
     if (response.status === 200) {
-      setMessage("Orele au fost setate cu succes!");
+      setMessage(response.data?.message);
       setType("success");
       setShow(true);
+      getWorkingHours();
       fromRef.current.value = "";
       toRef.current.value = "";
     } else {
-      setMessage("Eroare la setarea orelor!");
-      setType("error");
+      setMessage(response.data?.message);
+      setType("danger");
       setShow(true);
     }
   };
@@ -159,12 +190,12 @@ const AdminIncasare = ({ token, setMessage, setType, setShow }) => {
     const response = await finalizeRegister();
 
     if (response.status === 200) {
-      setMessage("Finalizare realizata cu succes!");
+      setMessage(response.data?.message);
       setType("success");
       setShow(true);
     } else {
-      setMessage("Eroare la finalizare!");
-      setType("error");
+      setMessage(response.data?.message);
+      setType("danger");
       setShow(true);
     }
   };
@@ -172,6 +203,7 @@ const AdminIncasare = ({ token, setMessage, setType, setShow }) => {
   return (
     <>
       <Finalizer finalizeHandle={finalizeHandle} />
+
       <div className="container pb-5">
         <form onSubmit={handleWorkingHours}>
           <div className="input-group mb-3">
@@ -181,7 +213,7 @@ const AdminIncasare = ({ token, setMessage, setType, setShow }) => {
               className="form-control"
               placeholder="From"
               aria-label="time"
-              aria-describedby="button-addon2"
+              aria-describedby="button-addon1"
               required
             />
             <input
@@ -193,43 +225,17 @@ const AdminIncasare = ({ token, setMessage, setType, setShow }) => {
               aria-describedby="button-addon2"
               required
             />
+            <select ref={typeRef} className="form-control">
+              <option value="daily">daily</option>
+              <option value="today">today</option>
+            </select>
+
             <button
               className="btn btn-outline-success"
               type="submit"
               id="button-addon2"
             >
-              Set today's working hours
-            </button>
-          </div>
-        </form>
-      </div>
-      <div className="container pb-5">
-        <form onSubmit={handleWorkingHours}>
-          <div className="input-group mb-3">
-            <input
-              ref={fromRef}
-              type="time"
-              className="form-control"
-              placeholder="From"
-              aria-label="time"
-              aria-describedby="button-addon2"
-              required
-            />
-            <input
-              ref={toRef}
-              type="time"
-              className="form-control"
-              placeholder="To"
-              aria-label="time"
-              aria-describedby="button-addon2"
-              required
-            />
-            <button
-              className="btn btn-outline-success"
-              type="submit"
-              id="button-addon2"
-            >
-              Set daily working hours
+              Set working hours
             </button>
           </div>
         </form>
@@ -268,7 +274,18 @@ const AdminIncasare = ({ token, setMessage, setType, setShow }) => {
       {loading ? (
         <Loading height=" " />
       ) : (
-        <HomeTable registers={registers} report={report} />
+        <>
+          <HomeTable registers={registers} report={report} ref={printCompRef} />
+          <Container className="p-4">
+            <button
+              type="button"
+              className="btn btn-secondary btn-lg float-end"
+              onClick={handlePrint}
+            >
+              Print
+            </button>
+          </Container>
+        </>
       )}
       <div className="container px-4 mt-5">
         <div className="row">

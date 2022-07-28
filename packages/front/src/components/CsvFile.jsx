@@ -1,15 +1,63 @@
-import React, { useRef } from "react";
+import React, { useRef, useCallback, useState, useEffect } from "react";
+import { fetchCsvFile, updateCsvFile, uploadCsvFile } from "../utils/api-calls";
 
 const CsvFile = ({ token, setMessage, setType, setShow }) => {
   const uploadFileRef = useRef();
   const updateFileRef = useRef();
 
+  const [urlPath, setUrlPath] = useState("");
+
+  const getPath = useCallback(async () => {
+    const response = await fetchCsvFile(token);
+
+    if (response.status === 200) {
+      setUrlPath(response.data?.data?.path.path);
+    }
+  }, [token]);
+
+  useEffect(() => {
+    getPath();
+
+    return () => {
+      // this now gets called when the component unmounts
+    };
+  }, [getPath]);
+
   const uploadFileHandler = async (e) => {
     e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("csvFile", uploadFileRef.current.files[0]);
+
+    const response = await uploadCsvFile(token, formData);
+
+    if (response.status === 200) {
+      setMessage(response.data?.message);
+      setType("success");
+      setShow(true);
+    } else {
+      setMessage(response.data?.message);
+      setType("danger");
+      setShow(true);
+    }
   };
 
   const updateFileHandler = async (e) => {
     e.preventDefault();
+
+    const path = updateFileRef.current.value;
+
+    const response = await updateCsvFile(token, path);
+
+    if (response.status === 200) {
+      setMessage(response.data?.message);
+      setType("success");
+      setShow(true);
+    } else {
+      setMessage(response.data?.message);
+      setType("danger");
+      setShow(true);
+    }
   };
 
   return (
@@ -28,7 +76,7 @@ const CsvFile = ({ token, setMessage, setType, setShow }) => {
             />
             <button
               className="btn btn-outline-success"
-              type="button"
+              type="submit"
               id="button-addon2"
             >
               Upload
@@ -44,13 +92,13 @@ const CsvFile = ({ token, setMessage, setType, setShow }) => {
               type="text"
               className="form-control"
               id="formFile"
-              placeholder="CSV file path"
+              placeholder={`CSV file path: ${urlPath}`}
               aria-describedby="button-addon2"
               required
             />
             <button
               className="btn btn-outline-success"
-              type="button"
+              type="submit"
               id="button-addon2"
             >
               Update

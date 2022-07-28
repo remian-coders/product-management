@@ -174,9 +174,21 @@ export const uploadCsvFile = async function (token, data) {
 
 export const updateCsvFile = async function (token, data) {
   try {
-    let response = await api.patch("/admin/update-csv-path", data, {
+    let response = await api.patch("/admin/csv-path", data, {
       headers: { Authorization: `Bearer ${token}` },
     });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const fetchCsvFile = async function (token) {
+  try {
+    let response = await api.get("/admin/csv-path", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
     return response;
   } catch (error) {
     return error.response;
@@ -220,6 +232,17 @@ export const setWorkingHours = async function (token, data) {
 export const finalizeRegister = async function () {
   try {
     let response = await api.patch("/client-register/finalize");
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const getHours = async function (token) {
+  try {
+    let response = await api.get("/admin/working-hours", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     return response;
   } catch (error) {
     return error.response;

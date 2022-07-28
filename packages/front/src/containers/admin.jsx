@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import {
   UserCreate,
@@ -19,9 +19,12 @@ const Admin = ({
   setShow,
   setToken,
 }) => {
+  const [today, setToday] = useState(null);
+  const [daily, setDaily] = useState(null);
+
   return (
     <>
-      <Navbar />
+      <Navbar today={today} daily={daily} />
       <Routes>
         <Route
           path="/csv"
@@ -94,6 +97,8 @@ const Admin = ({
           element={
             <Protected isLoggedIn={isLoggedIn}>
               <AdminIncasare
+                setDaily={setDaily}
+                setToday={setToday}
                 token={token}
                 setMessage={setMessage}
                 setShow={setShow}

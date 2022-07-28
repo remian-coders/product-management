@@ -36,13 +36,13 @@ const UserCreate = ({ token, setMessage, setType, setShow }) => {
       emailRef.current.value = "";
       nameRef.current.value = "";
       passwordRef.current.value = "";
-      setMessage(response.data.message);
+      setMessage(response.data?.message);
       setType("success");
       setShow(true);
       setIsLoading(true);
       getUsers();
     } else {
-      setMessage(response.data.message);
+      setMessage(response.data?.message);
       setType("danger");
       setShow(true);
     }
@@ -51,13 +51,13 @@ const UserCreate = ({ token, setMessage, setType, setShow }) => {
   const deleteUserHandler = async (id) => {
     const response = await deleteUser(token, id);
     if (response.status === 200 || response.status === 201) {
-      setMessage(response.data.message);
+      setMessage(response.data?.message);
       setType("success");
       setShow(true);
       setIsLoading(true);
       getUsers();
     } else {
-      setMessage(response.data.message);
+      setMessage(response.data?.message);
       setType("danger");
       setShow(true);
     }

@@ -16,3 +16,4 @@ export { default as Loading } from "./Loading";
 export { default as NotFoundPage } from "./NotFoundPage";
 export { default as TimeOver } from "./TimeOver";
 export { default as AdminIncasare } from "./AdminIncasare";
+export { default as FinalizerModal } from "./FinalizerModal";
