@@ -20,4 +20,9 @@ export class FixedProducts {
 		nullable: false,
 	})
 	technician: string;
+	@Column({
+		nullable: false,
+		default: () => Date.now(),
+	})
+	date: Date;
 }

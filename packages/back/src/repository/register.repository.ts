@@ -51,4 +51,7 @@ export class RegisterRepository {
 		});
 		return { registers, cash, card };
 	}
+	async findByIdTicketNo(ticketNo) {
+		return await this.registerRepo.findOneBy({ ticketNo });
+	}
 }

@@ -42,9 +42,9 @@ export class Mail {
 			to,
 			subject,
 			secure: false,
-			text: 'Reset your password!',
-			html: message,
-			// attachments: attachments ? attachments : undefined,
+			text: message,
+			// html:
+			attachments: attachments ? attachments : undefined,
 		};
 		return await transporter.sendMail(mailOptions);
 	}

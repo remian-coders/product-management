@@ -15,7 +15,7 @@ export const updateWorkingHours = catchAsyncError(
 		}
 		if (type !== 'today' && type !== 'daily') {
 			return next(
-				new CustomError('type value can onlu be today or daily', 400)
+				new CustomError('type value can only be today or daily', 400)
 			);
 		}
 		from = new Date(`${date().currentDayStr} ${from}`);

@@ -6,7 +6,6 @@ import { CsvPathRepository } from '../repository/csv-path.repository';
 import { catchAsyncError } from './utils/catch-async-error';
 import { CustomError } from '../utils/custom-error';
 import { job } from '../cron-job/job';
-import path from 'path';
 
 export const addPath = catchAsyncError(
 	async (req: Request, res: Response, next: express.NextFunction) => {
@@ -64,7 +63,7 @@ export const uploadFile = catchAsyncError(
 			filePath.path + `/realizari_${date}_${month}_${year}.csv`;
 		const { buffer } = req.file;
 		await writeFile(fullPath, buffer);
-		// await job()();
+		job();
 		res.status(200).json({
 			status: 'success',
 			message: 'File uploaded successfully',

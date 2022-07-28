@@ -2,6 +2,7 @@ import { Repository, Between } from 'typeorm';
 import { WorkingHours } from '../entities/working-hours.entity';
 import dataSource from '../data-source';
 import { date } from '../utils/date';
+import { cronManager } from '../cron-job/cron-job';
 export class WorkingHoursRepository {
 	workingHoursRepository: Repository<WorkingHours>;
 	constructor() {
@@ -46,6 +47,11 @@ export class WorkingHoursRepository {
 		if (originalWorkingHours) {
 			workingHours = Object.assign(originalWorkingHours, workingHours);
 		}
-		return await this.workingHoursRepository.save(workingHours);
+		const updatedSchedule = await this.workingHoursRepository.save(
+			workingHours
+		);
+		if (updatedSchedule.type === 'today') await cronManager.todaysCronJob();
+		if (updatedSchedule.type === 'daily') await cronManager.dailyCronJob();
+		return updatedSchedule;
 	}
 }

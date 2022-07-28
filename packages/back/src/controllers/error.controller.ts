@@ -14,7 +14,8 @@ export default (
 };
 
 const devError = (res: Response, err: CustomError) => {
-	console.error(err);
+	// console.error(err);
+	if (err.message === '25') console.log('the error is here');
 	res.status(err.statusCode).json({
 		status: err.status,
 		message: err.message,

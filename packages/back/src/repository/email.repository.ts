@@ -14,6 +14,10 @@ export class EmailRepository {
 	async findAll() {
 		return await this.emailRepository.find();
 	}
+	async getEmailAddresses() {
+		const emails = await this.findAll();
+		return emails.map((email) => email.email);
+	}
 	async deleteById(id) {
 		return await this.emailRepository.delete(id);
 	}

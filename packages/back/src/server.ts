@@ -1,8 +1,7 @@
 import { config } from 'dotenv';
 import { App } from './app';
 import dataSource from './data-source';
-import { cronJob } from './cron-job/cron-job';
-
+import { cronManager } from './cron-job/cron-job';
 config({ path: './config.env' });
 
 const { app } = new App();
@@ -12,7 +11,8 @@ dataSource
 	.then(async () => {
 		await dataSource.addDefaultUser();
 		app.listen({ port: process.env.PORT || 5000, host: '0.0.0.0' }, () => {
-			cronJob.start();
+			cronManager.todaysCronJob();
+			cronManager.dailyCronJob();
 			console.log(`Server running on port ${process.env.PORT}`);
 		});
 	})

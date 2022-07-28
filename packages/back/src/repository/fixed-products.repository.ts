@@ -11,8 +11,13 @@ export class FixedProductsRepository {
 		return await this.fixedProductsRepo.find();
 	}
 
-	async create(fixedProducts: FixedProducts) {
-		return await this.fixedProductsRepo.save(fixedProducts);
+	async create(fixedProduct: FixedProducts) {
+		const existingProduct = await this.fixedProductsRepo.findOneBy({
+			id: fixedProduct.id,
+		});
+		if (existingProduct)
+			fixedProduct = Object.assign(existingProduct, fixedProduct);
+		return await this.fixedProductsRepo.save(fixedProduct);
 	}
 	async delete(id: string) {
 		return await this.fixedProductsRepo.delete(id);
