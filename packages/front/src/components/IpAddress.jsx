@@ -30,13 +30,13 @@ const IpAddress = ({ token, setMessage, setType, setShow }) => {
 
     if (response.status === 200 || response.status === 201) {
       ipRef.current.value = "";
-      setMessage(response.data.message);
+      setMessage(response.data?.message);
       setType("success");
       setShow(true);
       setIsLoading(true);
       getIps();
     } else {
-      setMessage(response.data.message);
+      setMessage(response.data?.message);
       setType("danger");
       setShow(true);
     }
@@ -45,13 +45,13 @@ const IpAddress = ({ token, setMessage, setType, setShow }) => {
   const deleteIpHandler = async (id) => {
     const response = await deleteIp(token, id);
     if (response.status === 200 || response.status === 201) {
-      setMessage(response.data.message);
+      setMessage(response.data?.message);
       setType("success");
       setShow(true);
       setIsLoading(true);
       getIps();
     } else {
-      setMessage(response.data.message);
+      setMessage(response.data?.message);
       setType("danger");
       setShow(true);
     }

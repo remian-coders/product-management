@@ -15,14 +15,14 @@ const PasswordUpdate = ({ token, setToken, setMessage, setShow, setType }) => {
 
     if (response.status === 200) {
       setToken(response.data.token);
-      setMessage(response.data.message);
+      setMessage(response.data?.message);
       setType("success");
       setShow(true);
       oldPasswordRef.current.value = "";
       newPasswordRef.current.value = "";
     } else {
-      setMessage(response.data.message);
-      setType("error");
+      setMessage(response.data?.message);
+      setType("danger");
       setShow(true);
     }
   };

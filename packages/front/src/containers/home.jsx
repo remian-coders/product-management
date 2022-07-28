@@ -75,7 +75,7 @@ const Home = ({ setMessage, setType, setShow }) => {
     });
 
     if (response.status === 200) {
-      setMessage("Incasare realizata cu succes!");
+      setMessage(response.data?.message);
       setType("success");
       setShow(true);
       setIncasare(false);
@@ -86,8 +86,8 @@ const Home = ({ setMessage, setType, setShow }) => {
       incasareMentiune.current.value = "";
       incasareType.current.value = "";
     } else {
-      setMessage("Eroare la incasare!");
-      setType("error");
+      setMessage(response.data?.message);
+      setType("danger");
       setShow(true);
     }
   };
@@ -102,7 +102,7 @@ const Home = ({ setMessage, setType, setShow }) => {
     const response = await createRegister({ ticketNo, cost, others });
 
     if (response.status === 200) {
-      setMessage("Plata realizata cu succes!");
+      setMessage(response.data?.message);
       setType("success");
       setShow(true);
       setPlata(false);
@@ -112,8 +112,8 @@ const Home = ({ setMessage, setType, setShow }) => {
       plataCost.current.value = "";
       plataMentiune.current.value = "";
     } else {
-      setMessage("Eroare la plata!");
-      setType("error");
+      setMessage(response.data?.message);
+      setType("danger");
       setShow(true);
     }
   };
@@ -122,12 +122,15 @@ const Home = ({ setMessage, setType, setShow }) => {
     const response = await finalizeRegister();
 
     if (response.status === 200) {
-      setMessage("Finalizare realizata cu succes!");
+      setMessage(response.data?.message);
       setType("success");
       setShow(true);
+      setTimeout(() => {
+        window.location.reload();
+      }, "5000");
     } else {
-      setMessage("Eroare la finalizare!");
-      setType("error");
+      setMessage(response.data?.message);
+      setType("danger");
       setShow(true);
     }
   };

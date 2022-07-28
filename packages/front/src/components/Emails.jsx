@@ -29,13 +29,13 @@ const Emails = ({ token, setMessage, setType, setShow }) => {
 
     if (response.status === 200) {
       emailRef.current.value = "";
-      setMessage(response.data.message);
+      setMessage(response.data?.message);
       setType("success");
       setShow(true);
       setIsLoading(true);
       getEmails();
     } else {
-      setMessage(response.data.message);
+      setMessage(response.data?.message);
       setType("danger");
       setShow(true);
     }
@@ -44,13 +44,13 @@ const Emails = ({ token, setMessage, setType, setShow }) => {
   const deleteEmailHandler = async (id) => {
     const response = await deleteEmail(token, id);
     if (response.status === 200) {
-      setMessage(response.data.message);
+      setMessage(response.data?.message);
       setType("success");
       setShow(true);
       setIsLoading(true);
       getEmails();
     } else {
-      setMessage(response.data.message);
+      setMessage(response.data?.message);
       setType("danger");
       setShow(true);
     }

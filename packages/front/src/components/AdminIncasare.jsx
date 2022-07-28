@@ -96,10 +96,6 @@ const AdminIncasare = ({
     };
   }, [getRegisters, getWorkingHours]);
 
-  // useEffect(() => {
-  //   getWorkingHours();
-  // }, [getWorkingHours]);
-
   const incasareHandle = async (e) => {
     e.preventDefault();
     const ticketNo = incasareTicket.current.value;
@@ -114,7 +110,7 @@ const AdminIncasare = ({
     });
 
     if (response.status === 200) {
-      setMessage("Incasare realizata cu succes!");
+      setMessage(response.data?.message);
       setType("success");
       setShow(true);
       setIncasare(false);
@@ -124,8 +120,8 @@ const AdminIncasare = ({
       incasareMentiune.current.value = "";
       incasareType.current.value = "";
     } else {
-      setMessage("Eroare la incasare!");
-      setType("error");
+      setMessage(response.data?.message);
+      setType("danger");
       setShow(true);
     }
   };
@@ -137,7 +133,7 @@ const AdminIncasare = ({
     const others = plataMentiune.current.value;
     const response = await postAdminRegister(token, { ticketNo, cost, others });
     if (response.status === 200) {
-      setMessage("Plata realizata cu succes!");
+      setMessage(response.data?.message);
       setType("success");
       setShow(true);
       setPlata(false);
@@ -146,8 +142,8 @@ const AdminIncasare = ({
       plataCost.current.value = "";
       plataMentiune.current.value = "";
     } else {
-      setMessage("Eroare la plata!");
-      setType("error");
+      setMessage(response.data?.message);
+      setType("danger");
       setShow(true);
     }
   };
@@ -162,15 +158,15 @@ const AdminIncasare = ({
     const response = await setWorkingHours(token, { from, to, type });
 
     if (response.status === 200) {
-      setMessage("Orele au fost setate cu succes!");
+      setMessage(response.data?.message);
       setType("success");
       setShow(true);
       getWorkingHours();
       fromRef.current.value = "";
       toRef.current.value = "";
     } else {
-      setMessage("Eroare la setarea orelor!");
-      setType("error");
+      setMessage(response.data?.message);
+      setType("danger");
       setShow(true);
     }
   };
@@ -194,12 +190,12 @@ const AdminIncasare = ({
     const response = await finalizeRegister();
 
     if (response.status === 200) {
-      setMessage("Finalizare realizata cu succes!");
+      setMessage(response.data?.message);
       setType("success");
       setShow(true);
     } else {
-      setMessage("Eroare la finalizare!");
-      setType("error");
+      setMessage(response.data?.message);
+      setType("danger");
       setShow(true);
     }
   };
