@@ -19,7 +19,7 @@ export class FixedProductsRepository {
 			fixedProduct = Object.assign(existingProduct, fixedProduct);
 		return await this.fixedProductsRepo.save(fixedProduct);
 	}
-	async delete(id: string) {
+	async delete(id) {
 		return await this.fixedProductsRepo.delete(id);
 	}
 }

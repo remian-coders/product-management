@@ -37,6 +37,8 @@ import {
 	updateWorkingHours,
 } from '../controllers/working-hours.controller';
 
+import { getIssues, deleteIssue } from '../controllers/issue.controller';
+
 const router = Router();
 router.post('/login', login);
 router.post('/forgot-password', forgotPassword);
@@ -59,6 +61,8 @@ router.post(
 	uploadFile
 );
 router.route('/working-hours').patch(updateWorkingHours).get(getWorkingHours);
+router.route('/issues').get(getIssues);
+router.route('/issues/:id').delete(deleteIssue);
 router.get('/get-users', getUsers);
 router.delete('/delete-user/:id', deleteUser);
 
