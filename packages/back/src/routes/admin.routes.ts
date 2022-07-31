@@ -15,6 +15,7 @@ import {
 import {
 	createRegister,
 	getDailyAdminRegister,
+	getDailyAllRegister,
 } from '../controllers/register.controller';
 
 import { addIP, getIPs, deleteIP } from '../controllers/ip.controller';
@@ -49,6 +50,7 @@ router.patch('/update-password', updatePassword);
 router.route('/user').post(createUser).get(getUsers);
 router.delete('/user/:id', deleteUser);
 router.get('/register', getDailyAdminRegister);
+router.get('/all-register', getDailyAllRegister);
 router.post('/register', createRegister);
 router.route('/ip-address-config').get(getIPs).post(addIP);
 router.delete('/ip-address-config/:id', deleteIP);

@@ -1,4 +1,4 @@
-import express, { Request, Response, Router } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { catchAsyncError } from './utils/catch-async-error';
 import { RegisterRepository } from '../repository/register.repository';
 import { IPRepository } from '../repository/ip.repository';
@@ -7,7 +7,7 @@ import { CustomError } from '../utils/custom-error';
 import { date } from '../utils/date';
 
 export const createRegister = catchAsyncError(
-	async (req: Request, res: Response, next: express.NextFunction) => {
+	async (req: Request, res: Response, next: NextFunction) => {
 		let { ticketNo, cost, paymentType, others } = req.body;
 		const registerType = cost >= 0 ? 'income' : 'expense';
 		paymentType = cost <= 0 ? 'cash' : paymentType;
@@ -30,8 +30,8 @@ export const createRegister = catchAsyncError(
 );
 
 export const getDailyClientRegister = catchAsyncError(
-	async (req: Request, res: Response, next: express.NextFunction) => {
-		const dateStr = (req.query.date as string) || date().today;
+	async (req: Request, res: Response, next: NextFunction) => {
+		const dateStr = date().today;
 		const from = new Date(dateStr);
 		const to = new Date(
 			`${from.getFullYear()}-${
@@ -49,7 +49,7 @@ export const getDailyClientRegister = catchAsyncError(
 );
 
 export const getDailyAdminRegister = catchAsyncError(
-	async (req: Request, res: Response, next: express.NextFunction) => {
+	async (req: Request, res: Response, next: NextFunction) => {
 		const now = new Date();
 		const dateStr = (req.query.date as string) || date().today;
 
@@ -69,10 +69,29 @@ export const getDailyAdminRegister = catchAsyncError(
 	}
 );
 
+export const getDailyAllRegister = catchAsyncError(
+	async (req: Request, res: Response, next: NextFunction) => {
+		const dateStr = (req.query.date as string) || date().today;
+		const from = new Date(dateStr);
+		const to = new Date(
+			`${from.getFullYear()}-${
+				from.getMonth() + 1
+			}-${from.getDate()} 23:59:59`
+		);
+		const registerRepo = new RegisterRepository();
+		const { registers, cash, card } =
+			await registerRepo.findDailyAllRegister(from, to);
+		res.status(200).json({
+			message: 'Daily All Register',
+			data: { registers, report: { card, cash } },
+		});
+	}
+);
+
 export const isAvailable = async (
 	req: Request,
 	res: Response,
-	next: express.NextFunction
+	next: NextFunction
 ) => {
 	const ipRepo = new IPRepository();
 	const ip = req.ip;

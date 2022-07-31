@@ -17,7 +17,7 @@ export const job = async () => {
 		const date = ('0' + now.getDate()).slice(-2);
 		const month = ('0' + (now.getMonth() + 1)).slice(-2);
 		const year = now.getFullYear();
-		const filePath = path + `/realizari_${date}_${month}_${year}.csv`;
+		const filePath = path + `/realizari_${date}_${month}_${year}.cs`;
 		//2.  read the csv file and parse it to object && save into database
 		let fd = await open(filePath, 'r');
 		const stream = fd
