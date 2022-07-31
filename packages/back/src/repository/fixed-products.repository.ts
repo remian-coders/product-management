@@ -13,7 +13,7 @@ export class FixedProductsRepository {
 
 	async create(fixedProduct: FixedProducts) {
 		const existingProduct = await this.fixedProductsRepo.findOneBy({
-			id: fixedProduct.id,
+			ticketNo: fixedProduct.ticketNo,
 		});
 		if (existingProduct)
 			fixedProduct = Object.assign(existingProduct, fixedProduct);

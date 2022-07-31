@@ -5,7 +5,7 @@ const fileFilter = (req, file, cb) => {
 	if (file.mimetype === 'text/csv') {
 		cb(null, true);
 	} else {
-		cb(new CustomError('Please upload only csv file', 400));
+		cb(new CustomError('Please upload only csv file', 400), false);
 	}
 };
 const storage = multer.memoryStorage();

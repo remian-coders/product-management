@@ -45,6 +45,15 @@ export const getPath = catchAsyncError(
 
 export const uploadFile = catchAsyncError(
 	async (req: Request, res: Response, next: express.NextFunction) => {
+		if (!req.file)
+			return next(
+				new CustomError(
+					'No file uploaded. Please upload a CSV file.',
+					400
+				)
+			);
+		const { buffer } = req.file;
+
 		const csvPathRepo = new CsvPathRepository();
 		const filePath = await csvPathRepo.getPath();
 		if (!filePath) {
@@ -61,9 +70,8 @@ export const uploadFile = catchAsyncError(
 		const year = now.getFullYear();
 		const fullPath =
 			filePath.path + `/realizari_${date}_${month}_${year}.csv`;
-		const { buffer } = req.file;
 		await writeFile(fullPath, buffer);
-		job();
+		await job();
 		res.status(200).json({
 			status: 'success',
 			message: 'File uploaded successfully',
