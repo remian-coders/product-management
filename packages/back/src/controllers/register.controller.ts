@@ -38,12 +38,13 @@ export const getDailyClientRegister = catchAsyncError(
 				from.getMonth() + 1
 			}-${from.getDate()} 23:59:59`
 		);
+		console.log(from, to);
 		const registerRepo = new RegisterRepository();
-		const { registers, card, cash } =
-			await registerRepo.findDailyClientRegister(from, to);
+		// const { registers, card, cash } =
+		// 	await registerRepo.findDailyClientRegister(from, to);
 		res.status(200).json({
 			message: 'Daily Client Register',
-			data: { registers, report: { card, cash } },
+			// data: { registers, report: { card, cash } },
 		});
 	}
 );
@@ -95,6 +96,7 @@ export const isAvailable = async (
 ) => {
 	const ipRepo = new IPRepository();
 	const ip = req.ip;
+	console.log(ip);
 	const isAllowedIP = await ipRepo.findByIP(ip);
 	if (!isAllowedIP) {
 		return next(new CustomError('IP not allowed', 403));
