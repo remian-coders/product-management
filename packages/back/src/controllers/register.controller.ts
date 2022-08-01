@@ -117,13 +117,14 @@ export const isAvailable = async (
 	const endingMinute = to.getMinutes();
 	const currentHour = date().currentHour;
 	const currentMinute = date().currentMinute;
-	console.log('entering second wokiring hours check');
+
 	if (
 		currentHour < startingHour ||
 		currentHour > endingHour ||
 		(currentHour === startingHour && startingMinute > currentMinute) ||
 		(currentHour === endingHour && currentMinute >= endingMinute)
 	) {
+		console.log('entering second wokiring hours check');
 		return next(
 			new CustomError(
 				`The page is available between ${startingHour}:${startingMinute} - ${endingHour}:${endingMinute}`,
