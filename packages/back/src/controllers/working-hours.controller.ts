@@ -18,8 +18,8 @@ export const updateWorkingHours = catchAsyncError(
 				new CustomError('type value can only be today or daily', 400)
 			);
 		}
-		from = new Date(`${date().currentDayStr} ${from}`);
-		to = new Date(`${date().currentDayStr} ${to}`);
+		from = new Date(from);
+		to = new Date(to);
 		if (from > to) {
 			return next(
 				new CustomError(
