@@ -32,7 +32,6 @@ export const createRegister = catchAsyncError(
 export const getDailyClientRegister = catchAsyncError(
 	async (req: Request, res: Response, next: NextFunction) => {
 		const dateStr = date().today;
-		console.log(dateStr);
 		const from = new Date(dateStr);
 		const to = new Date(
 			`${from.getFullYear()}-${
@@ -96,6 +95,7 @@ export const isAvailable = async (
 ) => {
 	const ipRepo = new IPRepository();
 	const ip = req.ip;
+	console.log(ip);
 	const isAllowedIP = await ipRepo.findByIP(ip);
 	if (!isAllowedIP) {
 		return next(new CustomError('IP not allowed', 403));
