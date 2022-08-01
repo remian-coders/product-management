@@ -94,40 +94,40 @@ export const isAvailable = async (
 	res: Response,
 	next: NextFunction
 ) => {
-	// const ipRepo = new IPRepository();
-	// const ip = req.ip;
-	// console.log(ip);
-	// const isAllowedIP = await ipRepo.findByIP(ip);
-	// if (!isAllowedIP) {
-	// 	return next(new CustomError('IP not allowed', 403));
-	// }
+	const ipRepo = new IPRepository();
+	const ip = req.ip;
+	console.log(ip);
+	const isAllowedIP = await ipRepo.findByIP(ip);
+	if (!isAllowedIP) {
+		return next(new CustomError('IP not allowed', 403));
+	}
 
-	// const workingHoursRepo = new WorkingHoursRepository();
-	// const todaysWorkingHours = await workingHoursRepo.getTodaysWorkingHours();
-	// if (!todaysWorkingHours)
-	// 	return next(
-	// 		new CustomError('Working hours should be set from admin page!', 403)
-	// 	);
-	// const from = new Date(todaysWorkingHours.from);
-	// const to = new Date(todaysWorkingHours.to);
-	// const startingHour = from.getHours();
-	// const startingMinute = from.getMinutes();
-	// const endingHour = to.getHours();
-	// const endingMinute = to.getMinutes();
-	// const currentHour = date().currentHour;
-	// const currentMinute = date().currentMinute;
-	// if (
-	// 	currentHour < startingHour ||
-	// 	currentHour > endingHour ||
-	// 	(currentHour === startingHour && startingMinute > currentMinute) ||
-	// 	(currentHour === endingHour && currentMinute >= endingMinute)
-	// ) {
-	// 	return next(
-	// 		new CustomError(
-	// 			`The page is available between ${startingHour}:${startingMinute} - ${endingHour}:${endingMinute}`,
-	// 			503
-	// 		)
-	// 	);
-	// }
+	const workingHoursRepo = new WorkingHoursRepository();
+	const todaysWorkingHours = await workingHoursRepo.getTodaysWorkingHours();
+	if (!todaysWorkingHours)
+		return next(
+			new CustomError('Working hours should be set from admin page!', 403)
+		);
+	const from = new Date(todaysWorkingHours.from);
+	const to = new Date(todaysWorkingHours.to);
+	const startingHour = from.getHours();
+	const startingMinute = from.getMinutes();
+	const endingHour = to.getHours();
+	const endingMinute = to.getMinutes();
+	const currentHour = date().currentHour;
+	const currentMinute = date().currentMinute;
+	if (
+		currentHour < startingHour ||
+		currentHour > endingHour ||
+		(currentHour === startingHour && startingMinute > currentMinute) ||
+		(currentHour === endingHour && currentMinute >= endingMinute)
+	) {
+		return next(
+			new CustomError(
+				`The page is available between ${startingHour}:${startingMinute} - ${endingHour}:${endingMinute}`,
+				503
+			)
+		);
+	}
 	next();
 };
