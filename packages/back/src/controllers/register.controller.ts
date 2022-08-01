@@ -32,6 +32,7 @@ export const createRegister = catchAsyncError(
 export const getDailyClientRegister = catchAsyncError(
 	async (req: Request, res: Response, next: NextFunction) => {
 		const dateStr = date().today;
+		console.log(dateStr);
 		const from = new Date(dateStr);
 		const to = new Date(
 			`${from.getFullYear()}-${
@@ -116,6 +117,7 @@ export const isAvailable = async (
 	const endingMinute = to.getMinutes();
 	const currentHour = date().currentHour;
 	const currentMinute = date().currentMinute;
+	console.log('entering second wokiring hours check');
 	if (
 		currentHour < startingHour ||
 		currentHour > endingHour ||
