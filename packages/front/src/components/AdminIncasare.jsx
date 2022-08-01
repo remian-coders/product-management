@@ -4,12 +4,12 @@ import { useReactToPrint } from "react-to-print";
 
 import { Finalizer, HomeTable, IncasareModal, PlataModal, Loading } from ".";
 import {
-  fetchRegisters,
   getAdminRegister,
   postAdminRegister,
   setWorkingHours,
   finalizeRegister,
   getHours,
+  fetchAllRegisters,
 } from "../utils/api-calls";
 
 const AdminIncasare = ({
@@ -48,17 +48,25 @@ const AdminIncasare = ({
     content: () => printCompRef.current,
   });
 
-  const getHomeRegisters = useCallback(async (params = null) => {
-    const response = await fetchRegisters(params);
-    if (response.status === 200) {
-      setRegisters(response.data.data.registers);
-      setReport(response.data.data.report);
-      setLoading(false);
-    } else {
-      setRegisters([]);
-      setLoading(false);
-    }
-  }, []);
+  const [tableDate, setTableDate] = useState(
+    new Date().toISOString().split("T")[0]
+  );
+
+  const getAllRegisters = useCallback(
+    async (params = null) => {
+      const response = await fetchAllRegisters(token, params);
+
+      if (response.status === 200) {
+        setRegisters(response.data.data.registers);
+        setReport(response.data.data.report);
+        setLoading(false);
+      } else {
+        setRegisters([]);
+        setLoading(false);
+      }
+    },
+    [token]
+  );
 
   const getRegisters = useCallback(
     async (params = null) => {
@@ -180,9 +188,11 @@ const AdminIncasare = ({
     if (select === "admin") {
       setLoading(true);
       getRegisters({ date });
+      setTableDate(date);
     } else {
       setLoading(true);
-      getHomeRegisters({ date });
+      getAllRegisters({ date });
+      setTableDate(date);
     }
   };
 
@@ -240,7 +250,7 @@ const AdminIncasare = ({
           </div>
         </form>
       </div>
-      <div className="container pb-5">
+      <div className="container pb-2">
         <form onSubmit={handleBrowse}>
           <div className="input-group mb-3">
             <input
@@ -275,11 +285,19 @@ const AdminIncasare = ({
         <Loading height=" " />
       ) : (
         <>
-          <HomeTable registers={registers} report={report} ref={printCompRef} />
+          <Container className="p-0">
+            <HomeTable
+              role="admin"
+              registers={registers}
+              report={report}
+              ref={printCompRef}
+              tableDate={tableDate}
+            />
+          </Container>
           <Container className="p-4">
             <button
               type="button"
-              className="btn btn-secondary btn-lg float-end"
+              className="btn btn-secondary float-end"
               onClick={handlePrint}
             >
               Print
@@ -287,12 +305,12 @@ const AdminIncasare = ({
           </Container>
         </>
       )}
-      <div className="container px-4 mt-5">
+      <div className="container px-4 py-5">
         <div className="row">
           <div className="col">
             <button
               type="button"
-              className="btn btn-primary btn-lg"
+              className="btn btn-primary"
               onClick={() => setIncasare(true)}
             >
               Incasare
@@ -301,7 +319,7 @@ const AdminIncasare = ({
           <div className="col">
             <button
               type="button"
-              className="btn btn-primary btn-lg float-end"
+              className="btn btn-primary float-end"
               onClick={() => setPlata(true)}
             >
               Plata

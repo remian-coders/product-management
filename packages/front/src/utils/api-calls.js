@@ -207,6 +207,18 @@ export const getAdminRegister = async function (token, params) {
   }
 };
 
+export const fetchAllRegisters = async function (token, params) {
+  try {
+    let response = await api.get("/admin/all-register", {
+      headers: { Authorization: `Bearer ${token}` },
+      params: params,
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+
 export const postAdminRegister = async function (token, data) {
   try {
     let response = await api.post("/admin/register", data, {
@@ -241,6 +253,28 @@ export const finalizeRegister = async function () {
 export const getHours = async function (token) {
   try {
     let response = await api.get("/admin/working-hours", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const fetchIssues = async function (token) {
+  try {
+    let response = await api.get("/admin/issues", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const deleteIssue = async function (token, id) {
+  try {
+    let response = await api.delete(`/admin/issues/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response;
