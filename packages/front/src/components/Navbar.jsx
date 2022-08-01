@@ -36,10 +36,11 @@ const NavbarM = ({ today, daily }) => {
             <Nav className="justify-content-end flex-grow-1 pe-3">
               <NavLink to="./">Admin Incasare</NavLink>
               <NavLink to="./emails">Email</NavLink>
-              <NavLink to="./user">Create user</NavLink>
+              <NavLink to="./user">Create User</NavLink>
               <NavLink to="./ip-address">IP Address</NavLink>
               <NavLink to="./csv">CSV File</NavLink>
               <NavLink to="./password-update">Update Password</NavLink>
+              <NavLink to="./issues">Issues Table</NavLink>
             </Nav>
           </Offcanvas.Body>
         </Navbar.Offcanvas>

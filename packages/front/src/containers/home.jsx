@@ -17,6 +17,8 @@ import {
   finalizeRegister,
 } from "../utils/api-calls";
 
+import { Container } from "react-bootstrap";
+
 const Home = ({ setMessage, setType, setShow }) => {
   const [incasare, setIncasare] = useState(false);
   const [plata, setPlata] = useState(false);
@@ -142,13 +144,15 @@ const Home = ({ setMessage, setType, setShow }) => {
         <>
           <Header />
           <Finalizer finalizeHandle={finalizeHandle} />
-          <HomeTable registers={registers} report={report} />
-          <div className="container px-4 mt-5">
+          <Container className="p-0">
+            <HomeTable registers={registers} report={report} />
+          </Container>
+          <div className="container px-4 py-5">
             <div className="row">
               <div className="col">
                 <button
                   type="button"
-                  className="btn btn-primary btn-lg"
+                  className="btn btn-primary "
                   onClick={() => setIncasare(true)}
                 >
                   Incasare
@@ -157,7 +161,7 @@ const Home = ({ setMessage, setType, setShow }) => {
               <div className="col">
                 <button
                   type="button"
-                  className="btn btn-primary btn-lg float-end"
+                  className="btn btn-primary  float-end"
                   onClick={() => setPlata(true)}
                 >
                   Plata

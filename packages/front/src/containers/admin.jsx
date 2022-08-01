@@ -8,6 +8,7 @@ import {
   CsvFile,
   PasswordUpdate,
   AdminIncasare,
+  Issues,
 } from "../components";
 import Protected from "../utils/protected";
 
@@ -31,6 +32,19 @@ const Admin = ({
           element={
             <Protected isLoggedIn={isLoggedIn}>
               <CsvFile
+                token={token}
+                setMessage={setMessage}
+                setShow={setShow}
+                setType={setType}
+              />
+            </Protected>
+          }
+        />
+        <Route
+          path="/issues"
+          element={
+            <Protected isLoggedIn={isLoggedIn}>
+              <Issues
                 token={token}
                 setMessage={setMessage}
                 setShow={setShow}
