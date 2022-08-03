@@ -3,7 +3,6 @@ import { WorkingHoursRepository } from '../repository/working-hours.repository';
 import { catchAsyncError } from './utils/catch-async-error';
 import { CustomError } from '../utils/custom-error';
 import { date } from '../utils/date';
-import { job } from '../cron-job/job';
 
 export const updateWorkingHours = catchAsyncError(
 	async (req: Request, res: Response, next: express.NextFunction) => {
