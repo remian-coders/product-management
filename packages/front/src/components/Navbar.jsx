@@ -3,11 +3,11 @@ import { Navbar, Nav, Offcanvas, Container } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 
 const NavbarM = ({ today, daily }) => {
-  const todayFrom = new Date(today?.from).toTimeString().split(" ")[0];
-  const todayTo = new Date(today?.to).toTimeString().split(" ")[0];
+  const todayFrom = today?.from.split("T")[1].split(".")[0];
+  const todayTo = today?.to.split("T")[1].split(".")[0];
 
-  const dailyFrom = new Date(daily?.from).toTimeString().split(" ")[0];
-  const dailyTo = new Date(daily?.to).toTimeString().split(" ")[0];
+  const dailyFrom = daily?.from.split("T")[1].split(".")[0];
+  const dailyTo = daily?.to.split("T")[1].split(".")[0];
 
   return (
     <Navbar bg="light" expand={false} className="mb-3">
