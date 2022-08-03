@@ -1,6 +1,5 @@
 import { parse } from 'csv-parse';
 import { open } from 'node:fs/promises';
-import { pipeline } from 'node:stream';
 import { CsvPathRepository } from '../repository/csv-path.repository';
 import { FixedProductsRepository } from '../repository/fixed-products.repository';
 import { EmailRepository } from '../repository/email.repository';
@@ -13,7 +12,7 @@ export const job = async () => {
 		const fixedProductsRepo = new FixedProductsRepository();
 		const { path } = await new CsvPathRepository().getPath();
 		console.log(path);
-		if (!path) return handleIssue({ errorType: 'PathNotSet' });
+		if (!path) return await handleIssue({ errorType: 'PathNotSet' });
 		const now = new Date();
 		const date = ('0' + now.getDate()).slice(-2);
 		const month = ('0' + (now.getMonth() + 1)).slice(-2);

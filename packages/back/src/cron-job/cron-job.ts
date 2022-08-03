@@ -28,16 +28,8 @@ class CronManager {
 		this.add(
 			'todays-cron-job',
 			`${closingMinute} ${closingHour} * * *`,
-			() => {
-				console.log(
-					`*****${date().currentMinute}`,
-					'todaysCronJob started'
-				);
-				job();
-				console.log(
-					`*****${date().currentMinute}`,
-					'todaysCronJob finished'
-				);
+			async () => {
+				await job();
 				this.stop('todays-cron-job');
 			}
 		);
@@ -57,8 +49,7 @@ class CronManager {
 				const workingHours =
 					await workingHoursRepo.getTodaysWorkingHours();
 				if (workingHours.type !== 'daily') return;
-				console.log(`*****${date().currentMinute}`, 'dailyCronJob');
-				job();
+				await job();
 			}
 		);
 	}
