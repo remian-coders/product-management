@@ -32,6 +32,7 @@ export const createRegister = catchAsyncError(
 export const getDailyClientRegister = catchAsyncError(
 	async (req: Request, res: Response, next: NextFunction) => {
 		const dateStr = date().today;
+		console.log(dateStr);
 		const from = new Date(dateStr);
 		const to = new Date(
 			`${from.getFullYear()}-${
@@ -40,11 +41,11 @@ export const getDailyClientRegister = catchAsyncError(
 		);
 		console.log(from, to);
 		const registerRepo = new RegisterRepository();
-		// const { registers, card, cash } =
-		// 	await registerRepo.findDailyClientRegister(from, to);
+		const { registers, card, cash } =
+			await registerRepo.findDailyClientRegister(from, to);
 		res.status(200).json({
 			message: 'Daily Client Register',
-			// data: { registers, report: { card, cash } },
+			data: { registers, report: { card, cash } },
 		});
 	}
 );
@@ -116,6 +117,7 @@ export const isAvailable = async (
 	const endingMinute = to.getMinutes();
 	const currentHour = date().currentHour;
 	const currentMinute = date().currentMinute;
+
 	if (
 		currentHour < startingHour ||
 		currentHour > endingHour ||

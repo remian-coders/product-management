@@ -9,28 +9,36 @@ export default (
 ) => {
 	err.statusCode = err.statusCode || 500;
 	err.status = err.status || 'error';
-	if (process.env.NODE_ENV === 'development') devError(res, err);
-	if (process.env.NODE_ENV === 'production') prodError(res, err);
-};
-
-const devError = (res: Response, err: CustomError) => {
-	// console.error(err);
-	if (err.message === '25') console.log('the error is here');
-	res.status(err.statusCode).json({
-		status: err.status,
-		message: err.message,
-		err,
-	});
-};
-const prodError = (res: Response, err: CustomError) => {
 	let error = Object.create(err);
-	console.log(error);
 	if (
 		error.message ===
 		'SQLITE_CONSTRAINT: UNIQUE constraint failed: user.email'
 	) {
 		error = new CustomError(
-			'Email already exists. Please use different email',
+			'User with this email address has already been registered. Please use different email',
+			400
+		);
+	} else if (
+		error.message ===
+		'SQLITE_CONSTRAINT: UNIQUE constraint failed: register.ticketNo'
+	) {
+		error = new CustomError(
+			'Product with this ticket number has already been registered. Please use different ticket number',
+			400
+		);
+	} else if (
+		error.message === 'SQLITE_CONSTRAINT: UNIQUE constraint failed: ip.ip'
+	) {
+		error = new CustomError(
+			"This IP address has already been whitelisted! You don't need to add it again.",
+			400
+		);
+	} else if (
+		error.message ===
+		'SQLITE_CONSTRAINT: UNIQUE constraint failed: email.email'
+	) {
+		error = new CustomError(
+			"This email address has already been added! You don't need to add it again.",
 			400
 		);
 	}
@@ -44,10 +52,23 @@ const prodError = (res: Response, err: CustomError) => {
 			400
 		);
 	}
-	if (error.isOperational) {
-		res.status(error.statusCode).json({
-			status: error.status,
-			message: error.message,
+	if (process.env.NODE_ENV === 'development') devError(res, error);
+	if (process.env.NODE_ENV === 'production') prodError(res, error);
+};
+
+const devError = (res: Response, err: CustomError) => {
+	if (err.message === '25') console.log('the error is here');
+	res.status(err.statusCode).json({
+		status: err.status,
+		message: err.message,
+		err,
+	});
+};
+const prodError = (res: Response, err: CustomError) => {
+	if (err.isOperational) {
+		res.status(err.statusCode).json({
+			status: err.status,
+			message: err.message,
 		});
 	} else {
 		res.status(500).json({

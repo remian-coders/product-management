@@ -24,10 +24,10 @@ class CronManager {
 		if (!today || `${today.date}` !== `${date().today}`) return;
 		const closingTime = new Date(today.to);
 		const closingHour = closingTime.getHours();
-		const closingMinute = closingTime.getMinutes() + 5;
+		const closingMinute = closingTime.getMinutes() + 1;
 		this.add(
 			'todays-cron-job',
-			`* ${closingMinute} ${closingHour} * * *`,
+			`${closingMinute} ${closingHour} * * *`,
 			() => {
 				console.log(`*****${date().currentMinute}`, 'todaysCronJob');
 				job();

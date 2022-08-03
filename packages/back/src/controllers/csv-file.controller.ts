@@ -5,7 +5,8 @@ import { writeFile } from 'fs/promises';
 import { CsvPathRepository } from '../repository/csv-path.repository';
 import { catchAsyncError } from './utils/catch-async-error';
 import { CustomError } from '../utils/custom-error';
-import { job } from '../cron-job/job';
+import { WorkingHoursRepository } from '../repository/working-hours.repository';
+import { date } from '../utils/date';
 
 export const addPath = catchAsyncError(
 	async (req: Request, res: Response, next: express.NextFunction) => {
@@ -65,13 +66,24 @@ export const uploadFile = catchAsyncError(
 			);
 		}
 		const now = new Date();
-		const date = ('0' + now.getDate()).slice(-2);
-		const month = ('0' + (now.getMonth() + 1)).slice(-2);
+		const twoDigitDate = ('0' + now.getDate()).slice(-2);
+		const twoDigitMonth = ('0' + (now.getMonth() + 1)).slice(-2);
 		const year = now.getFullYear();
 		const fullPath =
-			filePath.path + `/realizari_${date}_${month}_${year}.csv`;
+			filePath.path +
+			`/realizari_${twoDigitDate}_${twoDigitMonth}_${year}.csv`;
 		await writeFile(fullPath, buffer);
-		await job();
+		const workingHoursRepo = new WorkingHoursRepository();
+		await workingHoursRepo.updateWorkingHours({
+			date: date().today,
+			from: new Date(`${date().currentDayStr} 00:00:00`),
+			to: new Date(
+				`${date().currentDayStr} ${date().currentHour}:${
+					date().currentMinute
+				}`
+			),
+			type: 'today',
+		});
 		res.status(200).json({
 			status: 'success',
 			message: 'File uploaded successfully',

@@ -3,7 +3,6 @@ import { WorkingHoursRepository } from '../repository/working-hours.repository';
 import { catchAsyncError } from './utils/catch-async-error';
 import { CustomError } from '../utils/custom-error';
 import { date } from '../utils/date';
-import { job } from '../cron-job/job';
 
 export const updateWorkingHours = catchAsyncError(
 	async (req: Request, res: Response, next: express.NextFunction) => {
@@ -18,9 +17,9 @@ export const updateWorkingHours = catchAsyncError(
 				new CustomError('type value can only be today or daily', 400)
 			);
 		}
-		from = new Date(`${date().currentDayStr} ${from}`);
-		to = new Date(`${date().currentDayStr} ${to}`);
-		if (from > to) {
+		from = new Date(date().currentDayStr + ' ' + from);
+		to = new Date(date().currentDayStr + ' ' + to);
+		if (from >= to) {
 			return next(
 				new CustomError(
 					'Starting hour must be before ending hour!',
@@ -67,8 +66,6 @@ export const finalizeDay = catchAsyncError(
 			),
 			type: 'today',
 		});
-
-		// job()();
 		res.status(200).json({
 			status: 'success',
 			message: `Today's register is closed!`,
