@@ -8,25 +8,26 @@ import { RegisterRepository } from '../repository/register.repository';
 import { IssueRepository } from '../repository/issue.repository';
 export const job = async () => {
 	try {
-		console.log('job started');
 		const fixedProductsRepo = new FixedProductsRepository();
-		const { path } = await new CsvPathRepository().getPath();
-		console.log(path);
-		if (!path) return await handleIssue({ errorType: 'PathNotSet' });
+		const filePath = await new CsvPathRepository().getPath();
+		if (!filePath) {
+			handleIssue({ errorType: 'PathNotSet' });
+			return;
+		}
+
 		const now = new Date();
 		const date = ('0' + now.getDate()).slice(-2);
 		const month = ('0' + (now.getMonth() + 1)).slice(-2);
 		const year = now.getFullYear();
-		const filePath = path + `/realizari_${date}_${month}_${year}.csv`;
-		console.log('reading file');
-		let fd = await open(filePath, 'r');
+		const fullPath =
+			filePath.path + `/realizari_${date}_${month}_${year}.csv`;
+		let fd = await open(fullPath, 'r');
 		const stream = fd
 			.createReadStream()
 			.pipe(parse({ delimiter: ',', columns: true }));
 		stream.on('error', (err) => {
 			handleIssue({ errorType: 'CannotParse' });
 		});
-		console.log('parsing file');
 		const promise = new Promise((resolve, reject) => {
 			stream.on('data', async (fixedProduct) => {
 				try {
@@ -47,7 +48,6 @@ export const job = async () => {
 			});
 		});
 		await promise;
-		console.log('comparing date and cost');
 		const fixedProducts = await fixedProductsRepo.getAll();
 		if (fixedProducts.length === 0) return;
 		for (const fixedProduct of fixedProducts) {
