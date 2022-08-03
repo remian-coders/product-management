@@ -12,7 +12,8 @@ export const job = async () => {
 		console.log('job started');
 		const fixedProductsRepo = new FixedProductsRepository();
 		const { path } = await new CsvPathRepository().getPath();
-		if (!path) handleIssue({ errorType: 'PathNotSet' });
+		console.log(path);
+		if (!path) return handleIssue({ errorType: 'PathNotSet' });
 		const now = new Date();
 		const date = ('0' + now.getDate()).slice(-2);
 		const month = ('0' + (now.getMonth() + 1)).slice(-2);
