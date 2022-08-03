@@ -18,8 +18,8 @@ export const updateWorkingHours = catchAsyncError(
 				new CustomError('type value can only be today or daily', 400)
 			);
 		}
-		from = new Date(from);
-		to = new Date(to);
+		from = new Date(date().currentDayStr + ' ' + from);
+		to = new Date(date().currentDayStr + ' ' + to);
 		if (from > to) {
 			return next(
 				new CustomError(
@@ -68,7 +68,7 @@ export const finalizeDay = catchAsyncError(
 			type: 'today',
 		});
 
-		// job()();
+		job();
 		res.status(200).json({
 			status: 'success',
 			message: `Today's register is closed!`,
