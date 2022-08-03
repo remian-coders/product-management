@@ -9,7 +9,7 @@ import { RegisterRepository } from '../repository/register.repository';
 import { IssueRepository } from '../repository/issue.repository';
 export const job = async () => {
 	try {
-		//1.  get the path to the csv file
+		console.log('job started');
 		const fixedProductsRepo = new FixedProductsRepository();
 		const { path } = await new CsvPathRepository().getPath();
 		if (!path) handleIssue({ errorType: 'PathNotSet' });
@@ -18,7 +18,7 @@ export const job = async () => {
 		const month = ('0' + (now.getMonth() + 1)).slice(-2);
 		const year = now.getFullYear();
 		const filePath = path + `/realizari_${date}_${month}_${year}.csv`;
-		//2.  read the csv file and parse it to object && save into database
+		console.log('reading file');
 		let fd = await open(filePath, 'r');
 		const stream = fd
 			.createReadStream()
@@ -26,6 +26,7 @@ export const job = async () => {
 		stream.on('error', (err) => {
 			handleIssue({ errorType: 'CannotParse' });
 		});
+		console.log('parsing file');
 		const promise = new Promise((resolve, reject) => {
 			stream.on('data', async (fixedProduct) => {
 				try {
@@ -45,8 +46,8 @@ export const job = async () => {
 				}
 			});
 		});
-		//3. compare the date and cost
 		await promise;
+		console.log('comparing date and cost');
 		const fixedProducts = await fixedProductsRepo.getAll();
 		if (fixedProducts.length === 0) return;
 		for (const fixedProduct of fixedProducts) {
