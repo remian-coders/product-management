@@ -41,11 +41,11 @@ export const getDailyClientRegister = catchAsyncError(
 		);
 		console.log(from, to);
 		const registerRepo = new RegisterRepository();
-		// const { registers, card, cash } =
-		// 	await registerRepo.findDailyClientRegister(from, to);
+		const { registers, card, cash } =
+			await registerRepo.findDailyClientRegister(from, to);
 		res.status(200).json({
 			message: 'Daily Client Register',
-			// data: { registers, report: { card, cash } },
+			data: { registers, report: { card, cash } },
 		});
 	}
 );
@@ -124,7 +124,6 @@ export const isAvailable = async (
 		(currentHour === startingHour && startingMinute > currentMinute) ||
 		(currentHour === endingHour && currentMinute >= endingMinute)
 	) {
-		console.log('entering second wokiring hours check');
 		return next(
 			new CustomError(
 				`The page is available between ${startingHour}:${startingMinute} - ${endingHour}:${endingMinute}`,

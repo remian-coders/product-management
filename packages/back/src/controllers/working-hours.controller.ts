@@ -20,7 +20,7 @@ export const updateWorkingHours = catchAsyncError(
 		}
 		from = new Date(date().currentDayStr + ' ' + from);
 		to = new Date(date().currentDayStr + ' ' + to);
-		if (from > to) {
+		if (from >= to) {
 			return next(
 				new CustomError(
 					'Starting hour must be before ending hour!',
@@ -67,8 +67,6 @@ export const finalizeDay = catchAsyncError(
 			),
 			type: 'today',
 		});
-
-		job();
 		res.status(200).json({
 			status: 'success',
 			message: `Today's register is closed!`,
