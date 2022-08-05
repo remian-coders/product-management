@@ -176,7 +176,7 @@ export const updateCsvFile = async function (token, path) {
 	try {
 		let response = await api.patch(
 			'/admin/csv-path',
-			{ path },
+			{ path: path },
 			{
 				headers: { Authorization: `Bearer ${token}` },
 			}
