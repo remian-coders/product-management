@@ -17,8 +17,9 @@ export const updateWorkingHours = catchAsyncError(
 				new CustomError('type value can only be today or daily', 400)
 			);
 		}
-		from = new Date(date().currentDayStr + ' ' + from);
-		to = new Date(date().currentDayStr + ' ' + to);
+		console.log(new Date());
+		from = new Date(`${date().currentDayStr} ${from}`);
+		to = new Date(`${date().currentDayStr} ${to}`);
 		if (from >= to) {
 			return next(
 				new CustomError(
@@ -27,6 +28,7 @@ export const updateWorkingHours = catchAsyncError(
 				)
 			);
 		}
+		console.log(from, to, type);
 		const updatedWorkingHours = await workingHoursRepo.updateWorkingHours({
 			date: date().today,
 			from,
@@ -40,7 +42,6 @@ export const updateWorkingHours = catchAsyncError(
 		});
 	}
 );
-
 export const getWorkingHours = catchAsyncError(
 	async (req: Request, res: Response, next: express.NextFunction) => {
 		const workingHoursRepo = new WorkingHoursRepository();

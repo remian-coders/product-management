@@ -3,7 +3,8 @@ import { App } from './app';
 import dataSource from './data-source';
 import { cronManager } from './cron-job/cron-job';
 import { date } from './utils/date';
-config({ path: './config.env' });
+import path from 'path';
+config({ path: path.join(__dirname, '../config.env') });
 
 const { app } = new App();
 
@@ -15,9 +16,7 @@ dataSource
 			cronManager.todaysCronJob();
 			cronManager.dailyCronJob();
 			console.log(
-				`Server running on port ${process.env.PORT}\nEnvironment ${
-					process.env.NODE_ENV
-				}\nDate: ${date().toLocalTime}`
+				`Server running on port ${process.env.PORT}\nEnvironment ${process.env.NODE_ENV}`
 			);
 		});
 	})
