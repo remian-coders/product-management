@@ -7,7 +7,6 @@ import path from 'path';
 config({ path: path.join(__dirname, '../config.env') });
 
 const { app } = new App();
-
 dataSource
 	.initialize()
 	.then(async () => {
