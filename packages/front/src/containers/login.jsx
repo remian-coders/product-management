@@ -33,6 +33,7 @@ const Login = ({
       navigate("/admin");
       setMessage(response.data.message);
       setToken(response.data.token);
+      localStorage.setItem("user_token", response.data.token);
       setType("success");
       setShow(true);
     } else {

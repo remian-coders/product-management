@@ -55,13 +55,7 @@ const Issues = ({ setMessage, setShow, setType, token }) => {
             {issues.map(({ id, date, type, description }, index) => (
               <tr key={index}>
                 <th>{index + 1}</th>
-                <td>
-                  {new Date(date)
-                    .toISOString()
-                    .slice(0, 19)
-                    .replace(/-/g, "/")
-                    .replace("T", " ")}
-                </td>
+                <td>{new Date(date).toLocaleString()}</td>
                 <td>{type}</td>
                 <td>{description}</td>
                 <td>

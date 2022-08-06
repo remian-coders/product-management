@@ -26,13 +26,7 @@ const HomeTable = forwardRef(
                     <th>{ticketNo}</th>
                     <td>{cost}</td>
                     <td>{paymentType}</td>
-                    <td>
-                      {new Date(date)
-                        .toISOString()
-                        .slice(0, 19)
-                        .replace(/-/g, "/")
-                        .replace("T", " ")}
-                    </td>
+                    <td>{new Date(date).toLocaleString()}</td>
                     {role === "admin" && <td>{admin}</td>}
                     <td>{others}</td>
                   </tr>
