@@ -20,6 +20,9 @@ export class RegisterRepository {
 		});
 		return { registers, cash, card };
 	}
+	async getAll() {
+		return await this.registerRepo.find();
+	}
 	async getDailySum(from: Date, to: Date, admin: boolean) {
 		let isAdmin = '';
 		if (admin) isAdmin = 'NOT';

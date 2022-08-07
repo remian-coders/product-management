@@ -28,7 +28,15 @@ export const createRegister = catchAsyncError(
 		});
 	}
 );
-
+export const getAllRegisters = catchAsyncError(
+	async (req: Request, res: Response, next: NextFunction) => {
+		const registerRepo = new RegisterRepository();
+		const registers = await registerRepo.getAll();
+		res.status(200).json({
+			registers,
+		});
+	}
+);
 export const getDailyClientRegister = catchAsyncError(
 	async (req: Request, res: Response, next: NextFunction) => {
 		const dateStr = date().today;
