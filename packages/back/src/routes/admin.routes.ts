@@ -46,6 +46,13 @@ router.post('/forgot-password', forgotPassword);
 router.patch('/reset-password', resetPassword);
 
 router.use(guard);
+router.get('/', (req, res, next) => {
+	res.status(200).json({
+		status: 'success',
+		message: `Hello ${req.user.name}`,
+		data: { user: req.user },
+	});
+});
 router.patch('/update-password', updatePassword);
 router.route('/user').post(createUser).get(getUsers);
 router.delete('/user/:id', deleteUser);

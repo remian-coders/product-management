@@ -89,7 +89,8 @@ export const guard = catchAsyncError(
 		if (Date.parse(`${user.passwordChangedAt}`) / 1000 > decoded.iat) {
 			return next(new CustomError('Please login again!', 401));
 		}
-		user.passwordChangedAt = undefined;
+		user.passwordChangedAt = null;
+		user.password = null;
 		req.user = user;
 		next();
 	}

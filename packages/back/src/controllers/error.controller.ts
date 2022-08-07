@@ -42,10 +42,12 @@ export default (
 			400
 		);
 	}
-	if (error.name === 'TokenExpiredError')
+	if (
+		error.name === 'TokenExpiredError' ||
+		error.name === 'JsonWebTokenError'
+	)
 		error = new CustomError('You are not logged in, please log in.', 401);
-	if (error.name === 'JsonWebTokenError')
-		error = new CustomError('You are not logged in please log in.', 401);
+
 	if (error.code === 'LIMIT_FILE_SIZE') {
 		error = new CustomError(
 			'File size should not be more than 100MG!',
