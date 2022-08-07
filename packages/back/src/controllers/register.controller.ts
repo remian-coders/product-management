@@ -68,7 +68,7 @@ export const getDailyAdminRegister = catchAsyncError(
 		const to = new Date(
 			`${from.getFullYear()}-${
 				from.getMonth() + 1
-			}-${from.getDate()} 23:59:00`
+			}-${from.getDate()} 23:59:59`
 		);
 		const registerRepo = new RegisterRepository();
 		const { registers, cash, card } =
