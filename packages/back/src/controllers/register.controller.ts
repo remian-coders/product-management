@@ -33,7 +33,8 @@ export const getAllRegisters = catchAsyncError(
 		const registerRepo = new RegisterRepository();
 		const registers = await registerRepo.getAll();
 		res.status(200).json({
-			registers,
+			message: 'Daily Client Register',
+			data: { registers, report: { card: null, cash: null } },
 		});
 	}
 );
