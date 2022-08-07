@@ -12,14 +12,7 @@ import {
 } from "../components";
 import Protected from "../utils/protected";
 
-const Admin = ({
-  isLoggedIn,
-  token,
-  setMessage,
-  setType,
-  setShow,
-  setToken,
-}) => {
+const Admin = ({ token, setMessage, setType, setShow, setToken }) => {
   const [today, setToday] = useState(null);
   const [daily, setDaily] = useState(null);
 
@@ -30,7 +23,7 @@ const Admin = ({
         <Route
           path="/csv"
           element={
-            <Protected isLoggedIn={isLoggedIn}>
+            <Protected token={token}>
               <CsvFile
                 token={token}
                 setMessage={setMessage}
@@ -43,7 +36,7 @@ const Admin = ({
         <Route
           path="/issues"
           element={
-            <Protected isLoggedIn={isLoggedIn}>
+            <Protected token={token}>
               <Issues
                 token={token}
                 setMessage={setMessage}
@@ -56,7 +49,7 @@ const Admin = ({
         <Route
           path="/password-update"
           element={
-            <Protected isLoggedIn={isLoggedIn}>
+            <Protected token={token}>
               <PasswordUpdate
                 token={token}
                 setMessage={setMessage}
@@ -70,7 +63,7 @@ const Admin = ({
         <Route
           path="/ip-address"
           element={
-            <Protected isLoggedIn={isLoggedIn}>
+            <Protected token={token}>
               <IpAddress
                 token={token}
                 setMessage={setMessage}
@@ -83,7 +76,7 @@ const Admin = ({
         <Route
           path="/user"
           element={
-            <Protected isLoggedIn={isLoggedIn}>
+            <Protected token={token}>
               <UserCreate
                 token={token}
                 setMessage={setMessage}
@@ -96,7 +89,7 @@ const Admin = ({
         <Route
           path="/emails"
           element={
-            <Protected isLoggedIn={isLoggedIn}>
+            <Protected token={token}>
               <Emails
                 token={token}
                 setMessage={setMessage}
@@ -109,7 +102,7 @@ const Admin = ({
         <Route
           path="/*"
           element={
-            <Protected isLoggedIn={isLoggedIn}>
+            <Protected token={token}>
               <AdminIncasare
                 setDaily={setDaily}
                 setToday={setToday}

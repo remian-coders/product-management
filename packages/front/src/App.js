@@ -13,7 +13,7 @@ function App() {
     "Woohoo, you're reading this text in a Toast!"
   );
   const [type, setType] = useState("success");
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState(localStorage.getItem("user_token"));
 
   return (
     <div className="App">
@@ -34,6 +34,7 @@ function App() {
           path="/admin/*"
           element={
             <Admin
+              setIsLoggedIn={setIsLoggedIn}
               isLoggedIn={isLoggedIn}
               token={token}
               setMessage={setMessage}
