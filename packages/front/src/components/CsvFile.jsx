@@ -11,7 +11,7 @@ const CsvFile = ({ token, setMessage, setType, setShow }) => {
     const response = await fetchCsvFile(token);
 
     if (response.status === 200) {
-      setUrlPath(response.data?.data?.path.path);
+      setUrlPath(response.data?.data?.path?.path);
     }
   }, [token]);
 

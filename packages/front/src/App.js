@@ -1,10 +1,11 @@
 import { Routes, Route } from "react-router-dom";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import Admin from "./containers/admin";
 import Home from "./containers/home";
 import Login from "./containers/login";
 import { Toast, ToastContainer } from "react-bootstrap";
+import { checkToken } from "./utils/api-calls";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -14,6 +15,27 @@ function App() {
   );
   const [type, setType] = useState("success");
   const [token, setToken] = useState(localStorage.getItem("user_token"));
+
+  const handleToken = useCallback(async () => {
+    const response = await checkToken(token);
+
+    if (response.status === 200) {
+      setIsLoggedIn(true);
+      setMessage(response.data.message);
+      setType("success");
+      setShow(true);
+    } else {
+      setToken(null);
+      localStorage.removeItem("user_token");
+      setMessage(response.data.message);
+      setType("danger");
+      setShow(true);
+    }
+  }, [token]);
+
+  useEffect(() => {
+    handleToken();
+  }, [handleToken]);
 
   return (
     <div className="App">
