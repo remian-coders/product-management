@@ -70,6 +70,7 @@ export const getDailyAdminRegister = catchAsyncError(
 				from.getMonth() + 1
 			}-${from.getDate()} 23:59:59`
 		);
+		console.log(from, to);
 		const registerRepo = new RegisterRepository();
 		const { registers, cash, card } =
 			await registerRepo.findDailyAdminRegister(from, to);
