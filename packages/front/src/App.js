@@ -27,9 +27,6 @@ function App() {
     } else {
       setToken(null);
       localStorage.removeItem("user_token");
-      setMessage(response.data.message);
-      setType("danger");
-      setShow(true);
     }
   }, [token]);
 
