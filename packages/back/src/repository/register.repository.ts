@@ -46,7 +46,7 @@ export class RegisterRepository {
 			.getRawOne();
 		return { cash, card };
 	}
-	async findDailyAdminRegister(from: Date, to: Date) {
+	async findAdminRegister(from: Date, to: Date) {
 		const { cash, card } = await this.getDailySum(from, to, true);
 		const registers = await this.registerRepo.findBy({
 			date: Between(from, to),
@@ -54,7 +54,7 @@ export class RegisterRepository {
 		});
 		return { registers, cash, card };
 	}
-	async findDailyAllRegister(from: Date, to: Date) {
+	async findAllRegister(from: Date, to: Date) {
 		const { cash: cashAdmin, card: cardAdmin } = await this.getDailySum(
 			from,
 			to,
@@ -67,10 +67,8 @@ export class RegisterRepository {
 		);
 		const cash = cashAdmin + cashClient;
 		const card = cardAdmin + cardClient;
-		const registers = await this.registerRepo.find({
-			where: {
-				date: Between(from, to),
-			},
+		const registers = await this.registerRepo.findBy({
+			date: Between(from, to),
 		});
 		return { registers, cash, card };
 	}

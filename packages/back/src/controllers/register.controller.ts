@@ -61,8 +61,10 @@ export const getAdminRegister = catchAsyncError(
 			  }-${from.getDate()} 23:59:59`;
 		const to = new Date(toStr);
 		const registerRepo = new RegisterRepository();
-		const { registers, cash, card } =
-			await registerRepo.findDailyAdminRegister(from, to);
+		const { registers, cash, card } = await registerRepo.findAdminRegister(
+			from,
+			to
+		);
 		res.status(200).json({
 			message: 'Client Register',
 			data: { registers, report: { card, cash } },
@@ -72,8 +74,8 @@ export const getAdminRegister = catchAsyncError(
 
 export const getAllRegister = catchAsyncError(
 	async (req: Request, res: Response, next: NextFunction) => {
-		const dateStr = (req.query.date as string) || date().today;
-		const from = new Date(dateStr);
+		const fromStr = (req.query.from as string) || date().today;
+		const from = new Date(fromStr);
 		const toStr = req.query.to
 			? (req.query.to as string) + ' 23:59:59'
 			: `${from.getFullYear()}-${
@@ -81,8 +83,10 @@ export const getAllRegister = catchAsyncError(
 			  }-${from.getDate()} 23:59:59`;
 		const to = new Date(toStr);
 		const registerRepo = new RegisterRepository();
-		const { registers, cash, card } =
-			await registerRepo.findDailyAllRegister(from, to);
+		const { registers, cash, card } = await registerRepo.findAllRegister(
+			from,
+			to
+		);
 		res.status(200).json({
 			message: 'Daily All Register',
 			data: { registers, report: { card, cash } },
