@@ -53,7 +53,13 @@ const Issues = ({ setMessage, setShow, setType, token }) => {
           </thead>
           <tbody>
             {issues.map(({ id, date, type, description }, index) => (
-              <tr key={index}>
+              <tr
+                key={index}
+                className={
+                  (type === "cost-difference" && "bg-warning") ||
+                  (type === "older-than-7-days" && "bg-info")
+                }
+              >
                 <th>{index + 1}</th>
                 <td>{new Date(date).toLocaleString()}</td>
                 <td>{type}</td>

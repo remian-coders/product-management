@@ -32,7 +32,6 @@ const AdminIncasare = ({
   const incasareMentiune = useRef();
   const incasareType = useRef();
 
-  const plataTicket = useRef();
   const plataCost = useRef();
   const plataMentiune = useRef();
 
@@ -40,7 +39,8 @@ const AdminIncasare = ({
   const toRef = useRef();
   const typeRef = useRef();
 
-  const dateRef = useRef();
+  const fromDateRef = useRef();
+  const toDateRef = useRef();
   const selectRef = useRef();
 
   const printCompRef = useRef();
@@ -136,11 +136,10 @@ const AdminIncasare = ({
 
   const plataHandle = async (e) => {
     e.preventDefault();
-    const ticketNo = plataTicket.current.value;
+
     const cost = plataCost.current.value * -1;
     const others = plataMentiune.current.value;
     const response = await postAdminRegister(token, {
-      ticketNo,
       cost,
       others,
     });
@@ -150,7 +149,7 @@ const AdminIncasare = ({
       setShow(true);
       setPlata(false);
       getRegisters();
-      plataTicket.current.value = "";
+
       plataCost.current.value = "";
       plataMentiune.current.value = "";
     } else {
@@ -186,17 +185,18 @@ const AdminIncasare = ({
   const handleBrowse = async (e) => {
     e.preventDefault();
 
-    const date = dateRef.current.value;
+    const from = fromDateRef.current.value;
+    const to = toDateRef.current.value;
     const select = selectRef.current.value;
 
     if (select === "admin") {
       setLoading(true);
-      getRegisters({ date });
-      setTableDate(date);
+      getRegisters({ from, to });
+      setTableDate(to);
     } else {
       setLoading(true);
-      getAllRegisters({ date });
-      setTableDate(date);
+      getAllRegisters({ from, to });
+      setTableDate(to);
     }
   };
 
@@ -258,7 +258,16 @@ const AdminIncasare = ({
         <form onSubmit={handleBrowse}>
           <div className="input-group mb-3">
             <input
-              ref={dateRef}
+              ref={fromDateRef}
+              type="date"
+              className="form-control"
+              placeholder="Choose a date"
+              aria-label="date"
+              aria-describedby="button-addon2"
+              required
+            />
+            <input
+              ref={toDateRef}
               type="date"
               className="form-control"
               placeholder="Choose a date"
@@ -344,7 +353,6 @@ const AdminIncasare = ({
         show={plata}
         onHide={() => setPlata(false)}
         submitHandler={plataHandle}
-        ticket={plataTicket}
         cost={plataCost}
         mentiune={plataMentiune}
       />

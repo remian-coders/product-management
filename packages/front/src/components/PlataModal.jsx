@@ -1,14 +1,7 @@
 import React from "react";
 import { Modal, Alert, Button } from "react-bootstrap";
 
-const PlataModal = ({
-  show,
-  submitHandler,
-  onHide,
-  ticket,
-  cost,
-  mentiune,
-}) => {
+const PlataModal = ({ show, submitHandler, onHide, cost, mentiune }) => {
   return (
     <Modal
       show={show}
@@ -23,20 +16,6 @@ const PlataModal = ({
       </Modal.Header>
       <form onSubmit={submitHandler}>
         <Modal.Body>
-          <div className="row mb-3">
-            <label htmlFor="inputTichet" className="col-sm-3 col-form-label">
-              Tichet
-            </label>
-            <div className="col-sm-9">
-              <input
-                ref={ticket}
-                type="text"
-                className="form-control"
-                id="inputTichet"
-                required
-              />
-            </div>
-          </div>
           <div className="row mb-3">
             <label htmlFor="inputCost" className="col-sm-3 col-form-label">
               Cost(RON)
