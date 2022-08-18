@@ -48,10 +48,6 @@ const AdminIncasare = ({
     content: () => printCompRef.current,
   });
 
-  const [tableDate, setTableDate] = useState(
-    new Date().toISOString().split("T")[0]
-  );
-
   const getAllRegisters = useCallback(
     async (params = null) => {
       const response = await fetchAllRegisters(token, params);
@@ -192,11 +188,9 @@ const AdminIncasare = ({
     if (select === "admin") {
       setLoading(true);
       getRegisters({ from, to });
-      setTableDate(to);
     } else {
       setLoading(true);
       getAllRegisters({ from, to });
-      setTableDate(to);
     }
   };
 
@@ -304,7 +298,6 @@ const AdminIncasare = ({
               registers={registers}
               report={report}
               ref={printCompRef}
-              tableDate={tableDate}
             />
           </Container>
           <Container className="p-4">

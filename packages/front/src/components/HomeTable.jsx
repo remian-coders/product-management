@@ -5,9 +5,6 @@ const HomeTable = forwardRef(
     return (
       <div className="px-3" ref={ref}>
         <div className="container-fuild mt-5">
-          <h4 className="text-center">
-            {tableDate ? tableDate : new Date().toISOString().split("T")[0]}
-          </h4>
           <table className="table table-bordered table-hover">
             <thead>
               <tr>

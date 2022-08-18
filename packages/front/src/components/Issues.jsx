@@ -56,8 +56,8 @@ const Issues = ({ setMessage, setShow, setType, token }) => {
               <tr
                 key={index}
                 className={
-                  (type === "cost-difference" && "bg-warning") ||
-                  (type === "older-than-7-days" && "bg-info")
+                  (type === "cost-difference" && "bg-info") ||
+                  (type === "older-than-7-days" && "bg-warning")
                 }
               >
                 <th>{index + 1}</th>
