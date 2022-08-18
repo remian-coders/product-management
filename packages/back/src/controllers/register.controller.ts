@@ -40,7 +40,6 @@ export const getDailyClientRegister = catchAsyncError(
 				from.getMonth() + 1
 			}-${from.getDate()} 23:59:59`
 		);
-		console.log(from, to);
 		const registerRepo = new RegisterRepository();
 		const { registers, card, cash } =
 			await registerRepo.findDailyClientRegister(from, to);
@@ -55,11 +54,11 @@ export const getAdminRegister = catchAsyncError(
 	async (req: Request, res: Response, next: NextFunction) => {
 		const fromStr = (req.query.from as string) || date().today;
 		const from = new Date(fromStr);
-		const toStr =
-			(req.query.to as string) ||
-			`${from.getFullYear()}-${
-				from.getMonth() + 1
-			}-${from.getDate()} 23:59:59`;
+		const toStr = req.query.to
+			? (req.query.to as string) + ' 23:59:59'
+			: `${from.getFullYear()}-${
+					from.getMonth() + 1
+			  }-${from.getDate()} 23:59:59`;
 		const to = new Date(toStr);
 		const registerRepo = new RegisterRepository();
 		const { registers, cash, card } =
@@ -75,11 +74,12 @@ export const getAllRegister = catchAsyncError(
 	async (req: Request, res: Response, next: NextFunction) => {
 		const dateStr = (req.query.date as string) || date().today;
 		const from = new Date(dateStr);
-		const to = new Date(
-			`${from.getFullYear()}-${
-				from.getMonth() + 1
-			}-${from.getDate()} 23:59:59`
-		);
+		const toStr = req.query.to
+			? (req.query.to as string) + ' 23:59:59'
+			: `${from.getFullYear()}-${
+					from.getMonth() + 1
+			  }-${from.getDate()} 23:59:59`;
+		const to = new Date(toStr);
 		const registerRepo = new RegisterRepository();
 		const { registers, cash, card } =
 			await registerRepo.findDailyAllRegister(from, to);
