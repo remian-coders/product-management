@@ -3,9 +3,9 @@ import bcryptjs from 'bcryptjs';
 import { v4 as uuid4 } from 'uuid';
 import { User } from './entities/users.entity';
 class AppDataSource {
-	_dataSource;
+	private dataSource;
 	constructor() {
-		this._dataSource = new DataSource({
+		this.dataSource = new DataSource({
 			type: 'sqlite',
 			database: './db.sqlite',
 			entities: [__dirname + '/**/*.entity{.ts,.js}'],
@@ -31,10 +31,10 @@ class AppDataSource {
 	}
 
 	initialize(): Promise<void> {
-		return this._dataSource.initialize();
+		return this.dataSource.initialize();
 	}
 	getRepository(entityClass) {
-		return this._dataSource.getRepository(entityClass);
+		return this.dataSource.getRepository(entityClass);
 	}
 }
 export default new AppDataSource();

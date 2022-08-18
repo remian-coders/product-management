@@ -9,8 +9,10 @@ import { date } from '../utils/date';
 export const createRegister = catchAsyncError(
 	async (req: Request, res: Response, next: NextFunction) => {
 		let { ticketNo, cost, paymentType, others } = req.body;
-		const registerType = cost >= 0 ? 'income' : 'expense';
-		paymentType = cost <= 0 ? 'cash' : paymentType;
+		if (cost === 0) return next(new CustomError('Cost cannot be 0', 400));
+		const registerType = cost > 0 ? 'income' : 'expense';
+		paymentType = cost < 0 ? 'cash' : paymentType;
+		ticketNo = cost < 0 ? null : ticketNo;
 		const admin = req.user ? req.user.name : null;
 		const register = {
 			ticketNo,
@@ -41,7 +43,6 @@ export const getAllRegisters = catchAsyncError(
 export const getDailyClientRegister = catchAsyncError(
 	async (req: Request, res: Response, next: NextFunction) => {
 		const dateStr = date().today;
-		console.log(dateStr);
 		const from = new Date(dateStr);
 		const to = new Date(
 			`${from.getFullYear()}-${
@@ -61,21 +62,19 @@ export const getDailyClientRegister = catchAsyncError(
 
 export const getDailyAdminRegister = catchAsyncError(
 	async (req: Request, res: Response, next: NextFunction) => {
-		const now = new Date();
-		const dateStr = (req.query.date as string) || date().today;
-
-		const from = new Date(dateStr);
-		const to = new Date(
+		const fromStr = (req.query.from as string) || date().today;
+		const from = new Date(fromStr);
+		const toStr =
+			(req.query.to as string) ||
 			`${from.getFullYear()}-${
 				from.getMonth() + 1
-			}-${from.getDate()} 23:59:59`
-		);
-		console.log(from, to);
+			}-${from.getDate()} 23:59:59`;
+		const to = new Date(toStr);
 		const registerRepo = new RegisterRepository();
 		const { registers, cash, card } =
 			await registerRepo.findDailyAdminRegister(from, to);
 		res.status(200).json({
-			message: 'Daily Client Register',
+			message: 'Client Register',
 			data: { registers, report: { card, cash } },
 		});
 	}

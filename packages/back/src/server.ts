@@ -5,7 +5,6 @@ import { cronManager } from './cron-job/cron-job';
 import { date } from './utils/date';
 import path from 'path';
 config({ path: path.join(__dirname, '../config.env') });
-console.log(process.env.TZ);
 process.env.TZ = 'Asia/Seoul';
 const { app } = new App();
 dataSource

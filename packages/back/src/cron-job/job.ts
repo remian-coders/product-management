@@ -69,10 +69,7 @@ export const job = async () => {
 			}
 			const fivePercentLess =
 				fixedProduct.cost - fixedProduct.cost * 0.05;
-			if (
-				register.cost < fivePercentLess &&
-				register.registerType === 'income'
-			) {
+			if (register.cost < fivePercentLess) {
 				handleIssue({
 					product: fixedProduct,
 					errorType: 'CostDifference',
