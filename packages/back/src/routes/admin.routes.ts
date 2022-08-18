@@ -14,9 +14,8 @@ import {
 
 import {
 	createRegister,
-	getDailyAdminRegister,
-	getDailyAllRegister,
-	getAllRegisters,
+	getAdminRegister,
+	getAllRegister,
 } from '../controllers/register.controller';
 
 import { addIP, getIPs, deleteIP } from '../controllers/ip.controller';
@@ -57,10 +56,9 @@ router.get('/', (req, res, next) => {
 router.patch('/update-password', updatePassword);
 router.route('/user').post(createUser).get(getUsers);
 router.delete('/user/:id', deleteUser);
-router.get('/register', getDailyAdminRegister);
-router.get('/all-register', getDailyAllRegister);
-router.get('/all-time-registers', getAllRegisters);
-router.post('/register', createRegister);
+router.route('/register').post(createRegister).get(getAdminRegister);
+router.get('/all-register', getAllRegister);
+
 router.route('/ip-address-config').get(getIPs).post(addIP);
 router.delete('/ip-address-config/:id', deleteIP);
 router.route('/email-address-config').get(getEmails).post(addEmail);

@@ -30,16 +30,7 @@ export const createRegister = catchAsyncError(
 		});
 	}
 );
-export const getAllRegisters = catchAsyncError(
-	async (req: Request, res: Response, next: NextFunction) => {
-		const registerRepo = new RegisterRepository();
-		const registers = await registerRepo.getAll();
-		res.status(200).json({
-			message: 'Daily Client Register',
-			data: { registers, report: { card: null, cash: null } },
-		});
-	}
-);
+
 export const getDailyClientRegister = catchAsyncError(
 	async (req: Request, res: Response, next: NextFunction) => {
 		const dateStr = date().today;
@@ -60,7 +51,7 @@ export const getDailyClientRegister = catchAsyncError(
 	}
 );
 
-export const getDailyAdminRegister = catchAsyncError(
+export const getAdminRegister = catchAsyncError(
 	async (req: Request, res: Response, next: NextFunction) => {
 		const fromStr = (req.query.from as string) || date().today;
 		const from = new Date(fromStr);
@@ -80,7 +71,7 @@ export const getDailyAdminRegister = catchAsyncError(
 	}
 );
 
-export const getDailyAllRegister = catchAsyncError(
+export const getAllRegister = catchAsyncError(
 	async (req: Request, res: Response, next: NextFunction) => {
 		const dateStr = (req.query.date as string) || date().today;
 		const from = new Date(dateStr);
