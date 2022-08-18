@@ -33,7 +33,6 @@ const Home = ({ setMessage, setType, setShow }) => {
   const incasareMentiune = useRef();
   const incasareType = useRef();
 
-  const plataTicket = useRef();
   const plataCost = useRef();
   const plataMentiune = useRef();
 
@@ -97,11 +96,10 @@ const Home = ({ setMessage, setType, setShow }) => {
   const plataHandle = async (e) => {
     e.preventDefault();
 
-    const ticketNo = plataTicket.current.value;
     const cost = plataCost.current.value * -1;
     const others = plataMentiune.current.value;
 
-    const response = await createRegister({ ticketNo, cost, others });
+    const response = await createRegister({ cost, others });
 
     if (response.status === 200) {
       setMessage(response.data?.message);
@@ -110,7 +108,6 @@ const Home = ({ setMessage, setType, setShow }) => {
       setPlata(false);
       getRegisters();
 
-      plataTicket.current.value = "";
       plataCost.current.value = "";
       plataMentiune.current.value = "";
     } else {
@@ -182,7 +179,6 @@ const Home = ({ setMessage, setType, setShow }) => {
             show={plata}
             onHide={() => setPlata(false)}
             submitHandler={plataHandle}
-            ticket={plataTicket}
             cost={plataCost}
             mentiune={plataMentiune}
           />
