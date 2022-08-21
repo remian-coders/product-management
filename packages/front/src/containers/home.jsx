@@ -133,7 +133,7 @@ const Home = ({
   };
 
   const finalizeHandle = async (e) => {
-    const response = await finalizeRegister();
+    const response = await finalizeRegister(token);
 
     if (response.status === 200) {
       setMessage(response.data?.message);
