@@ -36,6 +36,7 @@ const Login = ({
       setToken(response.data.token);
       setRole(response.data?.data?.user?.role);
       localStorage.setItem("user_token", response.data.token);
+      console.log(response.data.token);
       localStorage.setItem("user_role", response.data?.data?.user?.role);
       setType("success");
       setShow(true);

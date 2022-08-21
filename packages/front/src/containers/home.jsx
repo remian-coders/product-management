@@ -12,7 +12,7 @@ import {
 import {
   fetchRegisters,
   createRegister,
-  finalizeRegister,
+  patchFinalizeRegister,
 } from "../utils/api-calls";
 
 import { Container } from "react-bootstrap";
@@ -133,7 +133,9 @@ const Home = ({
   };
 
   const finalizeHandle = async (e) => {
-    const response = await finalizeRegister(token);
+    const response = await patchFinalizeRegister(token);
+
+    console.log(token);
 
     if (response.status === 200) {
       setMessage(response.data?.message);

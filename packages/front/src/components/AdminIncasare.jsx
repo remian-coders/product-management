@@ -7,7 +7,7 @@ import {
   getAdminRegister,
   postAdminRegister,
   setWorkingHours,
-  finalizeRegister,
+  patchFinalizeRegister,
   getHours,
   fetchAllRegisters,
 } from "../utils/api-calls";
@@ -195,7 +195,7 @@ const AdminIncasare = ({
   };
 
   const finalizeHandle = async (e) => {
-    const response = await finalizeRegister(token);
+    const response = await patchFinalizeRegister(token);
 
     if (response.status === 200) {
       setMessage(response.data?.message);
