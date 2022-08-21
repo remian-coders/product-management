@@ -8,8 +8,11 @@ import {
 import { finalizeDay } from '../controllers/working-hours.controller';
 
 const router = Router();
-router.use(guard, authorize(['cashier', 'admin']));
+router.use(guard);
 router.patch('/finalize', finalizeDay);
-router.route('/').get(isAvailable, getDailyClientRegister).post(createRegister);
+router
+	.route('/')
+	.get(isAvailable, authorize(['cashier']), getDailyClientRegister)
+	.post(createRegister);
 
 export default router;

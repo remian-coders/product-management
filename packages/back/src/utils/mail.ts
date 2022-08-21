@@ -42,8 +42,8 @@ export class Mail {
 			to,
 			subject,
 			secure: false,
-			text: message,
-			// html:
+			// text: message,
+			html: message,
 			attachments: attachments ? attachments : undefined,
 		};
 		return await transporter.sendMail(mailOptions);
