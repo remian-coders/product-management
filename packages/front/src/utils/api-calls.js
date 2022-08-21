@@ -29,9 +29,11 @@ export const resetPassword = async function (data) {
   }
 };
 
-export const fetchRegisters = async function (params = null) {
+export const fetchRegisters = async function (token) {
   try {
-    let response = await api.get("/client-register", { params: params });
+    let response = await api.get("/client-register", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
 
     return response;
   } catch (error) {
@@ -39,9 +41,11 @@ export const fetchRegisters = async function (params = null) {
   }
 };
 
-export const createRegister = async function (data) {
+export const createRegister = async function (data, token) {
   try {
-    let response = await api.post("/client-register", data);
+    let response = await api.post("/client-register", data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
 
     return response;
   } catch (error) {

@@ -11,6 +11,7 @@ const Login = ({
   setType,
   setToken,
   token,
+  setRole,
 }) => {
   const navigate = useNavigate();
 
@@ -33,11 +34,19 @@ const Login = ({
       navigate("/admin");
       setMessage(response.data.message);
       setToken(response.data.token);
+      setRole(response.data?.data?.user?.role);
       localStorage.setItem("user_token", response.data.token);
+      localStorage.setItem("user_role", response.data?.data?.user?.role);
       setType("success");
       setShow(true);
+      if (response.data.data.user.role === "cashier") {
+        navigate("/");
+      } else if (response.data.data.user.role === "admin") {
+        navigate("/admin");
+      }
     } else {
       setMessage(response.data.message);
+      setRole(null);
       setType("danger");
       setShow(true);
     }

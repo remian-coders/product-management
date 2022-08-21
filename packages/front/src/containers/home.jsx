@@ -7,8 +7,6 @@ import {
   IncasareModal,
   PlataModal,
   Loading,
-  NotFoundPage,
-  TimeOver,
 } from "../components";
 
 import {
@@ -18,15 +16,23 @@ import {
 } from "../utils/api-calls";
 
 import { Container } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
-const Home = ({ setMessage, setType, setShow }) => {
+const Home = ({
+  setMessage,
+  setType,
+  setShow,
+  setToken,
+  setRole,
+  token,
+  role,
+}) => {
   const [incasare, setIncasare] = useState(false);
   const [plata, setPlata] = useState(false);
 
   const [loading, setLoading] = useState(true);
   const [registers, setRegisters] = useState([]);
   const [report, setReport] = useState({});
-  const [status, setStatus] = useState("data");
 
   const incasareTicket = useRef();
   const incasareCost = useRef();
@@ -36,8 +42,10 @@ const Home = ({ setMessage, setType, setShow }) => {
   const plataCost = useRef();
   const plataMentiune = useRef();
 
+  const navigate = useNavigate();
+
   const getRegisters = useCallback(async () => {
-    const response = await fetchRegisters();
+    const response = await fetchRegisters(token);
 
     if (response.status === 200) {
       setRegisters(response.data.data.registers);
@@ -45,12 +53,10 @@ const Home = ({ setMessage, setType, setShow }) => {
       setLoading(false);
     } else if (response.status === 403) {
       setLoading(false);
-      setStatus("not found");
     } else {
       setLoading(false);
-      setStatus("closed");
     }
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     getRegisters(); // run it, run it
@@ -60,6 +66,12 @@ const Home = ({ setMessage, setType, setShow }) => {
     };
   }, [getRegisters]);
 
+  useEffect(() => {
+    if (!token || role !== "cashier") {
+      navigate("/login");
+    }
+  }, [token, role, navigate]);
+
   const incasareHandle = async (e) => {
     e.preventDefault();
 
@@ -68,12 +80,15 @@ const Home = ({ setMessage, setType, setShow }) => {
     const paymentType = incasareType.current.value;
     const others = incasareMentiune.current.value;
 
-    const response = await createRegister({
-      ticketNo,
-      cost,
-      paymentType,
-      others,
-    });
+    const response = await createRegister(
+      {
+        ticketNo,
+        cost,
+        paymentType,
+        others,
+      },
+      token
+    );
 
     if (response.status === 200) {
       setMessage(response.data?.message);
@@ -99,7 +114,7 @@ const Home = ({ setMessage, setType, setShow }) => {
     const cost = plataCost.current.value * -1;
     const others = plataMentiune.current.value;
 
-    const response = await createRegister({ cost, others });
+    const response = await createRegister({ cost, others }, token);
 
     if (response.status === 200) {
       setMessage(response.data?.message);
@@ -124,22 +139,26 @@ const Home = ({ setMessage, setType, setShow }) => {
       setMessage(response.data?.message);
       setType("success");
       setShow(true);
-      setTimeout(() => {
-        window.location.reload();
-      }, "5000");
     } else {
       setMessage(response.data?.message);
       setType("danger");
       setShow(true);
     }
   };
+
+  const logoutHandler = () => {
+    setToken(null);
+    setRole(null);
+    localStorage.removeItem("user_token");
+    localStorage.removeItem("user_role");
+  };
   return (
     <>
       {loading ? (
         <Loading />
-      ) : status === "data" ? (
+      ) : (
         <>
-          <Header />
+          <Header logoutHandler={logoutHandler} />
           <Finalizer finalizeHandle={finalizeHandle} />
           <Container className="p-0">
             <HomeTable registers={registers} report={report} />
@@ -183,10 +202,6 @@ const Home = ({ setMessage, setType, setShow }) => {
             mentiune={plataMentiune}
           />
         </>
-      ) : status === "not found" ? (
-        <NotFoundPage />
-      ) : (
-        <TimeOver />
       )}
     </>
   );

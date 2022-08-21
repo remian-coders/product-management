@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 
-const Protected = ({ token, children }) => {
-  if (!token) {
+const Protected = ({ role, token, children }) => {
+  if (!token || role !== "admin") {
     return <Navigate to="/login" replace />;
   }
   return children;

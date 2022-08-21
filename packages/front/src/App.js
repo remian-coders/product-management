@@ -6,6 +6,7 @@ import Home from "./containers/home";
 import Login from "./containers/login";
 import { Toast, ToastContainer } from "react-bootstrap";
 import { checkToken } from "./utils/api-calls";
+// import Protected from "./utils/protected";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -15,18 +16,19 @@ function App() {
   );
   const [type, setType] = useState("success");
   const [token, setToken] = useState(localStorage.getItem("user_token"));
+  const [role, setRole] = useState(localStorage.getItem("user_role"));
 
   const handleToken = useCallback(async () => {
     const response = await checkToken(token);
 
     if (response.status === 200) {
       setIsLoggedIn(true);
-      setMessage(response.data.message);
-      setType("success");
-      setShow(true);
+      setRole(response.data?.data?.user?.role);
     } else {
       setToken(null);
+      setRole(null);
       localStorage.removeItem("user_token");
+      localStorage.removeItem("user_role");
     }
   }, [token]);
 
@@ -46,6 +48,7 @@ function App() {
               setShow={setShow}
               setType={setType}
               setToken={setToken}
+              setRole={setRole}
             />
           }
         />
@@ -60,13 +63,23 @@ function App() {
               setShow={setShow}
               setType={setType}
               setToken={setToken}
+              role={role}
+              setRole={setRole}
             />
           }
         />
         <Route
           path="/"
           element={
-            <Home setMessage={setMessage} setShow={setShow} setType={setType} />
+            <Home
+              setMessage={setMessage}
+              setShow={setShow}
+              setType={setType}
+              setRole={setRole}
+              setToken={setToken}
+              role={role}
+              token={token}
+            />
           }
         />
       </Routes>

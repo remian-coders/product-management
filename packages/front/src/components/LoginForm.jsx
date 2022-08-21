@@ -8,7 +8,7 @@ const LoginForm = ({ loginHandler, password, email }) => {
         onSubmit={loginHandler}
         className="col-12 col-sm-8 col-md-6 col-lg-4 m-auto p-5 mt-5 border rounded"
       >
-        <h3 className="mb-3">Welcome to the Admin Page</h3>
+        <h3 className="mb-3">Log in</h3>
         <div className="form-floating mb-3">
           <input
             ref={email}

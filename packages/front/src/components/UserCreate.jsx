@@ -9,6 +9,7 @@ const UserCreate = ({ token, setMessage, setType, setShow }) => {
   const nameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
+  const roleRef = useRef();
 
   const getUsers = useCallback(async () => {
     const response = await fetchUsers(token);
@@ -29,8 +30,11 @@ const UserCreate = ({ token, setMessage, setType, setShow }) => {
     const name = nameRef.current.value;
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
+    const role = roleRef.current.value;
 
-    const response = await createUser(token, { name, email, password });
+    const response = await createUser(token, { name, email, password, role });
+
+    console.log(response);
 
     if (response.status === 200 || response.status === 201) {
       emailRef.current.value = "";
@@ -108,6 +112,17 @@ const UserCreate = ({ token, setMessage, setType, setShow }) => {
                 aria-describedby="inputGroupPrepend2"
                 required
               />
+            </div>
+          </div>
+          <div className="col-md-6">
+            <label htmlFor="validationDefaultRole" className="form-label">
+              Role
+            </label>
+            <div className="input-group">
+              <select ref={roleRef} className="form-control">
+                <option value="admin">Admin</option>
+                <option value="cashier">Cashier</option>
+              </select>
             </div>
           </div>
           <div className="col-12">
