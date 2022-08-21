@@ -7,13 +7,18 @@ import { catchAsyncError } from './utils/catch-async-error';
 
 export const createUser = catchAsyncError(
 	async (req: Request, res: Response, next: express.NextFunction) => {
-		const { name, email, password } = req.body;
+		const { name, email, password, role } = req.body;
 		if (!name || !email || !password) {
 			return next(
 				new CustomError(
-					'You should provide name, email, and password to create a new user!',
+					'You should provide name, email, password, and role to create a new user!',
 					400
 				)
+			);
+		}
+		if (role !== 'admin' && role !== 'cashier') {
+			return next(
+				new CustomError('Role should be admin or cashier!', 400)
 			);
 		}
 		const hash = await bcryptjs.hash(password, 8);
@@ -22,6 +27,7 @@ export const createUser = catchAsyncError(
 			id: uuid4(),
 			name,
 			email,
+			role,
 			password: hash,
 		});
 		user.password = undefined;
@@ -40,11 +46,7 @@ export const createUser = catchAsyncError(
 export const getUsers = catchAsyncError(async (req: Request, res: Response) => {
 	const usersRepo = new UsersRepository();
 	const id = req.user.id;
-	const users = await usersRepo.getAll(id, [
-		'user.id',
-		'user.name',
-		'user.email',
-	]);
+	const users = await usersRepo.getAll();
 
 	res.status(200).json({
 		message: 'Users fetched successfully',

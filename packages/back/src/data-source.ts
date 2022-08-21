@@ -19,6 +19,7 @@ class AppDataSource {
 			const user: User = {
 				id: uuid4(),
 				name: 'admin',
+				role: 'admin',
 				email: 'admin@gmail.com',
 				password: await bcryptjs.hash('pwd12345', 8),
 			};

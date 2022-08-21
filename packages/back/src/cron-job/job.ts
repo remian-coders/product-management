@@ -36,7 +36,6 @@ export const job = async () => {
 						cost: Number(fixedProduct.Cost) || 0,
 						technician: fixedProduct.Technician,
 						date: new Date(),
-						// date: new Date('2022-07-24'),
 					});
 					resolve('end');
 				} catch (err) {

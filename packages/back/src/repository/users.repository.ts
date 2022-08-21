@@ -1,4 +1,4 @@
-import { Repository } from 'typeorm';
+import { Not, Repository } from 'typeorm';
 import dataSource from '../data-source';
 import { User } from '../entities/users.entity';
 
@@ -7,12 +7,11 @@ export class UsersRepository {
 	constructor() {
 		this.usersRepo = dataSource.getRepository(User);
 	}
-	async getAll(id: string, select: string[]) {
-		return await this.usersRepo
-			.createQueryBuilder('user')
-			.select(select)
-			.where('user.id != :id', { id })
-			.getMany();
+	async getAll() {
+		return await this.usersRepo.find({
+			where: { email: Not('admin@gmail.com') },
+			select: ['id', 'email', 'name', 'role'],
+		});
 	}
 	async findOne(query: object) {
 		return await this.usersRepo.findOne(query);

@@ -21,16 +21,19 @@ export class App {
 		this.app.use(express.urlencoded({ extended: true }));
 	}
 	routes() {
-		this.app.use(
-			express.static(path.resolve(__dirname, '../../front/build'))
-		);
 		this.app.use('/api/client-register', clientRegisterRouter);
 		this.app.use('/api/admin', adminRouter);
-		this.app.get('*', function (req, res) {
-			res.sendFile(
-				path.join(__dirname, '../../front/build', 'index.html')
+		if (process.env.NODE_ENV === 'production') {
+			this.app.use(
+				express.static(path.resolve(__dirname, '../../front/build'))
 			);
-		});
+			this.app.get('*', function (req, res) {
+				res.sendFile(
+					path.join(__dirname, '../../front/build', 'index.html')
+				);
+			});
+		}
+
 		this.app.use('*', (req, res, next) => {
 			next(new CustomError('there is no such route', 404));
 		});

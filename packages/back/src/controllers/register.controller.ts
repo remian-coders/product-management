@@ -13,7 +13,9 @@ export const createRegister = catchAsyncError(
 		const registerType = cost > 0 ? 'income' : 'expense';
 		paymentType = cost < 0 ? 'cash' : paymentType;
 		ticketNo = cost < 0 ? null : ticketNo;
-		const admin = req.user ? req.user.name : null;
+		let admin: string;
+		if (req.user.role === 'admin') admin = req.user.name;
+		else admin = null;
 		const register = {
 			ticketNo,
 			cost,
@@ -99,13 +101,13 @@ export const isAvailable = async (
 	res: Response,
 	next: NextFunction
 ) => {
-	const ipRepo = new IPRepository();
-	const ip = req.ip;
-	console.log(ip);
-	const isAllowedIP = await ipRepo.findByIP(ip);
-	if (!isAllowedIP) {
-		return next(new CustomError('IP not allowed', 403));
-	}
+	// const ipRepo = new IPRepository();
+	// const ip = req.ip;
+	// console.log(ip);
+	// const isAllowedIP = await ipRepo.findByIP(ip);
+	// if (!isAllowedIP) {
+	// 	return next(new CustomError('IP not allowed', 403));
+	// }
 
 	const workingHoursRepo = new WorkingHoursRepository();
 	const todaysWorkingHours = await workingHoursRepo.getTodaysWorkingHours();

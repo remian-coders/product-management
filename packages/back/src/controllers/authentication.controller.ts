@@ -1,14 +1,14 @@
 import bcryptjs from 'bcryptjs';
 import crypto from 'crypto';
 import { promisify } from 'util';
-import express, { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { UsersRepository } from '../repository/users.repository';
 import { CustomError } from '../utils/custom-error';
 import { jwtSign, jwtVerify } from './utils/jwt';
 import { catchAsyncError } from './utils/catch-async-error';
 
 export const login = catchAsyncError(
-	async (req: Request, res: Response, next: express.NextFunction) => {
+	async (req: Request, res: Response, next: NextFunction) => {
 		const usersRepo = new UsersRepository();
 		const { email, password } = req.body;
 		if (!email || !password)
@@ -16,7 +16,7 @@ export const login = catchAsyncError(
 				new CustomError('Please provide email and password', 400)
 			);
 		const user = await usersRepo.findOne({
-			select: ['id', 'name', 'password', 'email'],
+			select: ['id', 'name', 'password', 'email', 'role'],
 			where: { email },
 		});
 		if (!user || !(await bcryptjs.compare(password, user.password)))
@@ -35,7 +35,7 @@ export const login = catchAsyncError(
 );
 
 export const updatePassword = catchAsyncError(
-	async (req: Request, res: Response, next: express.NextFunction) => {
+	async (req: Request, res: Response, next: NextFunction) => {
 		const usersRepo = new UsersRepository();
 		const { oldPassword, newPassword } = req.body;
 		if (!oldPassword || !newPassword)
@@ -43,7 +43,7 @@ export const updatePassword = catchAsyncError(
 				new CustomError('Please provide old and new password', 400)
 			);
 		const user = await usersRepo.findOne({
-			select: ['id', 'name', 'password', 'email'],
+			select: ['id', 'name', 'password', 'email', 'role'],
 			where: { id: req.user.id },
 		});
 		const isCorrectPwd = await bcryptjs.compare(oldPassword, user.password);
@@ -64,7 +64,7 @@ export const updatePassword = catchAsyncError(
 );
 
 export const guard = catchAsyncError(
-	async (req: Request, res: Response, next: express.NextFunction) => {
+	async (req: Request, res: Response, next: NextFunction) => {
 		const usersRepo = new UsersRepository();
 		const { authorization } = req.headers;
 		let token: string;
@@ -95,15 +95,28 @@ export const guard = catchAsyncError(
 		next();
 	}
 );
+export const authorize = (roles: string[]) => {
+	return (req: Request, res: Response, next: NextFunction) => {
+		if (!roles.includes(req.user.role)) {
+			return next(
+				new CustomError(
+					`You don't have permission to access this route.`,
+					403
+				)
+			);
+		}
+		return next();
+	};
+};
 
 export const forgotPassword = catchAsyncError(
-	async (req: Request, res: Response, next: express.NextFunction) => {
+	async (req: Request, res: Response, next: NextFunction) => {
 		const usersRepo = new UsersRepository();
 		const { email } = req.body;
 		if (!email) return next(new CustomError('Please provide email', 400));
 		const user = await usersRepo.findOne({
 			where: { email },
-			selec: ['id', 'name', 'email'],
+			selec: ['id', 'name', 'email', 'role'],
 		});
 		if (!user) return next(new CustomError('User does not exist', 400));
 
@@ -127,7 +140,7 @@ export const forgotPassword = catchAsyncError(
 );
 
 export const resetPassword = catchAsyncError(
-	async (req: Request, res: Response, next: express.NextFunction) => {
+	async (req: Request, res: Response, next: NextFunction) => {
 		const { password, token: resetToken } = req.body;
 
 		if (!password)

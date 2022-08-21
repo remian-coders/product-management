@@ -5,6 +5,7 @@ import {
 	guard,
 	forgotPassword,
 	resetPassword,
+	authorize,
 } from '../controllers/authentication.controller';
 import {
 	createUser,
@@ -45,24 +46,18 @@ router.post('/login', login);
 router.post('/forgot-password', forgotPassword);
 router.patch('/reset-password', resetPassword);
 
-router.use(guard);
-router.get('/', (req, res, next) => {
-	res.status(200).json({
-		status: 'success',
-		message: `Hello ${req.user.name}`,
-		data: { user: req.user },
-	});
-});
+router.use(guard, authorize(['admin']));
 router.patch('/update-password', updatePassword);
 router.route('/user').post(createUser).get(getUsers);
 router.delete('/user/:id', deleteUser);
 router.route('/register').post(createRegister).get(getAdminRegister);
 router.get('/all-register', getAllRegister);
 
-router.route('/ip-address-config').get(getIPs).post(addIP);
-router.delete('/ip-address-config/:id', deleteIP);
+// router.route('/ip-address-config').get(getIPs).post(addIP);
+// router.delete('/ip-address-config/:id', deleteIP);
 router.route('/email-address-config').get(getEmails).post(addEmail);
 router.delete('/email-address-config/:id', deleteEmail);
+
 router.route('/csv-path').get(getPath).patch(addPath);
 router.post(
 	'/upload-csv-file',
