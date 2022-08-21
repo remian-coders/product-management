@@ -52,6 +52,13 @@ router.route('/user').post(createUser).get(getUsers);
 router.delete('/user/:id', deleteUser);
 router.route('/register').post(createRegister).get(getAdminRegister);
 router.get('/all-register', getAllRegister);
+router.get('/', (req, res, next) => {
+	res.status(200).json({
+		status: 'success',
+		message: `Hello ${req.user.name}`,
+		data: { user: req.user },
+	});
+});
 
 // router.route('/ip-address-config').get(getIPs).post(addIP);
 // router.delete('/ip-address-config/:id', deleteIP);
