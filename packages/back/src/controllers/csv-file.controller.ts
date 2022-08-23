@@ -11,8 +11,6 @@ import { date } from '../utils/date';
 export const addPath = catchAsyncError(
 	async (req: Request, res: Response, next: express.NextFunction) => {
 		const { path: csvFolder } = req.body;
-		console.log('******', csvFolder);
-		console.log('******', req.body);
 		const isExist = await access(csvFolder, constants.R_OK | constants.W_OK)
 			.then(() => true)
 			.catch(() => false);
