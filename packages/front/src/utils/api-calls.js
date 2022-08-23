@@ -251,9 +251,13 @@ export const setWorkingHours = async function (token, data) {
 
 export const patchFinalizeRegister = async function (token) {
   try {
-    let response = await api.patch("/client-register/finalize", {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    let response = await api.patch(
+      "/client-register/finalize",
+      {},
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
     return response;
   } catch (error) {
     return error.response;
