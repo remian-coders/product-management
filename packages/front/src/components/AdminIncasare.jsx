@@ -92,13 +92,13 @@ const AdminIncasare = ({
   }, [token, setDaily, setToday]);
 
   useEffect(() => {
-    getRegisters(); // run it, run it
+    getAllRegisters(); // run it, run it
     getWorkingHours();
 
     return () => {
       // this now gets called when the component unmounts
     };
-  }, [getRegisters, getWorkingHours]);
+  }, [getAllRegisters, getWorkingHours]);
 
   const incasareHandle = async (e) => {
     e.preventDefault();
@@ -274,8 +274,8 @@ const AdminIncasare = ({
               className="form-control"
               id="inputGroupSelect02"
             >
-              <option value="admin">Admin</option>
               <option value="all">All</option>
+              <option value="admin">Admin</option>
             </select>
             <button
               className="btn btn-outline-success"
