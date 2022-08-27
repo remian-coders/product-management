@@ -2,6 +2,7 @@ import nodemailer from 'nodemailer';
 import { google } from 'googleapis';
 import { OAuth2Client } from 'google-auth-library';
 import { open } from 'node:fs/promises';
+import { date } from './date';
 
 export class Mail {
 	private from: string;
@@ -37,13 +38,21 @@ export class Mail {
 			port: 465,
 			host: 'smtp.gmail.com',
 		});
+		const messagesLine = message.split('\n');
+		const messageHtml = messagesLine
+			.map((line) => {
+				return `<p>${line}</p>`;
+			})
+			.join('\n');
 		const mailOptions = {
 			from: this.from,
 			to,
 			subject,
 			secure: false,
 			// text: message,
-			html: message,
+			html: `<html><body>${messageHtml} <p>Date: ${
+				date().currentDayStr
+			}</p></body></html>`,
 			attachments: attachments ? attachments : undefined,
 		};
 		return await transporter.sendMail(mailOptions);
