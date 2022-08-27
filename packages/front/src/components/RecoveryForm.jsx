@@ -17,6 +17,7 @@ const RecoveryForm = ({ password1, password2, recoveryHandler }) => {
             id="floatingPassword"
             placeholder="Password"
             required
+            autoComplete="off"
           />
           <label htmlFor="floatingPassword">New Password</label>
         </div>
@@ -28,6 +29,7 @@ const RecoveryForm = ({ password1, password2, recoveryHandler }) => {
             id="floatingConfirmPassword"
             placeholder="Confirm Password"
             required
+            autoComplete="off"
           />
           <label htmlFor="floatingConfirmPassword">Confirm Password</label>
         </div>

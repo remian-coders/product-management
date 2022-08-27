@@ -1,15 +1,47 @@
-import React from "react";
-import { Modal, Button, Alert } from "react-bootstrap";
+import React, { useState } from "react";
 
-const IncasareModal = ({
-  show,
-  submitHandler,
-  onHide,
-  ticket,
-  cost,
-  type,
-  mentiune,
-}) => {
+import { Form, Modal, Button } from "react-bootstrap";
+
+import Step1 from "./Incasare/Step1";
+import Step2 from "./Incasare/Step2";
+import Step3 from "./Incasare/Step3";
+import Step4 from "./Incasare/Step4";
+import MultiStepProgressBar from "./Incasare/ProgressBar";
+
+const IncasareModal = ({ show, submitHandler, onHide }) => {
+  const [step, setStep] = useState(1);
+
+  const [formData, setFormData] = useState({
+    ticketNo: "",
+    cost: "",
+    paymentType: "cash",
+    others: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+  // Test current step with ternary
+  // _next and _previous functions will be called on button click
+  const next = () => {
+    let currentStep = step;
+
+    // If the current step is 1 or 2, then add one on "next" button click
+    currentStep = currentStep >= 3 ? 4 : currentStep + 1;
+    setStep(currentStep);
+  };
+
+  const prev = () => {
+    let currentStep = step;
+    // If the current step is 2 or 3, then subtract one on "previous" button click
+    currentStep = currentStep <= 1 ? 1 : currentStep - 1;
+    setStep(currentStep);
+  };
   return (
     <>
       <Modal
@@ -23,82 +55,64 @@ const IncasareModal = ({
             Inregistrare incasare noua
           </Modal.Title>
         </Modal.Header>
-        <form onSubmit={submitHandler}>
+        <Form>
           <Modal.Body>
-            <div className="row mb-3">
-              <label htmlFor="inputTichet" className="col-sm-3 col-form-label">
-                Tichet
-              </label>
-              <div className="col-sm-9">
-                <input
-                  ref={ticket}
-                  type="text"
-                  className="form-control"
-                  id="inputTichet"
-                  required
-                />
-              </div>
-            </div>
-            <div className="row mb-3">
-              <label htmlFor="inputCost" className="col-sm-3 col-form-label">
-                Cost(RON)
-              </label>
-              <div className="col-sm-9">
-                <input
-                  ref={cost}
-                  type="number"
-                  className="form-control"
-                  id="inputCost"
-                  min="0"
-                  required
-                />
-              </div>
-            </div>
-            <div className="row mb-3">
-              <label htmlFor="inputPlata" className="col-sm-3 col-form-label">
-                Tip plata
-              </label>
-              <div className="col-sm-9">
-                <select
-                  ref={type}
-                  className="form-select"
-                  aria-label="Default select example"
-                  required
-                >
-                  <option value="cash">Cash</option>
-                  <option value="card">Card</option>
-                </select>
-              </div>
-            </div>
-            <div className="row mb-3">
-              <label
-                htmlFor="inputMentiune"
-                className="col-sm-3 col-form-label"
-              >
-                Mentiune
-              </label>
-              <div className="col-sm-9">
-                <input
-                  ref={mentiune}
-                  type="text"
-                  className="form-control"
-                  id="inputMentiune"
-                />
-              </div>
-            </div>
-            <div className="row px-2">
-              <Alert variant="warning">Toate campurile sunt obligatorii!</Alert>
-            </div>
+            <MultiStepProgressBar step={step} />
+
+            <Step1 step={step} values={formData} handleChange={handleChange} />
+            <Step2 step={step} values={formData} handleChange={handleChange} />
+            <Step3 step={step} values={formData} handleChange={handleChange} />
+            <Step4 step={step} values={formData} handleChange={handleChange} />
           </Modal.Body>
           <Modal.Footer>
-            <Button type="submit" variant="primary">
-              Save
-            </Button>
-            <Button variant="secondary" onClick={onHide}>
-              Close
-            </Button>
+            {step !== 1 && (
+              <Button
+                variant="secondary"
+                onClick={prev}
+                className="float-start"
+              >
+                Previous
+              </Button>
+            )}
+            {step === 1 && (
+              <Button
+                variant="primary"
+                onClick={next}
+                className="float-end"
+                disabled={formData.ticketNo.length > 0 ? false : true}
+              >
+                Next
+              </Button>
+            )}
+            {step === 2 && (
+              <Button
+                variant="primary"
+                onClick={next}
+                className="float-end"
+                disabled={formData.cost.length > 0 ? false : true}
+              >
+                Next
+              </Button>
+            )}
+            {step === 3 && (
+              <Button variant="primary" onClick={next} className="float-end">
+                Next
+              </Button>
+            )}
+            {step === 4 && (
+              <Button
+                variant="primary"
+                onClick={() => {
+                  submitHandler(formData, setFormData);
+                  setStep(1);
+                }}
+                className="float-end"
+              >
+                Submit
+              </Button>
+            )}
           </Modal.Footer>
-        </form>
+        </Form>
       </Modal>
     </>
   );

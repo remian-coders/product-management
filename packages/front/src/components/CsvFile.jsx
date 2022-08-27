@@ -73,6 +73,7 @@ const CsvFile = ({ token, setMessage, setType, setShow }) => {
               aria-describedby="button-addon2"
               accept=".csv"
               required
+              autoComplete="off"
             />
             <button
               className="btn btn-outline-success"
@@ -95,6 +96,7 @@ const CsvFile = ({ token, setMessage, setType, setShow }) => {
               placeholder={`CSV file path: ${urlPath}`}
               aria-describedby="button-addon2"
               required
+              autoComplete="off"
             />
             <button
               className="btn btn-outline-success"

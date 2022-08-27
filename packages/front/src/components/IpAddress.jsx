@@ -69,6 +69,7 @@ const IpAddress = ({ token, setMessage, setType, setShow }) => {
               aria-describedby="button-addon2"
               ref={ipRef}
               required
+              autoComplete="off"
             />
             <button
               className="btn btn-outline-success"

@@ -28,6 +28,7 @@ const PlataModal = ({ show, submitHandler, onHide, cost, mentiune }) => {
                 id="inputCost"
                 min="0"
                 required
+                autoComplete="off"
               />
             </div>
           </div>
@@ -42,6 +43,7 @@ const PlataModal = ({ show, submitHandler, onHide, cost, mentiune }) => {
                 type="text"
                 className="form-control"
                 id="inputMentiune"
+                autoComplete="off"
               />
             </div>
           </div>

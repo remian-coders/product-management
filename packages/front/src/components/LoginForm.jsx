@@ -17,6 +17,7 @@ const LoginForm = ({ loginHandler, password, email }) => {
             id="floatingInput"
             placeholder="name@example.com"
             required
+            autoComplete="off"
           />
           <label htmlFor="floatingInput">Email address</label>
         </div>
@@ -28,6 +29,7 @@ const LoginForm = ({ loginHandler, password, email }) => {
             id="floatingPassword"
             placeholder="Password"
             required
+            autoComplete="off"
           />
           <label htmlFor="floatingPassword">Password</label>
         </div>

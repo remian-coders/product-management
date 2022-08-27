@@ -34,8 +34,6 @@ const UserCreate = ({ token, setMessage, setType, setShow }) => {
 
     const response = await createUser(token, { name, email, password, role });
 
-    console.log(response);
-
     if (response.status === 200 || response.status === 201) {
       emailRef.current.value = "";
       nameRef.current.value = "";
@@ -81,6 +79,7 @@ const UserCreate = ({ token, setMessage, setType, setShow }) => {
               className="form-control"
               id="validationDefault01"
               required
+              autoComplete="off"
             />
           </div>
           <div className="col-md-6">
@@ -96,6 +95,7 @@ const UserCreate = ({ token, setMessage, setType, setShow }) => {
                 id="validationDefaultEmail"
                 aria-describedby="inputGroupPrepend2"
                 required
+                autoComplete="off"
               />
             </div>
           </div>
@@ -111,6 +111,7 @@ const UserCreate = ({ token, setMessage, setType, setShow }) => {
                 id="validationDefaultPassword"
                 aria-describedby="inputGroupPrepend2"
                 required
+                autoComplete="off"
               />
             </div>
           </div>

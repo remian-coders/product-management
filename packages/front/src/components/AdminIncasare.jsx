@@ -27,11 +27,6 @@ const AdminIncasare = ({
   const [registers, setRegisters] = useState([]);
   const [report, setReport] = useState({});
 
-  const incasareTicket = useRef();
-  const incasareCost = useRef();
-  const incasareMentiune = useRef();
-  const incasareType = useRef();
-
   const plataCost = useRef();
   const plataMentiune = useRef();
 
@@ -100,18 +95,8 @@ const AdminIncasare = ({
     };
   }, [getAllRegisters, getWorkingHours]);
 
-  const incasareHandle = async (e) => {
-    e.preventDefault();
-    const ticketNo = incasareTicket.current.value;
-    const cost = incasareCost.current.value;
-    const paymentType = incasareType.current.value;
-    const others = incasareMentiune.current.value;
-    const response = await postAdminRegister(token, {
-      ticketNo,
-      cost,
-      paymentType,
-      others,
-    });
+  const incasareHandle = async (formData, setFormData) => {
+    const response = await postAdminRegister(token, formData);
 
     if (response.status === 200) {
       setMessage(response.data?.message);
@@ -119,10 +104,12 @@ const AdminIncasare = ({
       setShow(true);
       setIncasare(false);
       getRegisters();
-      incasareTicket.current.value = "";
-      incasareCost.current.value = "";
-      incasareMentiune.current.value = "";
-      incasareType.current.value = "";
+      setFormData({
+        ticketNo: "",
+        cost: "",
+        paymentType: "cash",
+        others: "",
+      });
     } else {
       setMessage(response.data?.message);
       setType("danger");
@@ -337,10 +324,6 @@ const AdminIncasare = ({
         show={incasare}
         onHide={() => setIncasare(false)}
         submitHandler={incasareHandle}
-        ticket={incasareTicket}
-        cost={incasareCost}
-        mentiune={incasareMentiune}
-        type={incasareType}
       />
       <PlataModal
         show={plata}

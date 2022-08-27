@@ -17,6 +17,7 @@ const ForgotForm = ({ forgotHandler, email }) => {
             id="floatingInput"
             placeholder="name@example.com"
             required
+            autoComplete="off"
           />
           <label htmlFor="floatingInput">Email address</label>
         </div>

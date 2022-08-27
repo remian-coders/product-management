@@ -18,26 +18,13 @@ import {
 import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-const Home = ({
-  setMessage,
-  setType,
-  setShow,
-  setToken,
-  setRole,
-  token,
-  role,
-}) => {
+const Home = ({ setMessage, setType, setShow, token, role }) => {
   const [incasare, setIncasare] = useState(false);
   const [plata, setPlata] = useState(false);
 
   const [loading, setLoading] = useState(true);
   const [registers, setRegisters] = useState([]);
   const [report, setReport] = useState({});
-
-  const incasareTicket = useRef();
-  const incasareCost = useRef();
-  const incasareMentiune = useRef();
-  const incasareType = useRef();
 
   const plataCost = useRef();
   const plataMentiune = useRef();
@@ -72,23 +59,8 @@ const Home = ({
     }
   }, [token, role, navigate]);
 
-  const incasareHandle = async (e) => {
-    e.preventDefault();
-
-    const ticketNo = incasareTicket.current.value;
-    const cost = incasareCost.current.value;
-    const paymentType = incasareType.current.value;
-    const others = incasareMentiune.current.value;
-
-    const response = await createRegister(
-      {
-        ticketNo,
-        cost,
-        paymentType,
-        others,
-      },
-      token
-    );
+  const incasareHandle = async (formData, setFormData) => {
+    const response = await createRegister(formData, token);
 
     if (response.status === 200) {
       setMessage(response.data?.message);
@@ -96,11 +68,12 @@ const Home = ({
       setShow(true);
       setIncasare(false);
       getRegisters();
-
-      incasareTicket.current.value = "";
-      incasareCost.current.value = "";
-      incasareMentiune.current.value = "";
-      incasareType.current.value = "";
+      setFormData({
+        ticketNo: "",
+        cost: "",
+        paymentType: "cash",
+        others: "",
+      });
     } else {
       setMessage(response.data?.message);
       setType("danger");
@@ -135,8 +108,6 @@ const Home = ({
   const finalizeHandle = async (e) => {
     const response = await patchFinalizeRegister(token);
 
-    console.log(token);
-
     if (response.status === 200) {
       setMessage(response.data?.message);
       setType("success");
@@ -148,19 +119,13 @@ const Home = ({
     }
   };
 
-  const logoutHandler = () => {
-    setToken(null);
-    setRole(null);
-    localStorage.removeItem("user_token");
-    localStorage.removeItem("user_role");
-  };
   return (
     <>
       {loading ? (
         <Loading />
       ) : (
         <>
-          <Header logoutHandler={logoutHandler} />
+          <Header />
           <Finalizer finalizeHandle={finalizeHandle} />
           <Container className="p-0">
             <HomeTable registers={registers} report={report} />
@@ -191,10 +156,6 @@ const Home = ({
             show={incasare}
             onHide={() => setIncasare(false)}
             submitHandler={incasareHandle}
-            ticket={incasareTicket}
-            cost={incasareCost}
-            mentiune={incasareMentiune}
-            type={incasareType}
           />
           <PlataModal
             show={plata}

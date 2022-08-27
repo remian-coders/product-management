@@ -39,6 +39,7 @@ const PasswordUpdate = ({ token, setToken, setMessage, setShow, setType }) => {
             className="form-control"
             id="validationDefault01"
             required
+            autoComplete="off"
           />
         </div>
         <div className="col-md-6">
@@ -51,6 +52,7 @@ const PasswordUpdate = ({ token, setToken, setMessage, setShow, setType }) => {
             className="form-control"
             id="validationDefault02"
             required
+            autoComplete="off"
           />
         </div>
         <div className="col-12">

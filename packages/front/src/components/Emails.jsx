@@ -68,6 +68,7 @@ const Emails = ({ token, setMessage, setType, setShow }) => {
               aria-label="email"
               aria-describedby="button-addon2"
               required
+              autoComplete="off"
             />
             <button
               className="btn btn-outline-success"
