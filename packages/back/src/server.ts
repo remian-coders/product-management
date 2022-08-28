@@ -6,6 +6,7 @@ import { date } from './utils/date';
 import path from 'path';
 config({ path: path.join(__dirname, '../config.env') });
 process.env.TZ = 'Europe/Bucharest';
+// process.env.TZ = 'Asia/Seoul';
 const { app } = new App();
 dataSource
 	.initialize()
