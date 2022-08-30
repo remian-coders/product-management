@@ -10,12 +10,10 @@ const PlataModal = ({ show, submitHandler, onHide, cost, mentiune }) => {
       centered
     >
       <Modal.Header closeButton onClick={onHide}>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Inregistrare incasare noua
-        </Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">Plata</Modal.Title>
       </Modal.Header>
       <form onSubmit={submitHandler}>
-        <Modal.Body>
+        <Modal.Body className="fs-5">
           <div className="row mb-3">
             <label htmlFor="inputCost" className="col-sm-3 col-form-label">
               Cost(RON)
@@ -29,6 +27,7 @@ const PlataModal = ({ show, submitHandler, onHide, cost, mentiune }) => {
                 min="0"
                 required
                 autoComplete="off"
+                autoFocus
               />
             </div>
           </div>
@@ -52,10 +51,10 @@ const PlataModal = ({ show, submitHandler, onHide, cost, mentiune }) => {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" type="submit">
+          <Button variant="primary" type="submit" size="lg">
             Save
           </Button>
-          <Button variant="secondary" onClick={onHide}>
+          <Button variant="secondary" onClick={onHide} size="lg">
             Close
           </Button>
         </Modal.Footer>

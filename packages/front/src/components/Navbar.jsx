@@ -20,14 +20,16 @@ const NavbarM = ({ today, daily, setToken, setRole }) => {
     <Navbar bg="light" expand={false} className="mb-3">
       <Container fluid>
         <Link to="./" className="text-decoration-none">
-          <Navbar.Brand>Admin</Navbar.Brand>
+          <Navbar.Brand>
+            Admin - {new Date().toLocaleDateString()} - Working Hours
+          </Navbar.Brand>
         </Link>
         <Navbar.Text>
-          Daily Working Hours:{dailyFrom} - {dailyTo}
+          Daily: {dailyFrom} - {dailyTo}
           {" | "}
           {today
-            ? `Today's Working Hours:${todayFrom} - ${todayTo}`
-            : `Today's Working Hours:${dailyFrom} - ${dailyTo}`}
+            ? `Today: ${todayFrom} - ${todayTo}`
+            : `Today: ${dailyFrom} - ${dailyTo}`}
         </Navbar.Text>
 
         <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${false}`} />

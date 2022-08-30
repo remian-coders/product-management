@@ -103,11 +103,11 @@ const AdminIncasare = ({
       setType("success");
       setShow(true);
       setIncasare(false);
-      getRegisters();
+      getAllRegisters();
       setFormData({
         ticketNo: "",
         cost: "",
-        paymentType: "cash",
+        paymentType: "",
         others: "",
       });
     } else {
@@ -131,7 +131,7 @@ const AdminIncasare = ({
       setType("success");
       setShow(true);
       setPlata(false);
-      getRegisters();
+      getAllRegisters();
 
       plataCost.current.value = "";
       plataMentiune.current.value = "";

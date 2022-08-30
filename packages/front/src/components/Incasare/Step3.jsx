@@ -8,19 +8,21 @@ const Step3 = ({ step, values, handleChange }) => {
   return (
     <>
       <div className="row my-4">
-        <label htmlFor="inputPlata" className="col-sm-3 col-form-label">
-          Tip plata
+        <label htmlFor="inputCost" className="col-sm-3 col-form-label">
+          Cost(RON)
         </label>
         <div className="col-sm-9">
-          <select
-            value={values.paymentType}
+          <input
+            value={values.cost}
             onChange={handleChange}
-            name="paymentType"
-            className="form-select"
-          >
-            <option value="cash">Cash</option>
-            <option value="card">Card</option>
-          </select>
+            name="cost"
+            type="number"
+            className="form-control"
+            id="inputCost"
+            min="0"
+            autoComplete="off"
+            autoFocus
+          />
         </div>
       </div>
     </>

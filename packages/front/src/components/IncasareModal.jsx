@@ -2,9 +2,9 @@ import React, { useState } from "react";
 
 import { Form, Modal, Button } from "react-bootstrap";
 
-import Step1 from "./Incasare/Step1";
-import Step2 from "./Incasare/Step2";
-import Step3 from "./Incasare/Step3";
+import Step1 from "./Incasare/Step2";
+import Step2 from "./Incasare/Step3";
+import Step3 from "./Incasare/Step1";
 import Step4 from "./Incasare/Step4";
 import MultiStepProgressBar from "./Incasare/ProgressBar";
 
@@ -14,7 +14,7 @@ const IncasareModal = ({ show, submitHandler, onHide }) => {
   const [formData, setFormData] = useState({
     ticketNo: "",
     cost: "",
-    paymentType: "cash",
+    paymentType: "",
     others: "",
   });
 
@@ -50,13 +50,25 @@ const IncasareModal = ({ show, submitHandler, onHide }) => {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <Modal.Header closeButton onClick={onHide}>
+        <Modal.Header
+          closeButton
+          onClick={() => {
+            onHide();
+            setStep(1);
+            setFormData({
+              ticketNo: "",
+              cost: "",
+              paymentType: "",
+              others: "",
+            });
+          }}
+        >
           <Modal.Title id="contained-modal-title-vcenter">
             Inregistrare incasare noua
           </Modal.Title>
         </Modal.Header>
         <Form>
-          <Modal.Body>
+          <Modal.Body className="fs-5">
             <MultiStepProgressBar step={step} />
 
             <Step1 step={step} values={formData} handleChange={handleChange} />
@@ -70,6 +82,7 @@ const IncasareModal = ({ show, submitHandler, onHide }) => {
                 variant="secondary"
                 onClick={prev}
                 className="float-start"
+                size="lg"
               >
                 Previous
               </Button>
@@ -79,7 +92,8 @@ const IncasareModal = ({ show, submitHandler, onHide }) => {
                 variant="primary"
                 onClick={next}
                 className="float-end"
-                disabled={formData.ticketNo.length > 0 ? false : true}
+                disabled={formData.paymentType.length > 0 ? false : true}
+                size="lg"
               >
                 Next
               </Button>
@@ -89,13 +103,20 @@ const IncasareModal = ({ show, submitHandler, onHide }) => {
                 variant="primary"
                 onClick={next}
                 className="float-end"
-                disabled={formData.cost.length > 0 ? false : true}
+                disabled={formData.ticketNo.length > 0 ? false : true}
+                size="lg"
               >
                 Next
               </Button>
             )}
             {step === 3 && (
-              <Button variant="primary" onClick={next} className="float-end">
+              <Button
+                variant="primary"
+                onClick={next}
+                className="float-end"
+                size="lg"
+                disabled={formData.cost.length > 0 ? false : true}
+              >
                 Next
               </Button>
             )}
@@ -107,6 +128,7 @@ const IncasareModal = ({ show, submitHandler, onHide }) => {
                   setStep(1);
                 }}
                 className="float-end"
+                size="lg"
               >
                 Submit
               </Button>
