@@ -68,7 +68,6 @@ export const guard = catchAsyncError(
 		const usersRepo = new UsersRepository();
 		const { authorization } = req.headers;
 		let token: string;
-		console.log(req.headers);
 		if (authorization && authorization.startsWith('Bearer'))
 			token = authorization.split(' ')[1];
 		if (!token) {
