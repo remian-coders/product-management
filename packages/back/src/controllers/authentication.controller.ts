@@ -131,9 +131,14 @@ export const forgotPassword = catchAsyncError(
 			passwordResetToken: tempToken,
 			passwordResetExpires: new Date(Date.now() + 10 * 60 * 1000),
 		});
-		const resetPwdLink = `${req.protocol}://${req.get(
-			'host'
-		)}/login/recovery/${randomBytes}`;
+		let resetPwdLink: string;
+		if (process.env.NODE_ENV === 'production') {
+			resetPwdLink = `${req.protocol}://${req.get(
+				'host'
+			)}/login/recovery/${randomBytes}`;
+		} else if (process.env.NODE_ENV === 'development') {
+			resetPwdLink = `http://localhost:3000/login/recovery/${randomBytes}`;
+		}
 		const subject = 'Reset your password!';
 		const html = `<p>Click here <a href="${resetPwdLink}">Reset Password</a> to reset your password.</p>\n<p>The link will expire after 10 minutes.</p>\n<p>If you did not request this, please ignore this email and your password will remain unchanged.</p>`;
 		await mail(email, subject, html);
@@ -148,6 +153,7 @@ export const forgotPassword = catchAsyncError(
 export const resetPassword = catchAsyncError(
 	async (req: Request, res: Response, next: NextFunction) => {
 		const { password, token: resetToken } = req.body;
+		console.log(password, resetToken);
 		if (!password)
 			return next(new CustomError('Please provide password!', 400));
 		if (!resetToken) return next(new CustomError('Please try again!', 400));
