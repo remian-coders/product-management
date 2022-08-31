@@ -18,8 +18,6 @@ const Login = ({
   const emailRef = useRef();
   const passwordRef = useRef();
   const recoveryEmailRef = useRef();
-  const recoveryPasswordRef1 = useRef();
-  const recoveryPasswordRef2 = useRef();
 
   const loginHandler = async (e) => {
     e.preventDefault();
@@ -60,9 +58,7 @@ const Login = ({
     const response = await forgotPassword({ email });
 
     if (response.status === 200) {
-      navigate("./recovery");
       setMessage(response.data.message);
-      setToken(response.data.data.token);
       setType("success");
       setShow(true);
     } else {
@@ -72,12 +68,7 @@ const Login = ({
     }
   };
 
-  const recoveryHandler = async (e) => {
-    e.preventDefault();
-
-    const password = recoveryPasswordRef1.current.value;
-    const password2 = recoveryPasswordRef2.current.value;
-
+  const recoveryHandler = async (password, password2, recoveryToken) => {
     if (password.localeCompare(password2) !== 0) {
       setMessage("Passwords do not match");
       setType("warning");
@@ -85,7 +76,7 @@ const Login = ({
       return;
     }
 
-    const response = await resetPassword({ token, password });
+    const response = await resetPassword({ recoveryToken, password });
 
     if (response.status === 200) {
       navigate("/login");
@@ -108,14 +99,8 @@ const Login = ({
         }
       />
       <Route
-        path="/recovery"
-        element={
-          <RecoveryForm
-            password1={recoveryPasswordRef1}
-            password2={recoveryPasswordRef2}
-            recoveryHandler={recoveryHandler}
-          />
-        }
+        path="/recovery/:token"
+        element={<RecoveryForm recoveryHandler={recoveryHandler} />}
       />
       <Route
         path="/*"

@@ -9,7 +9,7 @@ const ForgotForm = ({ forgotHandler, email }) => {
         className="col-12 col-sm-8 col-md-6 col-lg-4 m-auto p-5 mt-5 border rounded"
       >
         <h3 className="mb-3">Enter your email</h3>
-        <div className="form-floating mb-3">
+        <div className="mb-3">
           <input
             ref={email}
             type="email"
@@ -19,7 +19,6 @@ const ForgotForm = ({ forgotHandler, email }) => {
             required
             autoComplete="off"
           />
-          <label htmlFor="floatingInput">Email address</label>
         </div>
 
         <div className="mb-3">

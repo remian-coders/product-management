@@ -1,17 +1,27 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
-const RecoveryForm = ({ password1, password2, recoveryHandler }) => {
+const RecoveryForm = ({ recoveryHandler }) => {
+  const { token } = useParams();
+
+  const handlePasswordChange = (e) => {
+    e.preventDefault();
+    const password = e.target.password1.value;
+    const password2 = e.target.password2.value;
+
+    recoveryHandler(password, password2, token);
+  };
+
   return (
     <div className="container text-center p-5">
       <form
-        onSubmit={recoveryHandler}
+        onSubmit={handlePasswordChange}
         className="col-12 col-sm-8 col-md-6 col-lg-4 m-auto p-5 mt-5 border rounded"
       >
         <h3 className="mb-3">Updating your password</h3>
-        <div className="form-floating mb-3">
+        <div className="mb-3">
           <input
-            ref={password1}
+            name="password1"
             type="password"
             className="form-control"
             id="floatingPassword"
@@ -19,11 +29,10 @@ const RecoveryForm = ({ password1, password2, recoveryHandler }) => {
             required
             autoComplete="off"
           />
-          <label htmlFor="floatingPassword">New Password</label>
         </div>
-        <div className="form-floating mb-3">
+        <div className="mb-3">
           <input
-            ref={password2}
+            name="password2"
             type="password"
             className="form-control"
             id="floatingConfirmPassword"
@@ -31,7 +40,6 @@ const RecoveryForm = ({ password1, password2, recoveryHandler }) => {
             required
             autoComplete="off"
           />
-          <label htmlFor="floatingConfirmPassword">Confirm Password</label>
         </div>
         <div className="mb-3">
           <Link to="/login" className="text-decoration-none">
