@@ -3,9 +3,10 @@ import { open } from 'node:fs/promises';
 import { CsvPathRepository } from '../repository/csv-path.repository';
 import { FixedProductsRepository } from '../repository/fixed-products.repository';
 import { EmailRepository } from '../repository/email.repository';
-import { Mail } from '../utils/mail';
+import { mail } from '../utils/mail';
 import { RegisterRepository } from '../repository/register.repository';
 import { IssueRepository } from '../repository/issue.repository';
+import { date } from '../utils/date';
 export const job = async () => {
 	try {
 		const fixedProductsRepo = new FixedProductsRepository();
@@ -86,7 +87,6 @@ export const job = async () => {
 	}
 };
 async function handleIssue(err) {
-	console.log(err);
 	let message = '';
 	let subject = '';
 	let type = '';
@@ -116,12 +116,20 @@ async function handleIssue(err) {
 		message = `Cost difference. \n Ticket No: ${err.product.ticketNo} \n Technician: ${err.product.technician}\n\nCost: ${err.product.cost}.`;
 		type = 'cost-difference';
 	}
+	const messagesLine = message.split('\n');
+	const messageHtml = messagesLine
+		.map((line) => {
+			return `<p>${line}</p>`;
+		})
+		.join('\n');
+	const html = `<html><body>${messageHtml} <p>Date: ${
+		date().currentDayStr
+	}</p></body></html>`;
 	try {
-		const mail = new Mail();
 		const emailRepo = new EmailRepository();
 		const emailAddresses = await emailRepo.getEmailAddresses();
 		if (emailAddresses.length === 0) return;
-		await mail.send(emailAddresses, subject, message);
+		await mail(emailAddresses, subject, html);
 		const issueRepo = new IssueRepository();
 		let productId = null;
 		if (err.product) {

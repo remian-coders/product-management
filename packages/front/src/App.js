@@ -6,7 +6,6 @@ import Home from "./containers/home";
 import Login from "./containers/login";
 import { Toast, ToastContainer } from "react-bootstrap";
 import { checkToken } from "./utils/api-calls";
-// import Protected from "./utils/protected";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -69,7 +68,7 @@ function App() {
           }
         />
         <Route
-          path="/"
+          path="/*"
           element={
             <Home
               setMessage={setMessage}

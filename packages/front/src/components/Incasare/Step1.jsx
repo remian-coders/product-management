@@ -1,6 +1,6 @@
 import React from "react";
 
-const Step1 = ({ step, handleChange, values }) => {
+const Step1 = ({ step, values, handleChange }) => {
   if (step !== 1) {
     return null;
   }
@@ -8,19 +8,36 @@ const Step1 = ({ step, handleChange, values }) => {
   return (
     <>
       <div className="row my-4">
-        <label htmlFor="inputTichet" className="col-sm-3 col-form-label">
-          Tichet
-        </label>
+        <h4>Tip plata</h4>
         <div className="col-sm-9">
-          <input
-            type="number"
-            name="ticketNo"
-            className="form-control"
-            id="inputTichet"
-            value={values.ticketNo}
-            onChange={handleChange}
-            autoComplete="off"
-          />
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              type="radio"
+              name="paymentType"
+              onChange={handleChange}
+              value="cash"
+              id="paymentType1"
+              checked={values.paymentType === "cash"}
+            />
+            <label className="form-check-label" htmlFor="paymentType1">
+              Cash
+            </label>
+          </div>
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              type="radio"
+              name="paymentType"
+              onChange={handleChange}
+              id="paymentType2"
+              value="card"
+              checked={values.paymentType === "card"}
+            />
+            <label className="form-check-label" htmlFor="paymentType2">
+              Card
+            </label>
+          </div>
         </div>
       </div>
     </>

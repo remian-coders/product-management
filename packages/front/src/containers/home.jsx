@@ -71,7 +71,7 @@ const Home = ({ setMessage, setType, setShow, token, role }) => {
       setFormData({
         ticketNo: "",
         cost: "",
-        paymentType: "cash",
+        paymentType: "",
         others: "",
       });
     } else {

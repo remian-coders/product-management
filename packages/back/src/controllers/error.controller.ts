@@ -10,6 +10,7 @@ export default (
 	err.statusCode = err.statusCode || 500;
 	err.status = err.status || 'error';
 	let error = Object.create(err);
+	console.log(error);
 	if (
 		error.message ===
 		'SQLITE_CONSTRAINT: UNIQUE constraint failed: user.email'
