@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const RecoveryForm = ({ recoveryHandler }) => {
   const { token } = useParams();
@@ -40,11 +40,6 @@ const RecoveryForm = ({ recoveryHandler }) => {
             required
             autoComplete="off"
           />
-        </div>
-        <div className="mb-3">
-          <Link to="/login" className="text-decoration-none">
-            Login
-          </Link>
         </div>
         <button type="submit" className="btn btn-primary">
           Save

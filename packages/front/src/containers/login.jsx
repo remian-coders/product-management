@@ -61,6 +61,7 @@ const Login = ({
       setMessage(response.data.message);
       setType("success");
       setShow(true);
+      recoveryEmailRef.current.value = "";
     } else {
       setMessage(response.data.message);
       setType("danger");

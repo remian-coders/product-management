@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 const ForgotForm = ({ forgotHandler, email }) => {
   return (
@@ -21,11 +20,6 @@ const ForgotForm = ({ forgotHandler, email }) => {
           />
         </div>
 
-        <div className="mb-3">
-          <Link to="/login" className="text-decoration-none">
-            Log in
-          </Link>
-        </div>
         <button type="submit" className="btn btn-primary">
           Send
         </button>
