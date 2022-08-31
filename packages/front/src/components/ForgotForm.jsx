@@ -21,7 +21,7 @@ const ForgotForm = ({ forgotHandler, email, loading }) => {
         </div>
 
         <button type="submit" className="btn btn-primary" disabled={loading}>
-          Send
+          {loading ? "Loading..." : "Save"}
         </button>
       </form>
     </div>
