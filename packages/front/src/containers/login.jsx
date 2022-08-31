@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 
 import { ForgotForm, LoginForm, RecoveryForm } from "../components";
@@ -13,6 +13,8 @@ const Login = ({
   setRole,
 }) => {
   const navigate = useNavigate();
+
+  const [loading, setLoading] = useState(false);
 
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -52,6 +54,8 @@ const Login = ({
   const forgotHandler = async (e) => {
     e.preventDefault();
 
+    setLoading(true);
+
     const email = recoveryEmailRef.current.value;
 
     const response = await forgotPassword({ email });
@@ -66,6 +70,7 @@ const Login = ({
       setType("danger");
       setShow(true);
     }
+    setLoading(false);
   };
 
   const recoveryHandler = async (password, password2, token) => {
@@ -95,7 +100,11 @@ const Login = ({
       <Route
         path="/forgot"
         element={
-          <ForgotForm forgotHandler={forgotHandler} email={recoveryEmailRef} />
+          <ForgotForm
+            forgotHandler={forgotHandler}
+            email={recoveryEmailRef}
+            loading={loading}
+          />
         }
       />
       <Route

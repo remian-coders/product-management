@@ -1,6 +1,6 @@
 import React from "react";
 
-const ForgotForm = ({ forgotHandler, email }) => {
+const ForgotForm = ({ forgotHandler, email, loading }) => {
   return (
     <div className="container text-center p-5">
       <form
@@ -20,7 +20,7 @@ const ForgotForm = ({ forgotHandler, email }) => {
           />
         </div>
 
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-primary" disabled={loading}>
           Send
         </button>
       </form>
