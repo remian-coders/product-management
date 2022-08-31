@@ -10,7 +10,6 @@ const Login = ({
   setMessage,
   setType,
   setToken,
-  token,
   setRole,
 }) => {
   const navigate = useNavigate();
@@ -69,7 +68,7 @@ const Login = ({
     }
   };
 
-  const recoveryHandler = async (password, password2, recoveryToken) => {
+  const recoveryHandler = async (password, password2, token) => {
     if (password.localeCompare(password2) !== 0) {
       setMessage("Passwords do not match");
       setType("warning");
@@ -77,7 +76,7 @@ const Login = ({
       return;
     }
 
-    const response = await resetPassword({ recoveryToken, password });
+    const response = await resetPassword({ token, password });
 
     if (response.status === 200) {
       navigate("/login");
