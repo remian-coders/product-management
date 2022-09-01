@@ -122,8 +122,12 @@ async function handleIssue(err) {
 			return `<p>${line}</p>`;
 		})
 		.join('\n');
-	const html = `<html><body>${messageHtml} <p>Date: ${
-		date().currentDayStr
+	const html = `<html><body>${messageHtml} <p>Date: ${date().currentDayStr} ${
+		date().currentHour +
+		':' +
+		date().currentMinute +
+		':' +
+		date().currentSecond
 	}</p></body></html>`;
 	try {
 		const emailRepo = new EmailRepository();
