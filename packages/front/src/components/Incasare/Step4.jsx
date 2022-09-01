@@ -6,21 +6,19 @@ const Step4 = ({ step, values, handleChange }) => {
   }
   return (
     <>
-      <div className="row my-4">
-        <label htmlFor="inputMentiune" className="col-sm-3 col-form-label">
+      <div className="row my-4 input-group input-group-lg">
+        <label htmlFor="inputMentiune" className="col-4 col-form-label">
           Mentiune
         </label>
-        <div className="col-sm-9">
-          <input
-            value={values.others}
-            onChange={handleChange}
-            name="others"
-            type="text"
-            className="form-control"
-            id="inputMentiune"
-            autoComplete="off"
-          />
-        </div>
+        <input
+          value={values.others}
+          onChange={handleChange}
+          name="others"
+          type="text"
+          className="form-control col-8"
+          id="inputMentiune"
+          autoComplete="off"
+        />
       </div>
     </>
   );

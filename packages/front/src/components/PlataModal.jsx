@@ -5,7 +5,7 @@ const PlataModal = ({ show, submitHandler, onHide, cost, mentiune }) => {
   return (
     <Modal
       show={show}
-      size="lg"
+      size="xl"
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
@@ -14,37 +14,33 @@ const PlataModal = ({ show, submitHandler, onHide, cost, mentiune }) => {
       </Modal.Header>
       <form onSubmit={submitHandler}>
         <Modal.Body className="fs-5">
-          <div className="row mb-3">
-            <label htmlFor="inputCost" className="col-sm-3 col-form-label">
+          <div className="mb-3 input-group input-group-lg">
+            <label htmlFor="inputCost" className="col-4 col-form-label">
               Cost(RON)
             </label>
-            <div className="col-sm-9">
-              <input
-                ref={cost}
-                type="number"
-                className="form-control"
-                id="inputCost"
-                min="0"
-                required
-                autoComplete="off"
-                autoFocus
-              />
-            </div>
+            <input
+              ref={cost}
+              type="number"
+              className="form-control col-8"
+              id="inputCost"
+              min="0"
+              required
+              autoComplete="off"
+              autoFocus
+            />
           </div>
 
-          <div className="row mb-3">
-            <label htmlFor="inputMentiune" className="col-sm-3 col-form-label">
+          <div className="mb-3 input-group input-group-lg">
+            <label htmlFor="inputMentiune" className="col-4 col-form-label">
               Mentiune
             </label>
-            <div className="col-sm-9">
-              <input
-                ref={mentiune}
-                type="text"
-                className="form-control"
-                id="inputMentiune"
-                autoComplete="off"
-              />
-            </div>
+            <input
+              ref={mentiune}
+              type="text"
+              className="form-control col-8"
+              id="inputMentiune"
+              autoComplete="off"
+            />
           </div>
           <div className="row px-2">
             <Alert variant="warning">Toate campurile sunt obligatorii!</Alert>

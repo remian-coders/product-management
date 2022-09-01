@@ -10,7 +10,7 @@ const Finalizer = ({ finalizeHandle }) => {
         <div className="row gx-5">
           <div className="col">
             <div className="py-3">
-              <h3>Registru casa</h3>
+              <h3>Registru casa - {new Date().toLocaleDateString()}</h3>
             </div>
           </div>
 

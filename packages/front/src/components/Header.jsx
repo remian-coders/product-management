@@ -5,9 +5,7 @@ const Header = () => {
     <div>
       <nav className="navbar bg-light border-bottom">
         <div className="container-fluid">
-          <span className="navbar-brand mb-0 h1">
-            Incasare Table - {new Date().toLocaleDateString()}
-          </span>
+          <span className="navbar-brand mb-0 h1">Incasare Table</span>
         </div>
       </nav>
     </div>
