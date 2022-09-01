@@ -7,22 +7,20 @@ const Step2 = ({ step, handleChange, values }) => {
 
   return (
     <>
-      <div className="row my-4">
-        <label htmlFor="inputTichet" className="col-sm-3 col-form-label">
+      <div className="row my-4 input-group input-group-lg">
+        <label htmlFor="inputTichet" className="col-3 col-form-label">
           Tichet
         </label>
-        <div className="col-sm-9">
-          <input
-            type="number"
-            name="ticketNo"
-            className="form-control"
-            id="inputTichet"
-            value={values.ticketNo}
-            onChange={handleChange}
-            autoComplete="off"
-            autoFocus
-          />
-        </div>
+        <input
+          type="number"
+          name="ticketNo"
+          className="form-control col-9"
+          id="inputTichet"
+          value={values.ticketNo}
+          onChange={handleChange}
+          autoComplete="off"
+          autoFocus
+        />
       </div>
     </>
   );
