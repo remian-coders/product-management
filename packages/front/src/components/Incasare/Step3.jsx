@@ -8,15 +8,20 @@ const Step3 = ({ step, values, handleChange }) => {
   return (
     <>
       <div className="row my-4 input-group input-group-lg">
-        <label htmlFor="inputCost" className="col-4 col-form-label">
+        <label
+          htmlFor="inputCost"
+          className="col-5 col-form-label"
+          style={{ "font-size": "26pt" }}
+        >
           Cost(RON)
         </label>
         <input
           value={values.cost}
           onChange={handleChange}
+          style={{ height: "70px", "font-size": "26pt" }}
           name="cost"
           type="number"
-          className="form-control col-8"
+          className="form-control col-7"
           id="inputCost"
           min="0"
           autoComplete="off"
