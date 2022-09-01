@@ -197,7 +197,7 @@ const AdminIncasare = ({
 
   return (
     <>
-      <Finalizer finalizeHandle={finalizeHandle} />
+      <Finalizer finalizeHandle={finalizeHandle} role="admin" />
 
       <div className="container pb-5">
         <form onSubmit={handleWorkingHours}>
