@@ -9,7 +9,7 @@ const Step1 = ({ step, values, handleChange }) => {
     <>
       <div className="row my-4">
         <h4>Tip plata</h4>
-        <div className="d-flex gap-4">
+        <div className="d-flex col-10 justify-content-between">
           <div className="form-check">
             <input
               className="form-check-input"
