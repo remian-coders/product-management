@@ -8,7 +8,6 @@ import {
   postAdminRegister,
   setWorkingHours,
   patchFinalizeRegister,
-  getHours,
   fetchAllRegisters,
 } from "../utils/api-calls";
 
@@ -17,8 +16,7 @@ const AdminIncasare = ({
   setMessage,
   setType,
   setShow,
-  setDaily,
-  setToday,
+  getWorkingHours,
 }) => {
   const [incasare, setIncasare] = useState(false);
   const [plata, setPlata] = useState(false);
@@ -74,26 +72,13 @@ const AdminIncasare = ({
     [token]
   );
 
-  const getWorkingHours = useCallback(async () => {
-    const response = await getHours(token);
-
-    if (response.status === 200) {
-      setDaily(response.data.data.workingHours?.daily);
-      setToday(response.data.data.workingHours?.today);
-    } else {
-      setDaily(null);
-      setToday(null);
-    }
-  }, [token, setDaily, setToday]);
-
   useEffect(() => {
     getAllRegisters(); // run it, run it
-    getWorkingHours();
 
     return () => {
       // this now gets called when the component unmounts
     };
-  }, [getAllRegisters, getWorkingHours]);
+  }, [getAllRegisters]);
 
   const incasareHandle = async (formData, setFormData) => {
     const response = await postAdminRegister(token, formData);

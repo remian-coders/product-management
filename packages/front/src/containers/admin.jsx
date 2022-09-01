@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import {
   UserCreate,
@@ -11,6 +11,7 @@ import {
   Issues,
 } from "../components";
 import Protected from "../utils/protected";
+import { getHours } from "../utils/api-calls";
 
 const Admin = ({
   token,
@@ -23,6 +24,22 @@ const Admin = ({
 }) => {
   const [today, setToday] = useState(null);
   const [daily, setDaily] = useState(null);
+
+  const getWorkingHours = useCallback(async () => {
+    const response = await getHours(token);
+
+    if (response.status === 200) {
+      setDaily(response.data.data.workingHours?.daily);
+      setToday(response.data.data.workingHours?.today);
+    } else {
+      setDaily(null);
+      setToday(null);
+    }
+  }, [token, setDaily, setToday]);
+
+  useEffect(() => {
+    getWorkingHours();
+  }, [getWorkingHours]);
 
   return (
     <>
@@ -123,6 +140,7 @@ const Admin = ({
                 setMessage={setMessage}
                 setShow={setShow}
                 setType={setType}
+                getWorkingHours={getWorkingHours}
               />
             </Protected>
           }
