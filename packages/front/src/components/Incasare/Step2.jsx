@@ -8,13 +8,18 @@ const Step2 = ({ step, handleChange, values }) => {
   return (
     <>
       <div className="row my-4 input-group input-group-lg">
-        <label htmlFor="inputTichet" className="col-3 col-form-label">
+        <label
+          htmlFor="inputTichet"
+          className="col-4 col-form-label"
+          style={{ "font-size": "26pt" }}
+        >
           Tichet
         </label>
         <input
           type="number"
           name="ticketNo"
-          className="form-control col-9"
+          style={{ height: "70px", "font-size": "26pt" }}
+          className="form-control col-8"
           id="inputTichet"
           value={values.ticketNo}
           onChange={handleChange}
