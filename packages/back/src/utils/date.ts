@@ -8,6 +8,9 @@ export const date = () => {
 	const currentYear = now.getFullYear();
 	return {
 		today: new Date(`${currentYear}-${currentMonth + 1}-${currentDay}`),
+		currentDay,
+		currentMonth,
+		currentYear,
 		currentHour,
 		currentMinute,
 		currentSecond,

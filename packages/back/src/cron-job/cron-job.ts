@@ -28,8 +28,8 @@ class CronManager {
 		this.add(
 			'todays-cron-job',
 			`${closingMinute} ${closingHour} * * *`,
-			() => {
-				job();
+			async () => {
+				await job();
 				this.stop('todays-cron-job');
 			}
 		);

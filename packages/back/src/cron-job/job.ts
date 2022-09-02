@@ -69,12 +69,15 @@ export const job = async () => {
 			}
 			const fivePercentLess =
 				fixedProduct.cost - fixedProduct.cost * 0.05;
+			const fivePercentBigger =
+				fixedProduct.cost + fixedProduct.cost * 0.05;
 			if (
 				register.cost < fivePercentLess ||
-				register.cost > fivePercentLess
+				register.cost > fivePercentBigger
 			) {
 				handleIssue({
 					product: fixedProduct,
+					register,
 					errorType: 'CostDifference',
 				});
 				continue;
@@ -100,23 +103,29 @@ async function handleIssue(err) {
 		type = 'general';
 	} else if (err.errorType === 'FileNotFound') {
 		subject = `Today's CSV file is not found.`;
-		message = `Today's CSV file is not found. \n Please set the correct path to the file and upload today's file from the admin page.`;
+		message = `Please set the correct path to the file and upload today's file from the admin page.`;
 		type = 'general';
 	} else if (err.errorType === 'CannotCreate') {
-		subject = ` Cannot save in database`;
-		message = ` Cannot save the following product in to database.\nSomething is wrong with this product record in CSV file.\nPlease please fix the error and  upload the file again. \nTicket No:  ${err.product.TicketNo} \nTechnician: ${err.product.Technician} `;
+		subject = `Cannot save in database`;
+		message = `Something is wrong with this product record in CSV file.\nPlease please fix the error and  upload the file again. \nTicket No:  ${err.product.TicketNo} \nTechnician: ${err.product.Technician} `;
 		type = 'general';
 	} else if (err.errorType === 'CannotParse') {
-		subject = ` Cannot read a line in the csv file.`;
-		message = ` Cannot read a line in the csv file. \n Please check the CSV file and make sure it is in the correct format or all the values are provided. `;
+		subject = `Cannot read a line in the csv file.`;
+		message = `Please check the CSV file and make sure it is in the correct format or all the values are provided. `;
 		type = 'general';
 	} else if (err.errorType === 'OlerThan7Days') {
 		subject = ` Product is older than 7 days`;
-		message = `Product is older than 7 days. \nTicket No: ${err.product.ticketNo} \nTechnician: ${err.product.technician}\nCost: ${err.product.cost}.`;
+		message = `Ticket No: ${err.product.ticketNo} \nTechnician: ${err.product.technician}\nCost: ${err.product.cost}\nFixed Date: ${err.product.date}.`;
 		type = 'older-than-7-days';
 	} else if (err.errorType === 'CostDifference') {
 		subject = ` Cost difference `;
-		message = `Cost difference. \n Ticket No: ${err.product.ticketNo} \n Technician: ${err.product.technician}\n\nCost: ${err.product.cost}.`;
+		message = `Ticket No: ${err.product.ticketNo}\nTechnician: ${
+			err.product.technician
+		}\nFixed Product Cost: ${err.product.cost}. \nRegistry Cost: ${
+			err.register.cost
+		}. \n(PHD/Casa): ${err.product.cost} - ${err.register.cost} = ${
+			err.product.cost - err.register.cost
+		}.`;
 		type = 'cost-difference';
 	}
 	const messagesLine = message.split('\n');
@@ -125,13 +134,16 @@ async function handleIssue(err) {
 			return `<p>${line}</p>`;
 		})
 		.join('\n');
-	const html = `<html><body>${messageHtml} <p>Date: ${date().currentDayStr} ${
-		date().currentHour +
-		':' +
-		date().currentMinute +
-		':' +
-		date().currentSecond
-	}</p></body></html>`;
+	const html = `<html><body>${messageHtml} 
+		<p>Date:
+			${('0' + date().currentDay).slice(-2)}-${('0' + date().currentMonth).slice(
+		-2
+	)}-${date().currentYear}, ${('0' + date().currentHour).slice(-2)}:${(
+		'0' + date().currentMinute
+	).slice(-2)}:${('0' + date().currentSecond).slice(-2)}
+		</p>
+		</body>
+		</html>`;
 	try {
 		const emailRepo = new EmailRepository();
 		const emailAddresses = await emailRepo.getEmailAddresses();
