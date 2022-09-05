@@ -52,6 +52,7 @@ export class WorkingHoursRepository {
 		);
 		if (updatedSchedule.type === 'today') await cronManager.todaysCronJob();
 		if (updatedSchedule.type === 'daily') await cronManager.dailyCronJob();
+		await cronManager.logRunningJobs();
 		return updatedSchedule;
 	}
 }

@@ -5,7 +5,7 @@
 	"main": "server.js",
 	"scripts": {
 		"build": "tsc",
-		"dev": "TZ=Asia/Seoul  NODE_ENV=development  ts-node-dev --files ./src/server.ts",
+		"dev": "TZ=Europe/Bucharest  NODE_ENV=development  ts-node-dev --files ./src/server.ts",
 		"prod": "TZ=Europe/Bucharest  node ./dist/server.js > app.out.log 2> app.err.log < /dev/null &"
 	},
 	"repository": {

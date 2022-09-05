@@ -17,6 +17,7 @@ class CronManager {
 	}
 	stop(name) {
 		this.jobs[name].cron.stop();
+		delete this.jobs[name];
 	}
 	async todaysCronJob() {
 		const workingHoursRepo = new WorkingHoursRepository();
@@ -26,16 +27,16 @@ class CronManager {
 		const closingHour = closingTime.getHours();
 		const closingMinute = closingTime.getMinutes() + 1;
 		this.add(
-			'todays-cron-job',
+			'todaysCronJob',
 			`${closingMinute} ${closingHour} * * *`,
 			async () => {
 				await job();
-				this.stop('todays-cron-job');
+				this.stop('todaysCronJob');
 			}
 		);
 	}
 	async dailyCronJob() {
-		if (this.jobs['daily-cron-job']) this.stop('daily-cron-job');
+		if (this.jobs['dailyCronJob']) this.stop('dailyCronJob');
 		const workingHoursRepo = new WorkingHoursRepository();
 		const { daily } = await workingHoursRepo.getWorkingHours();
 		if (!daily) return;
@@ -43,7 +44,7 @@ class CronManager {
 		const closingHour = closingTime.getHours();
 		const closingMinute = closingTime.getMinutes() + 1;
 		this.add(
-			'daily-cron-job',
+			'dailyCronJob',
 			`${closingMinute} ${closingHour} * * *`,
 			async () => {
 				const workingHours =
@@ -52,6 +53,16 @@ class CronManager {
 				await job();
 			}
 		);
+	}
+	async logRunningJobs() {
+		// console.log(
+		// 	'**** Daily Job *****',
+		// 	this.jobs['dailyCronJob'].cron.nextDates()
+		// );
+		// console.log(
+		// 	'**** Today`s Job *****',
+		// 	this.jobs['todaysCronJob'].cron.nextDates()
+		// );
 	}
 }
 

@@ -15,7 +15,6 @@ export const job = async () => {
 			handleIssue({ errorType: 'PathNotSet' });
 			return;
 		}
-
 		const now = new Date();
 		const date = ('0' + now.getDate()).slice(-2);
 		const month = ('0' + (now.getMonth() + 1)).slice(-2);
@@ -115,7 +114,7 @@ async function handleIssue(err) {
 		type = 'general';
 	} else if (err.errorType === 'OlerThan7Days') {
 		subject = ` Product is older than 7 days`;
-		message = `Ticket No: ${err.product.ticketNo} \nTechnician: ${err.product.technician}\nCost: ${err.product.cost}\nFixed Date: ${err.product.date}.`;
+		message = `Ticket No: ${err.product.ticketNo} \nTechnician: ${err.product.technician}\nCost: ${err.product.cost}.`;
 		type = 'older-than-7-days';
 	} else if (err.errorType === 'CostDifference') {
 		subject = ` Cost difference `;
