@@ -135,11 +135,14 @@ async function handleIssue(err) {
 		.join('\n');
 	const html = `<html><body>${messageHtml} 
 		<p>Date:
-			${('0' + date().currentDay).slice(-2)}-${('0' + date().currentMonth).slice(
+			${('0' + date().currentDay).slice(-2)}-${(
+		'0' +
+		(date().currentMonth + 1)
+	).slice(-2)}-${date().currentYear}, ${('0' + date().currentHour).slice(
 		-2
-	)}-${date().currentYear}, ${('0' + date().currentHour).slice(-2)}:${(
-		'0' + date().currentMinute
-	).slice(-2)}:${('0' + date().currentSecond).slice(-2)}
+	)}:${('0' + date().currentMinute).slice(-2)}:${(
+		'0' + date().currentSecond
+	).slice(-2)}
 		</p>
 		</body>
 		</html>`;
