@@ -21,7 +21,7 @@ export class App {
 		this.app.use(express.urlencoded({ extended: true }));
 	}
 	routes() {
-		this.app.use('/api/client-register', clientRegisterRouter);
+		this.app.use('/api/client', clientRegisterRouter);
 		this.app.use('/api/admin', adminRouter);
 		if (process.env.NODE_ENV === 'production') {
 			this.app.use(

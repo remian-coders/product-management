@@ -1,97 +1,72 @@
 import { Request, Response, NextFunction } from 'express';
 import { catchAsyncError } from './utils/catch-async-error';
 import { RegisterRepository } from '../repository/register.repository';
-import { IPRepository } from '../repository/ip.repository';
 import { WorkingHoursRepository } from '../repository/working-hours.repository';
+import { PaymentsRepository } from '../repository/payments.repository';
 import { CustomError } from '../utils/custom-error';
 import { date } from '../utils/date';
 
 export const createRegister = catchAsyncError(
 	async (req: Request, res: Response, next: NextFunction) => {
-		let { ticketNo, cost, paymentType, others } = req.body;
-		if (cost === 0) return next(new CustomError('Cost cannot be 0', 400));
-		const registerType = cost > 0 ? 'income' : 'expense';
-		paymentType = cost < 0 ? 'cash' : paymentType;
-		ticketNo = cost < 0 ? null : ticketNo;
-		let admin: string;
-		if (req.user.role === 'admin') admin = req.user.name;
-		else admin = null;
+		let { registerType, cost, paymentAmount, ticketNo, paymentType } =
+			req.body;
+		const admin = req.user.role === 'admin' ? req.user.name : null;
+		let paymentStatus: 'complete' | 'incomplete' = 'complete';
+		if (cost === 0) return next(new CustomError('Cost cannot be 0!', 400));
+		if (registerType === 'service') {
+			if (cost > paymentAmount) paymentStatus = 'incomplete';
+			else if (cost === paymentAmount) paymentStatus = 'complete';
+			else
+				return next(
+					new CustomError(
+						`You cannot receive more than the cost: ${cost}`,
+						400
+					)
+				);
+		} else if (registerType === 'expense') {
+			ticketNo = null;
+			paymentAmount = cost;
+			paymentType = 'cash';
+		} else {
+			ticketNo = null;
+			paymentAmount = cost;
+		}
 		const register = {
 			ticketNo,
 			cost,
-			paymentType,
+			paymentStatus,
 			registerType,
-			admin,
-			date: new Date(Date.now()),
-			others,
+			date: new Date(),
+			payments: [],
 		};
 		const registerRepo = new RegisterRepository();
-		await registerRepo.save(register);
+		const newRegister = await registerRepo.create(register);
+		const payment = {
+			paymentType: paymentType,
+			paymentAmount: paymentAmount,
+			admin,
+			register: newRegister,
+			date: new Date(),
+		};
+		const paymentsRepo = new PaymentsRepository();
+		const newPayment = await paymentsRepo.makePayment(payment);
 		res.status(200).json({
-			message: 'Register created',
+			message: 'New register is created!',
+			data: { newPayment },
 		});
 	}
 );
 
-export const getDailyClientRegister = catchAsyncError(
+export const getByTicket = catchAsyncError(
 	async (req: Request, res: Response, next: NextFunction) => {
-		const dateStr = date().today;
-		const from = new Date(dateStr);
-		const to = new Date(
-			`${from.getFullYear()}-${
-				from.getMonth() + 1
-			}-${from.getDate()} 23:59:59`
-		);
+		const ticketNo = req.params.ticketNo;
 		const registerRepo = new RegisterRepository();
-		const { registers, card, cash } =
-			await registerRepo.findDailyClientRegister(from, to);
+		const register = await registerRepo.findByIdTicketNo(ticketNo);
 		res.status(200).json({
-			message: 'Daily Client Register',
-			data: { registers, report: { card, cash } },
-		});
-	}
-);
-
-export const getAdminRegister = catchAsyncError(
-	async (req: Request, res: Response, next: NextFunction) => {
-		const fromStr = (req.query.from as string) || date().today;
-		const from = new Date(fromStr);
-		const toStr = req.query.to
-			? (req.query.to as string) + ' 23:59:59'
-			: `${from.getFullYear()}-${
-					from.getMonth() + 1
-			  }-${from.getDate()} 23:59:59`;
-		const to = new Date(toStr);
-		const registerRepo = new RegisterRepository();
-		const { registers, cash, card } = await registerRepo.findAdminRegister(
-			from,
-			to
-		);
-		res.status(200).json({
-			message: 'Client Register',
-			data: { registers, report: { card, cash } },
-		});
-	}
-);
-
-export const getAllRegister = catchAsyncError(
-	async (req: Request, res: Response, next: NextFunction) => {
-		const fromStr = (req.query.from as string) || date().today;
-		const from = new Date(fromStr);
-		const toStr = req.query.to
-			? (req.query.to as string) + ' 23:59:59'
-			: `${from.getFullYear()}-${
-					from.getMonth() + 1
-			  }-${from.getDate()} 23:59:59`;
-		const to = new Date(toStr);
-		const registerRepo = new RegisterRepository();
-		const { registers, cash, card } = await registerRepo.findAllRegister(
-			from,
-			to
-		);
-		res.status(200).json({
-			message: 'Daily All Register',
-			data: { registers, report: { card, cash } },
+			message: 'Register',
+			data: {
+				register,
+			},
 		});
 	}
 );
@@ -101,14 +76,6 @@ export const isAvailable = async (
 	res: Response,
 	next: NextFunction
 ) => {
-	// const ipRepo = new IPRepository();
-	// const ip = req.ip;
-	// console.log(ip);
-	// const isAllowedIP = await ipRepo.findByIP(ip);
-	// if (!isAllowedIP) {
-	// 	return next(new CustomError('IP not allowed', 403));
-	// }
-
 	const workingHoursRepo = new WorkingHoursRepository();
 	const todaysWorkingHours = await workingHoursRepo.getTodaysWorkingHours();
 	if (!todaysWorkingHours)
