@@ -1,34 +1,32 @@
 import React from "react";
 
-const Step4 = ({ step, values, handleChange }) => {
-  if (step !== 4) {
+const Step5 = ({ step, values, handleChange }) => {
+  if (step !== 5) {
     return null;
   }
   return (
     <>
       <div className="row my-4 input-group input-group-lg">
         <label
-          htmlFor="amountPaid"
+          htmlFor="inputMentiune"
           className="col-5 col-form-label"
           style={{ "font-size": "26pt" }}
         >
-          Paid Money(RON)
+          Mentiune
         </label>
         <input
-          value={values.amountPaid}
+          value={values.others}
           onChange={handleChange}
           style={{ height: "70px", "font-size": "26pt" }}
-          name="amountPaid"
-          type="number"
+          name="others"
+          type="text"
           className="form-control col-7"
-          id="amountPaid"
-          min="0"
+          id="inputMentiune"
           autoComplete="off"
-          autoFocus
         />
       </div>
     </>
   );
 };
 
-export default Step4;
+export default Step5;

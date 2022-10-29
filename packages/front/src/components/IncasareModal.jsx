@@ -2,20 +2,23 @@ import React, { useState } from "react";
 
 import { Form, Modal, Button } from "react-bootstrap";
 
-import Step1 from "./Incasare/Step2";
+import Step1 from "./Incasare/Step1";
 import Step2 from "./Incasare/Step3";
-import Step3 from "./Incasare/Step1";
+import Step3 from "./Incasare/Step2";
 import Step4 from "./Incasare/Step4";
+import Step5 from "./Incasare/Step5";
 import MultiStepProgressBar from "./Incasare/ProgressBar";
 
 const IncasareModal = ({ show, submitHandler, onHide }) => {
   const [step, setStep] = useState(1);
 
   const [formData, setFormData] = useState({
+    registerType: "service",
     ticketNo: "",
     cost: "",
     paymentType: "",
     others: "",
+    amountPaid: "",
   });
 
   const handleChange = (e) => {
@@ -32,7 +35,7 @@ const IncasareModal = ({ show, submitHandler, onHide }) => {
     let currentStep = step;
 
     // If the current step is 1 or 2, then add one on "next" button click
-    currentStep = currentStep >= 3 ? 4 : currentStep + 1;
+    currentStep = currentStep >= 4 ? 5 : currentStep + 1;
     setStep(currentStep);
   };
 
@@ -56,10 +59,12 @@ const IncasareModal = ({ show, submitHandler, onHide }) => {
             onHide();
             setStep(1);
             setFormData({
+              registerType: "service",
               ticketNo: "",
               cost: "",
               paymentType: "",
               others: "",
+              amountPaid: "",
             });
           }}
         >
@@ -75,6 +80,7 @@ const IncasareModal = ({ show, submitHandler, onHide }) => {
             <Step2 step={step} values={formData} handleChange={handleChange} />
             <Step3 step={step} values={formData} handleChange={handleChange} />
             <Step4 step={step} values={formData} handleChange={handleChange} />
+            <Step5 step={step} values={formData} handleChange={handleChange} />
           </Modal.Body>
           <Modal.Footer>
             {step !== 1 && (
@@ -92,7 +98,7 @@ const IncasareModal = ({ show, submitHandler, onHide }) => {
                 variant="primary"
                 onClick={next}
                 className="float-end"
-                disabled={formData.paymentType.length > 0 ? false : true}
+                disabled={formData.ticketNo.length > 0 ? false : true}
                 size="lg"
               >
                 Next
@@ -103,7 +109,7 @@ const IncasareModal = ({ show, submitHandler, onHide }) => {
                 variant="primary"
                 onClick={next}
                 className="float-end"
-                disabled={formData.ticketNo.length > 0 ? false : true}
+                disabled={formData.paymentType.length > 0 ? false : true}
                 size="lg"
               >
                 Next
@@ -121,6 +127,17 @@ const IncasareModal = ({ show, submitHandler, onHide }) => {
               </Button>
             )}
             {step === 4 && (
+              <Button
+                variant="primary"
+                onClick={next}
+                className="float-end"
+                size="lg"
+                disabled={formData.amountPaid.length > 0 ? false : true}
+              >
+                Next
+              </Button>
+            )}
+            {step === 5 && (
               <Button
                 variant="primary"
                 onClick={() => {
