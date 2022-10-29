@@ -1,5 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-
+import {
+	Entity,
+	Column,
+	PrimaryGeneratedColumn,
+	OneToMany,
+	JoinColumn,
+} from 'typeorm';
+import { Payment } from './payments.entity';
 @Entity()
 export class Register {
 	@PrimaryGeneratedColumn()
@@ -8,18 +14,12 @@ export class Register {
 	ticketNo: string;
 	@Column({ nullable: false })
 	cost: number;
-	@Column({
-		enum: ['cash', 'card'],
-	})
-	paymentType: string;
-	@Column({ nullable: true })
-	admin: string;
+	@Column()
+	paymentStatus: 'complete' | 'incomplete';
+	@Column()
+	registerType: 'service' | 'expense' | 'accessory';
 	@Column()
 	date: Date;
-	@Column({
-		enum: ['income', 'expense'],
-	})
-	registerType: string;
-	@Column({ nullable: true })
-	others: string;
+	@OneToMany(() => Payment, (payment) => payment.register)
+	payments: Payment[];
 }

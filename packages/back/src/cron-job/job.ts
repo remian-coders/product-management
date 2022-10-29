@@ -8,88 +8,88 @@ import { RegisterRepository } from '../repository/register.repository';
 import { IssueRepository } from '../repository/issue.repository';
 import { date } from '../utils/date';
 export const job = async () => {
-	try {
-		const fixedProductsRepo = new FixedProductsRepository();
-		const filePath = await new CsvPathRepository().getPath();
-		if (!filePath) {
-			handleIssue({ errorType: 'PathNotSet' });
-			return;
-		}
-		const now = new Date();
-		const date = ('0' + now.getDate()).slice(-2);
-		const month = ('0' + (now.getMonth() + 1)).slice(-2);
-		const year = now.getFullYear();
-		const fullPath =
-			filePath.path + `/realizari_${date}_${month}_${year}.csv`;
-		let fd = await open(fullPath, 'r');
-		const stream = fd
-			.createReadStream()
-			.pipe(parse({ delimiter: ',', columns: true }));
-		stream.on('error', (err) => {
-			handleIssue({ errorType: 'CannotParse' });
-		});
-		const promise = new Promise((resolve, reject) => {
-			stream.on('data', async (fixedProduct) => {
-				try {
-					await fixedProductsRepo.create({
-						ticketNo: fixedProduct.TicketNo,
-						cost: Number(fixedProduct.Cost) || 0,
-						technician: fixedProduct.Technician,
-						date: new Date(),
-					});
-					resolve('end');
-				} catch (err) {
-					handleIssue({
-						product: fixedProduct,
-						errorType: 'CannotCreate',
-					});
-				}
-			});
-		});
-		await promise;
-		const fixedProducts = await fixedProductsRepo.getAll();
-		if (fixedProducts.length === 0) return;
-		for (const fixedProduct of fixedProducts) {
-			const registerRepo = new RegisterRepository();
-			const register = await registerRepo.findByIdTicketNo(
-				fixedProduct.ticketNo
-			);
-			if (!register) {
-				if (
-					new Date(fixedProduct.date).getTime() <=
-					Date.now() - 7 * 24 * 60 * 60 * 1000
-				) {
-					handleIssue({
-						product: fixedProduct,
-						errorType: 'OlerThan7Days',
-					});
-				}
-				continue;
-			}
-			const fivePercentLess =
-				fixedProduct.cost - fixedProduct.cost * 0.05;
-			const fivePercentBigger =
-				fixedProduct.cost + fixedProduct.cost * 0.05;
-			if (
-				register.cost < fivePercentLess ||
-				register.cost > fivePercentBigger
-			) {
-				handleIssue({
-					product: fixedProduct,
-					register,
-					errorType: 'CostDifference',
-				});
-				continue;
-			}
-			await fixedProductsRepo.delete(fixedProduct.id);
-		}
-	} catch (err) {
-		if (err.code === 'ENOENT') {
-			handleIssue({
-				errorType: 'FileNotFound',
-			});
-		}
-	}
+	// try {
+	// 	const fixedProductsRepo = new FixedProductsRepository();
+	// 	const filePath = await new CsvPathRepository().getPath();
+	// 	if (!filePath) {
+	// 		handleIssue({ errorType: 'PathNotSet' });
+	// 		return;
+	// 	}
+	// 	const now = new Date();
+	// 	const date = ('0' + now.getDate()).slice(-2);
+	// 	const month = ('0' + (now.getMonth() + 1)).slice(-2);
+	// 	const year = now.getFullYear();
+	// 	const fullPath =
+	// 		filePath.path + `/realizari_${date}_${month}_${year}.csv`;
+	// 	let fd = await open(fullPath, 'r');
+	// 	const stream = fd
+	// 		.createReadStream()
+	// 		.pipe(parse({ delimiter: ',', columns: true }));
+	// 	stream.on('error', (err) => {
+	// 		handleIssue({ errorType: 'CannotParse' });
+	// 	});
+	// 	const promise = new Promise((resolve, reject) => {
+	// 		stream.on('data', async (fixedProduct) => {
+	// 			try {
+	// 				await fixedProductsRepo.create({
+	// 					ticketNo: fixedProduct.TicketNo,
+	// 					cost: Number(fixedProduct.Cost) || 0,
+	// 					technician: fixedProduct.Technician,
+	// 					date: new Date(),
+	// 				});
+	// 				resolve('end');
+	// 			} catch (err) {
+	// 				handleIssue({
+	// 					product: fixedProduct,
+	// 					errorType: 'CannotCreate',
+	// 				});
+	// 			}
+	// 		});
+	// 	});
+	// 	await promise;
+	// 	const fixedProducts = await fixedProductsRepo.getAll();
+	// 	if (fixedProducts.length === 0) return;
+	// 	for (const fixedProduct of fixedProducts) {
+	// 		const registerRepo = new RegisterRepository();
+	// 		const register = await registerRepo.findByIdTicketNo(
+	// 			fixedProduct.ticketNo
+	// 		);
+	// 		if (!register) {
+	// 			if (
+	// 				new Date(fixedProduct.date).getTime() <=
+	// 				Date.now() - 7 * 24 * 60 * 60 * 1000
+	// 			) {
+	// 				handleIssue({
+	// 					product: fixedProduct,
+	// 					errorType: 'OlerThan7Days',
+	// 				});
+	// 			}
+	// 			continue;
+	// 		}
+	// 		const fivePercentLess =
+	// 			fixedProduct.cost - fixedProduct.cost * 0.05;
+	// 		const fivePercentBigger =
+	// 			fixedProduct.cost + fixedProduct.cost * 0.05;
+	// 		if (
+	// 			register.cost < fivePercentLess ||
+	// 			register.cost > fivePercentBigger
+	// 		) {
+	// 			handleIssue({
+	// 				product: fixedProduct,
+	// 				register,
+	// 				errorType: 'CostDifference',
+	// 			});
+	// 			continue;
+	// 		}
+	// 		await fixedProductsRepo.delete(fixedProduct.id);
+	// 	}
+	// } catch (err) {
+	// 	if (err.code === 'ENOENT') {
+	// 		handleIssue({
+	// 			errorType: 'FileNotFound',
+	// 		});
+	// 	}
+	// }
 };
 async function handleIssue(err) {
 	let message = '';

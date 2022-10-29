@@ -15,11 +15,8 @@ import {
 
 import {
 	createRegister,
-	getAdminRegister,
-	getAllRegister,
+	getByTicket,
 } from '../controllers/register.controller';
-
-import { addIP, getIPs, deleteIP } from '../controllers/ip.controller';
 
 import {
 	addEmail,
@@ -40,6 +37,11 @@ import {
 } from '../controllers/working-hours.controller';
 
 import { getIssues, deleteIssue } from '../controllers/issue.controller';
+import {
+	getAdminPayments,
+	getAllPayments,
+	makePayment,
+} from '../controllers/payments.controller';
 
 const router = Router();
 router.post('/login', login);
@@ -57,11 +59,11 @@ router.use(authorize(['admin']));
 router.patch('/update-password', updatePassword);
 router.route('/user').post(createUser).get(getUsers);
 router.delete('/user/:id', deleteUser);
-router.route('/register').post(createRegister).get(getAdminRegister);
-router.get('/all-register', getAllRegister);
+router.post('/register', createRegister);
+router.get('/register/:ticketNo', getByTicket);
+router.route('/payments').get(getAdminPayments).patch(makePayment);
+router.get('/all-payments', getAllPayments);
 
-// router.route('/ip-address-config').get(getIPs).post(addIP);
-// router.delete('/ip-address-config/:id', deleteIP);
 router.route('/email-address-config').get(getEmails).post(addEmail);
 router.delete('/email-address-config/:id', deleteEmail);
 router.route('/csv-path').get(getPath).patch(addPath);

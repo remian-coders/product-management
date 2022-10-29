@@ -14,9 +14,9 @@ dataSource
 		app.listen(
 			{ port: process.env.PORT || 5000, host: '0.0.0.0' },
 			async () => {
-				await cronManager.todaysCronJob();
-				await cronManager.dailyCronJob();
-				await cronManager.logRunningJobs();
+				// await cronManager.todaysCronJob();
+				// await cronManager.dailyCronJob();
+				// await cronManager.logRunningJobs();
 				console.log(
 					`Server running on port ${process.env.PORT}\nEnvironment ${process.env.NODE_ENV}`
 				);
