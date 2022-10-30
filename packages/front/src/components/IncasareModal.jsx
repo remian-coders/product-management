@@ -18,7 +18,7 @@ const IncasareModal = ({ show, submitHandler, onHide }) => {
     cost: "",
     paymentType: "",
     others: "",
-    amountPaid: "",
+    paymentAmount: "",
   });
 
   const handleChange = (e) => {
@@ -64,7 +64,7 @@ const IncasareModal = ({ show, submitHandler, onHide }) => {
               cost: "",
               paymentType: "",
               others: "",
-              amountPaid: "",
+              paymentAmount: "",
             });
           }}
         >
@@ -132,7 +132,7 @@ const IncasareModal = ({ show, submitHandler, onHide }) => {
                 onClick={next}
                 className="float-end"
                 size="lg"
-                disabled={formData.amountPaid.length > 0 ? false : true}
+                disabled={formData.paymentAmount.length > 0 ? false : true}
               >
                 Next
               </Button>

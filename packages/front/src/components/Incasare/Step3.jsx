@@ -11,14 +11,14 @@ const Step3 = ({ step, values, handleChange }) => {
         <label
           htmlFor="inputCost"
           className="col-5 col-form-label"
-          style={{ "font-size": "26pt" }}
+          style={{ fontSize: "26pt" }}
         >
           Cost(RON)
         </label>
         <input
           value={values.cost}
           onChange={handleChange}
-          style={{ height: "70px", "font-size": "26pt" }}
+          style={{ height: "70px", fontSize: "26pt" }}
           name="cost"
           type="number"
           className="form-control col-7"

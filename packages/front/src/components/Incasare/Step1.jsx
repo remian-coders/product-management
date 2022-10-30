@@ -11,14 +11,14 @@ const Step1 = ({ step, handleChange, values }) => {
         <label
           htmlFor="inputTichet"
           className="col-4 col-form-label"
-          style={{ "font-size": "26pt" }}
+          style={{ fontSize: "26pt" }}
         >
           Tichet
         </label>
         <input
           type="number"
           name="ticketNo"
-          style={{ height: "70px", "font-size": "26pt" }}
+          style={{ height: "70px", fontSize: "26pt" }}
           className="form-control col-8"
           id="inputTichet"
           value={values.ticketNo}

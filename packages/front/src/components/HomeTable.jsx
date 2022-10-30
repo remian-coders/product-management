@@ -1,6 +1,12 @@
 import React, { forwardRef } from "react";
+import { useNavigate } from "react-router-dom";
 
-const HomeTable = forwardRef(({ registers, report, role = "user" }, ref) => {
+const HomeTable = forwardRef(({ registers, report, token }, ref) => {
+  const navigate = useNavigate();
+
+  const searchHandler = (ticketNo) => {
+    navigate(`/search/${ticketNo}`);
+  };
   return (
     <div className="px-3" ref={ref}>
       <div className="container-fuild mt-5">
@@ -8,23 +14,42 @@ const HomeTable = forwardRef(({ registers, report, role = "user" }, ref) => {
           <thead>
             <tr>
               <th scope="col">Tichet Nr.</th>
-              <th scope="col">Cost</th>
               <th scope="col">Payment type</th>
-              <th scope="col">Timestamp</th>
-              {role === "admin" && <th scope="col">Role</th>}
-              <th scope="col">Mentiune</th>
+              <th scope="col">Time</th>
+              <th scope="col">Payment Amount</th>
+              <th scope="col">Others</th>
+              <th scope="col">Status</th>
             </tr>
           </thead>
           <tbody>
             {registers.map(
-              ({ id, ticketNo, cost, paymentType, date, admin, others }) => (
+              ({ id, paymentType, paymentAmount, date, admin, register }) => (
                 <tr key={id}>
-                  <th>{ticketNo}</th>
-                  <td>{cost}</td>
+                  <th>{register.ticketNo}</th>
                   <td>{paymentType}</td>
                   <td>{new Date(date).toLocaleString()}</td>
-                  {role === "admin" && <td>{admin}</td>}
-                  <td>{others}</td>
+                  <td>{paymentAmount}</td>
+                  <td>Others</td>
+                  <td>
+                    {register.paymentStatus === "complete" ? (
+                      <button
+                        type="button"
+                        className="btn btn-success btn-sm"
+                        disabled={!register.ticketNo}
+                        onClick={() => searchHandler(register.ticketNo)}
+                      >
+                        {register.paymentStatus}
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        className="btn btn-warning btn-sm"
+                        onClick={() => searchHandler(register.ticketNo)}
+                      >
+                        {register.paymentStatus}
+                      </button>
+                    )}
+                  </td>
                 </tr>
               )
             )}

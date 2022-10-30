@@ -18,7 +18,7 @@ const PlataModal = ({ show, submitHandler, onHide, cost, mentiune }) => {
             <label
               htmlFor="inputCost"
               className="col-5 col-form-label"
-              style={{ "font-size": "26pt" }}
+              style={{ fontSize: "26pt" }}
             >
               Cost(RON)
             </label>
@@ -27,7 +27,7 @@ const PlataModal = ({ show, submitHandler, onHide, cost, mentiune }) => {
               type="number"
               className="form-control col-7"
               id="inputCost"
-              style={{ height: "70px", "font-size": "26pt" }}
+              style={{ height: "70px", fontSize: "26pt" }}
               min="0"
               required
               autoComplete="off"
@@ -39,7 +39,7 @@ const PlataModal = ({ show, submitHandler, onHide, cost, mentiune }) => {
             <label
               htmlFor="inputMentiune"
               className="col-5 col-form-label"
-              style={{ "font-size": "26pt" }}
+              style={{ fontSize: "26pt" }}
             >
               Mentiune
             </label>
@@ -49,7 +49,7 @@ const PlataModal = ({ show, submitHandler, onHide, cost, mentiune }) => {
               className="form-control col-7"
               id="inputMentiune"
               autoComplete="off"
-              style={{ height: "70px", "font-size": "26pt" }}
+              style={{ height: "70px", fontSize: "26pt" }}
             />
           </div>
           <div className="row px-2">

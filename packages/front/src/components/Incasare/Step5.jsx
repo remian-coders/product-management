@@ -10,14 +10,14 @@ const Step5 = ({ step, values, handleChange }) => {
         <label
           htmlFor="inputMentiune"
           className="col-5 col-form-label"
-          style={{ "font-size": "26pt" }}
+          style={{ fontSize: "26pt" }}
         >
           Mentiune
         </label>
         <input
           value={values.others}
           onChange={handleChange}
-          style={{ height: "70px", "font-size": "26pt" }}
+          style={{ height: "70px", fontSize: "26pt" }}
           name="others"
           type="text"
           className="form-control col-7"

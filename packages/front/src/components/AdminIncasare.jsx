@@ -1,6 +1,7 @@
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import { Container } from "react-bootstrap";
 import { useReactToPrint } from "react-to-print";
+import { useNavigate } from "react-router-dom";
 
 import { Finalizer, HomeTable, IncasareModal, PlataModal, Loading } from ".";
 import {
@@ -36,17 +37,21 @@ const AdminIncasare = ({
   const toDateRef = useRef();
   const selectRef = useRef();
 
+  const ticketNo = useRef();
+
+  const navigate = useNavigate();
+
   const printCompRef = useRef();
   const handlePrint = useReactToPrint({
     content: () => printCompRef.current,
   });
 
-  const getAllRegisters = useCallback(
+  const getAllTransactions = useCallback(
     async (params = null) => {
       const response = await fetchAllRegisters(token, params);
 
       if (response.status === 200) {
-        setRegisters(response.data.data.registers);
+        setRegisters(response.data.data.payments);
         setReport(response.data.data.report);
         setLoading(false);
       } else {
@@ -61,7 +66,7 @@ const AdminIncasare = ({
     async (params = null) => {
       const response = await getAdminRegister(token, params);
       if (response.status === 200) {
-        setRegisters(response.data.data.registers);
+        setRegisters(response.data.data.payments);
         setReport(response.data.data.report);
         setLoading(false);
       } else {
@@ -73,14 +78,15 @@ const AdminIncasare = ({
   );
 
   useEffect(() => {
-    getAllRegisters(); // run it, run it
+    getAllTransactions(); // run it, run it
 
     return () => {
       // this now gets called when the component unmounts
     };
-  }, [getAllRegisters]);
+  }, [getAllTransactions]);
 
   const incasareHandle = async (formData, setFormData) => {
+    console.log(formData);
     const response = await postAdminRegister(token, formData);
 
     if (response.status === 200) {
@@ -88,12 +94,14 @@ const AdminIncasare = ({
       setType("success");
       setShow(true);
       setIncasare(false);
-      getAllRegisters();
+      getAllTransactions();
       setFormData({
+        registerType: "service",
         ticketNo: "",
         cost: "",
         paymentType: "",
         others: "",
+        paymentAmount: "",
       });
     } else {
       setMessage(response.data?.message);
@@ -108,6 +116,7 @@ const AdminIncasare = ({
     const cost = plataCost.current.value * -1;
     const others = plataMentiune.current.value;
     const response = await postAdminRegister(token, {
+      registerType: "expense",
       cost,
       others,
     });
@@ -116,7 +125,7 @@ const AdminIncasare = ({
       setType("success");
       setShow(true);
       setPlata(false);
-      getAllRegisters();
+      getAllTransactions();
 
       plataCost.current.value = "";
       plataMentiune.current.value = "";
@@ -162,8 +171,13 @@ const AdminIncasare = ({
       getRegisters({ from, to });
     } else {
       setLoading(true);
-      getAllRegisters({ from, to });
+      getAllTransactions({ from, to });
     }
+  };
+  const handleSearch = async (e) => {
+    e.preventDefault();
+
+    navigate(`/search/${ticketNo.current.value}`);
   };
 
   const finalizeHandle = async (e) => {
@@ -220,7 +234,8 @@ const AdminIncasare = ({
           </div>
         </form>
       </div>
-      <div className="container pb-2">
+
+      <div className="container pb-5">
         <form onSubmit={handleBrowse}>
           <div className="input-group mb-3">
             <input
@@ -259,13 +274,36 @@ const AdminIncasare = ({
           </div>
         </form>
       </div>
-
+      <div className="container pb-2">
+        <form onSubmit={handleSearch}>
+          <div className="input-group mb-3">
+            <input
+              ref={ticketNo}
+              type="text"
+              className="form-control"
+              placeholder="Search by ticketNo"
+              aria-label="text"
+              aria-describedby="button-addon3"
+              required
+              autoComplete="off"
+            />
+            <button
+              className="btn btn-outline-success"
+              type="submit"
+              id="button-addon3"
+            >
+              Search
+            </button>
+          </div>
+        </form>
+      </div>
       {loading ? (
         <Loading height=" " />
       ) : (
         <>
           <Container className="p-0">
             <HomeTable
+              token={token}
               role="admin"
               registers={registers}
               report={report}

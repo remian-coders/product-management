@@ -24,7 +24,7 @@ const Step2 = ({ step, values, handleChange }) => {
             <label
               className="form-check-label"
               htmlFor="paymentType1"
-              style={{ "font-size": "26pt" }}
+              style={{ fontSize: "26pt" }}
             >
               Cash
             </label>
@@ -43,7 +43,7 @@ const Step2 = ({ step, values, handleChange }) => {
             <label
               className="form-check-label"
               htmlFor="paymentType2"
-              style={{ "font-size": "26pt" }}
+              style={{ fontSize: "26pt" }}
             >
               Card
             </label>
