@@ -31,11 +31,13 @@ const Home = ({ setMessage, setType, setShow, token, role }) => {
 
   const navigate = useNavigate();
 
+  const ticketNo = useRef();
+
   const getRegisters = useCallback(async () => {
     const response = await fetchRegisters(token);
 
     if (response.status === 200) {
-      setRegisters(response.data.data.registers);
+      setRegisters(response.data.data.payments);
       setReport(response.data.data.report);
       setLoading(false);
     } else if (response.status === 403) {
@@ -69,10 +71,12 @@ const Home = ({ setMessage, setType, setShow, token, role }) => {
       setIncasare(false);
       getRegisters();
       setFormData({
+        registerType: "service",
         ticketNo: "",
         cost: "",
         paymentType: "",
         others: "",
+        paymentAmount: "",
       });
     } else {
       setMessage(response.data?.message);
@@ -87,7 +91,10 @@ const Home = ({ setMessage, setType, setShow, token, role }) => {
     const cost = plataCost.current.value * -1;
     const others = plataMentiune.current.value;
 
-    const response = await createRegister({ cost, others }, token);
+    const response = await createRegister(
+      { registerType: "expense", cost, others },
+      token
+    );
 
     if (response.status === 200) {
       setMessage(response.data?.message);
@@ -119,6 +126,11 @@ const Home = ({ setMessage, setType, setShow, token, role }) => {
     }
   };
 
+  const handleSearch = async (e) => {
+    e.preventDefault();
+
+    navigate(`/search/${ticketNo.current.value}`);
+  };
   return (
     <>
       {loading ? (
@@ -127,6 +139,29 @@ const Home = ({ setMessage, setType, setShow, token, role }) => {
         <>
           <Header />
           <Finalizer finalizeHandle={finalizeHandle} />
+          <div className="container pb-2">
+            <form onSubmit={handleSearch}>
+              <div className="input-group mb-3">
+                <input
+                  ref={ticketNo}
+                  type="text"
+                  className="form-control"
+                  placeholder="Search by ticketNo"
+                  aria-label="text"
+                  aria-describedby="button-addon3"
+                  required
+                  autoComplete="off"
+                />
+                <button
+                  className="btn btn-outline-success"
+                  type="submit"
+                  id="button-addon3"
+                >
+                  Search
+                </button>
+              </div>
+            </form>
+          </div>
           <Container className="p-0">
             <HomeTable registers={registers} report={report} />
           </Container>

@@ -6,6 +6,7 @@ import Home from "./containers/home";
 import Login from "./containers/login";
 import { Toast, ToastContainer } from "react-bootstrap";
 import { checkToken } from "./utils/api-calls";
+import SearchPage from "./components/SearchPage/SearchPage";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -38,6 +39,18 @@ function App() {
   return (
     <div className="App">
       <Routes>
+        <Route
+          path="/search/:ticketNo"
+          element={
+            <SearchPage
+              role={role}
+              token={token}
+              setMessage={setMessage}
+              setShow={setShow}
+              setType={setType}
+            />
+          }
+        />
         <Route
           path="/login/*"
           element={

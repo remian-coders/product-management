@@ -31,7 +31,19 @@ export const resetPassword = async function (data) {
 
 export const fetchRegisters = async function (token) {
   try {
-    let response = await api.get("/client-register", {
+    let response = await api.get("/client/payments", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const getTicketByNumber = async function (token, ticketNo) {
+  try {
+    let response = await api.get(`/client/register/${ticketNo}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
 
@@ -43,7 +55,7 @@ export const fetchRegisters = async function (token) {
 
 export const createRegister = async function (data, token) {
   try {
-    let response = await api.post("/client-register", data, {
+    let response = await api.post("/client/register", data, {
       headers: { Authorization: `Bearer ${token}` },
     });
 
@@ -205,7 +217,7 @@ export const fetchCsvFile = async function (token) {
 
 export const getAdminRegister = async function (token, params) {
   try {
-    let response = await api.get(`/admin/register`, {
+    let response = await api.get(`/admin/payments`, {
       headers: { Authorization: `Bearer ${token}` },
       params: params,
     });
@@ -215,9 +227,20 @@ export const getAdminRegister = async function (token, params) {
   }
 };
 
+export const searchTicketNumber = async function (token, ticketNo) {
+  try {
+    let response = await api.get(`/admin/register/${ticketNo}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+
 export const fetchAllRegisters = async function (token, params) {
   try {
-    let response = await api.get("/admin/all-register", {
+    let response = await api.get("/admin/all-payments", {
       headers: { Authorization: `Bearer ${token}` },
       params: params,
     });
@@ -241,6 +264,28 @@ export const postAdminRegister = async function (token, data) {
 export const setWorkingHours = async function (token, data) {
   try {
     let response = await api.patch("/admin/working-hours", data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const makePaymentCashier = async function (token, data) {
+  try {
+    let response = await api.patch("/client/payments", data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const makePaymentAdmin = async function (token, data) {
+  try {
+    let response = await api.patch("/admin/payments", data, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response;
