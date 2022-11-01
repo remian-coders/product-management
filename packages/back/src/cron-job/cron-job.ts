@@ -28,7 +28,7 @@ class CronManager {
 		const closingMinute = closingTime.getMinutes() + 1;
 		this.add(
 			'todaysCronJob',
-			`${closingMinute} ${closingHour} * * *`,
+			`${closingMinute} ${closingHour} * * 1-5`,
 			async () => {
 				await job();
 				this.stop('todaysCronJob');
@@ -45,7 +45,7 @@ class CronManager {
 		const closingMinute = closingTime.getMinutes() + 1;
 		this.add(
 			'dailyCronJob',
-			`${closingMinute} ${closingHour} * * *`,
+			`${closingMinute} ${closingHour} * * 1-5`,
 			async () => {
 				const workingHours =
 					await workingHoursRepo.getTodaysWorkingHours();

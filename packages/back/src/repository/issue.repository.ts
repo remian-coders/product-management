@@ -8,15 +8,15 @@ export class IssueRepository {
 		this.issueRepository = dataSource.getRepository(Issue);
 	}
 	async save(issue: Issue) {
-		if (issue.productId) {
-			const existingIssue = await this.issueRepository.findOne({
-				where: {
-					productId: issue.productId,
-					type: issue.type,
-				},
-			});
-			issue = existingIssue || issue;
-		}
+		// if (issue.productId) {
+		// 	const existingIssue = await this.issueRepository.findOne({
+		// 		where: {
+		// 			productId: issue.productId,
+		// 			type: issue.type,
+		// 		},
+		// 	});
+		// 	issue = existingIssue || issue;
+		// }
 		return await this.issueRepository.save(issue);
 	}
 	async getIssue(id) {

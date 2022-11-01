@@ -23,7 +23,8 @@ export class Payment {
 
 	@Column({ nullable: true })
 	admin: string;
-
+	@Column({ nullable: true })
+	others: string;
 	@ManyToOne(() => Register, (register) => register.payments)
 	register: Register;
 }

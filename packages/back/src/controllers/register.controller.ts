@@ -8,8 +8,14 @@ import { date } from '../utils/date';
 
 export const createRegister = catchAsyncError(
 	async (req: Request, res: Response, next: NextFunction) => {
-		let { registerType, cost, paymentAmount, ticketNo, paymentType } =
-			req.body;
+		const registerType = req.body.registerType;
+		const cost = req.body.cost ? req.body.cost * 1 : 0;
+		let paymentAmount = req.body.paymentAmount
+			? req.body.paymentAmount * 1
+			: 0;
+		let paymentType = req.body.paymentType;
+		let ticketNo = req.body.ticketNo;
+		const others = req.body.others;
 		const admin = req.user.role === 'admin' ? req.user.name : null;
 		let paymentStatus: 'complete' | 'incomplete' = 'complete';
 		if (cost === 0) return next(new CustomError('Cost cannot be 0!', 400));
@@ -27,7 +33,7 @@ export const createRegister = catchAsyncError(
 			ticketNo = null;
 			paymentAmount = cost;
 			paymentType = 'cash';
-		} else {
+		} else if (registerType === 'accessory') {
 			ticketNo = null;
 			paymentAmount = cost;
 		}
@@ -47,6 +53,7 @@ export const createRegister = catchAsyncError(
 			admin,
 			register: newRegister,
 			date: new Date(),
+			others,
 		};
 		const paymentsRepo = new PaymentsRepository();
 		const newPayment = await paymentsRepo.makePayment(payment);

@@ -7,6 +7,7 @@ import { CustomError } from '../utils/custom-error';
 import { jwtSign, jwtVerify } from './utils/jwt';
 import { catchAsyncError } from './utils/catch-async-error';
 import { mail } from '../utils/mail';
+
 export const login = catchAsyncError(
 	async (req: Request, res: Response, next: NextFunction) => {
 		const usersRepo = new UsersRepository();

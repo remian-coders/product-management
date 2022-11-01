@@ -16,7 +16,7 @@ export class User {
 	@Column()
 	password: string;
 	@Column()
-	role: 'admin' | 'cashier';
+	role: 'admin' | 'cashier' | 'accessory';
 
 	@Column({
 		nullable: true,

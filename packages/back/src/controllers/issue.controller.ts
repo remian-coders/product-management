@@ -3,6 +3,7 @@ import { catchAsyncError } from './utils/catch-async-error';
 import { CustomError } from '../utils/custom-error';
 import { IssueRepository } from '../repository/issue.repository';
 import { FixedProductsRepository } from '../repository/fixed-products.repository';
+
 export const getIssues = catchAsyncError(
 	async (req: Request, res: Response, next: NextFunction) => {
 		const issueRepository = new IssueRepository();

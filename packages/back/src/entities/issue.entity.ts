@@ -7,7 +7,13 @@ export class Issue {
 	@Column({ default: () => 'CURRENT_TIMESTAMP' })
 	date?: Date;
 	@Column({
-		enum: ['general', 'cost-difference', 'older-than-7-days'],
+		enum: [
+			'general',
+			'cost-difference',
+			'older-than-7-days',
+			'incomplete-payment',
+			'out-of-stock',
+		],
 	})
 	type: string;
 	@Column()

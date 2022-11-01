@@ -10,7 +10,7 @@ export default (
 	err.statusCode = err.statusCode || 500;
 	err.status = err.status || 'error';
 	let error = Object.create(err);
-	// console.log(error);
+	console.log(error);
 	if (
 		error.message ===
 		'SQLITE_CONSTRAINT: UNIQUE constraint failed: user.email'
@@ -40,6 +40,29 @@ export default (
 	) {
 		error = new CustomError(
 			"This email address has already been added! You don't need to add it again.",
+			400
+		);
+	} else if (
+		error.message ===
+		'SQLITE_CONSTRAINT: UNIQUE constraint failed: category.name'
+	) {
+		error = new CustomError(
+			"This category has already been added! You don't need to add it again.",
+			400
+		);
+	} else if (
+		error.message ===
+		'SQLITE_CONSTRAINT: UNIQUE constraint failed: accessory.name, accessory.brand'
+	) {
+		error = new CustomError(
+			"This accessory has already been added! You don't need to add it again.",
+			400
+		);
+	} else if (
+		error.message === 'SQLITE_CONSTRAINT: FOREIGN KEY constraint failed'
+	) {
+		error = new CustomError(
+			'You cannot delete because there are accessories under this category.',
 			400
 		);
 	}

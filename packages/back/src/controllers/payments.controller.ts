@@ -6,7 +6,7 @@ import { CustomError } from '../utils/custom-error';
 
 export const makePayment = catchAsyncError(
 	async (req: Request, res: Response, next: NextFunction) => {
-		const { ticketNo, paymentType, paymentAmount } = req.body;
+		let { ticketNo, paymentType, paymentAmount, others } = req.body;
 		if (!ticketNo) {
 			return next(
 				new CustomError('A payment should belong to a register!', 400)
@@ -20,6 +20,7 @@ export const makePayment = catchAsyncError(
 				)
 			);
 		}
+
 		const registerRepo = new RegisterRepository();
 		const register = await registerRepo.findByIdTicketNo(ticketNo);
 		if (!register) {
@@ -45,6 +46,7 @@ export const makePayment = catchAsyncError(
 				)
 			);
 		}
+		paymentAmount = paymentAmount * 1;
 		if (paymentAmount > register.unPaid) {
 			return next(
 				new CustomError(
@@ -67,6 +69,7 @@ export const makePayment = catchAsyncError(
 			date: new Date(),
 			admin,
 			register,
+			others,
 		});
 		res.status(200).json({
 			message: 'Success!',
@@ -83,7 +86,6 @@ export const getDailyClientPayments = catchAsyncError(
 		from.setHours(0, 0, 0, 0);
 		const to = new Date();
 		to.setHours(23, 59, 59);
-		console.log(from.toString(), to.toString());
 		const paymentsRepo = new PaymentsRepository();
 		const { payments, cash, card } =
 			await paymentsRepo.findDailyClientPayments(from, to);

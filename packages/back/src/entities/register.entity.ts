@@ -14,10 +14,10 @@ export class Register {
 	ticketNo: string;
 	@Column({ nullable: false })
 	cost: number;
-	@Column()
-	paymentStatus: 'complete' | 'incomplete';
-	@Column()
-	registerType: 'service' | 'expense' | 'accessory';
+	@Column({ enum: ['complete', 'incomplete'] })
+	paymentStatus: string;
+	@Column({ enum: ['service', 'expense', 'accessory'] })
+	registerType: string;
 	@Column()
 	date: Date;
 	@OneToMany(() => Payment, (payment) => payment.register)
