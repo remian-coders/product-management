@@ -4,7 +4,6 @@ import {
   UserCreate,
   Emails,
   Navbar,
-  IpAddress,
   CsvFile,
   PasswordUpdate,
   AdminIncasare,
@@ -90,19 +89,7 @@ const Admin = ({
             </Protected>
           }
         />
-        <Route
-          path="/ip-address"
-          element={
-            <Protected token={token} role={role}>
-              <IpAddress
-                token={token}
-                setMessage={setMessage}
-                setShow={setShow}
-                setType={setType}
-              />
-            </Protected>
-          }
-        />
+
         <Route
           path="/user"
           element={

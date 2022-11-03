@@ -1,8 +1,8 @@
 import React, { useCallback, useState, useRef, useEffect } from "react";
-import { createUser, deleteUser, fetchUsers } from "../utils/api-calls";
+import { createUser, deleteUser, fetchUsers } from "../../utils/api-calls";
 import { Container, Spinner } from "react-bootstrap";
 
-const UserCreate = ({ token, setMessage, setType, setShow }) => {
+const Products = ({ token, setMessage, setType, setShow }) => {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -67,7 +67,7 @@ const UserCreate = ({ token, setMessage, setType, setShow }) => {
 
   return (
     <>
-      <div className="container border p-5 rounded">
+      <div className="container border p-5 rounded mt-3">
         <form className="row g-3" onSubmit={createUserHandler}>
           <div className="col-md-6">
             <label htmlFor="validationDefault01" className="form-label">
@@ -177,4 +177,4 @@ const UserCreate = ({ token, setMessage, setType, setShow }) => {
   );
 };
 
-export default UserCreate;
+export default Products;

@@ -42,6 +42,8 @@ const Login = ({
         navigate("/");
       } else if (response.data.data.user.role === "admin") {
         navigate("/admin");
+      } else if (response.data.data.user.role === "admin") {
+        navigate("/admin");
       }
     } else {
       setMessage(response.data.message);

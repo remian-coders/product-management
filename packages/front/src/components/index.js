@@ -6,7 +6,6 @@ export { default as Finalizer } from "./Finalizer";
 export { default as Navbar } from "./Navbar";
 export { default as Emails } from "./Emails";
 export { default as UserCreate } from "./UserCreate";
-export { default as IpAddress } from "./IpAddress";
 export { default as CsvFile } from "./CsvFile";
 export { default as PasswordUpdate } from "./PasswordUpdate";
 export { default as ForgotForm } from "./ForgotForm";

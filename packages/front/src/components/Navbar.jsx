@@ -48,7 +48,6 @@ const NavbarM = ({ today, daily, setToken, setRole }) => {
               <NavLink to="./">Admin Incasare</NavLink>
               <NavLink to="./emails">Email</NavLink>
               <NavLink to="./user">Create User</NavLink>
-              {/* <NavLink to="./ip-address">IP Address</NavLink> */}
               <NavLink to="./csv">CSV File</NavLink>
               <NavLink to="./password-update">Update Password</NavLink>
               <NavLink to="./issues">Issues Table</NavLink>

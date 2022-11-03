@@ -7,6 +7,7 @@ import Login from "./containers/login";
 import { Toast, ToastContainer } from "react-bootstrap";
 import { checkToken } from "./utils/api-calls";
 import SearchPage from "./components/SearchPage/SearchPage";
+import Accessories from "./containers/accessories";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -48,6 +49,22 @@ function App() {
               setMessage={setMessage}
               setShow={setShow}
               setType={setType}
+            />
+          }
+        />
+        <Route
+          path="/accessories/*"
+          element={
+            <Accessories
+              setIsLoggedIn={setIsLoggedIn}
+              isLoggedIn={isLoggedIn}
+              token={token}
+              setMessage={setMessage}
+              setShow={setShow}
+              setType={setType}
+              setToken={setToken}
+              role={role}
+              setRole={setRole}
             />
           }
         />
