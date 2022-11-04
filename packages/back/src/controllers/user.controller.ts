@@ -16,7 +16,7 @@ export const createUser = catchAsyncError(
 				)
 			);
 		}
-		if (role !== 'admin' && role !== 'cashier') {
+		if (role !== 'admin' && role !== 'cashier' && role !== 'accessory') {
 			return next(
 				new CustomError('Role should be admin or cashier!', 400)
 			);

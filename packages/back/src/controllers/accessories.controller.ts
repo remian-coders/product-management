@@ -6,6 +6,7 @@ import { CustomError } from '../utils/custom-error';
 import { RegisterRepository } from '../repository/register.repository';
 import { PaymentsRepository } from '../repository/payments.repository';
 import { sendNotification } from '../utils/notification';
+
 export const addAccessory = catchAsyncError(
 	async (req: Request, res: Response, next: NextFunction) => {
 		const {
@@ -126,7 +127,7 @@ export const makeSale = catchAsyncError(
 		accessory.quantity -= quantity;
 		const updatedAccessory = await accessoryRepo.update(accessory);
 		if (updatedAccessory.quantity === 0) {
-			await sendNotification({
+			sendNotification({
 				errorType: 'OutOfStock',
 				product: updatedAccessory,
 			});
