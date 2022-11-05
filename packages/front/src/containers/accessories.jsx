@@ -1,7 +1,9 @@
-import { Navbar, Nav, Container, NavDropdown, Button } from "react-bootstrap";
 import { Route, Routes } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
 import Categories from "../components/accessories/categories";
-import Products from "../components/accessories/products";
+import Brands from "../components/accessories/brands";
+import AccessoryProtected from "../utils/accessory-protected";
+import { fetchCategories } from "../utils/api-calls";
 
 const Accessories = ({
   role,
@@ -12,6 +14,23 @@ const Accessories = ({
   setRole,
   setToken,
 }) => {
+  const [categories, setCategories] = useState([]);
+
+  const getCategories = useCallback(async () => {
+    const response = await fetchCategories(token);
+
+    if (response.status === 200) {
+      setCategories(response.data.data.categories);
+    }
+  }, [token]);
+
+  useEffect(() => {
+    getCategories(); // run it, run it
+
+    return () => {
+      // this now gets called when the component unmounts
+    };
+  }, [getCategories]);
   const logoutHandler = () => {
     setRole(null);
     setToken(null);
@@ -19,65 +38,81 @@ const Accessories = ({
     localStorage.removeItem("user_role");
   };
   return (
-    <>
-      <Navbar bg="light" expand="lg">
-        <Container fluid>
-          <Navbar.Brand href="./">Accessories</Navbar.Brand>
-          <Navbar.Toggle aria-controls="navbarScroll" />
-          <Navbar.Collapse id="navbarScroll">
-            <Nav
-              className="me-auto my-2 my-lg-0"
-              style={{ maxHeight: "100px" }}
-              navbarScroll
-            >
-              <NavDropdown title="Categories" id="navbarScrollingDropdown">
-                <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-                <NavDropdown.Item href="#action4">
-                  Another action
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#action5">
-                  Something else here
-                </NavDropdown.Item>
-              </NavDropdown>
-            </Nav>
-
-            <Button variant="outline-danger" onClick={logoutHandler()}>
-              Log out
-            </Button>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+    <div className="d-flex">
+      <div
+        className="flex-column flex-shrink-0 p-3 bg-light sticky-top scrollspy-example-2"
+        data-bs-smooth-scroll="true"
+        style={{ width: "280px", maxHeight: "100vh" }}
+      >
+        <a
+          href="/accessories"
+          className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"
+        >
+          <svg className="bi me-2" width="40" height="32">
+            <use href="#bootstrap"></use>
+          </svg>
+          <span className="fs-4">Categories</span>
+        </a>
+        <hr />
+        <ul
+          className="p-0"
+          style={{ height: "78%", overflow: "hidden", overflowY: "scroll" }}
+        >
+          {categories.map(({ id, name }) => (
+            <li key={id} className="nav-item" style={{ listStyleType: "none" }}>
+              <a
+                href={`/accessories/categories/${id}`}
+                className="nav-link"
+                aria-current="page"
+              >
+                {name}
+              </a>
+            </li>
+          ))}
+        </ul>
+        <hr />
+        <div className="dropdown">
+          <button
+            type="button"
+            className="btn btn-outline-danger"
+            onClick={logoutHandler}
+          >
+            Log out
+          </button>
+        </div>
+      </div>
 
       <Routes>
         <Route
           path="/categories/:category"
           element={
-            // <Protected token={token} role={role}>
-            <Products
-              token={token}
-              setMessage={setMessage}
-              setShow={setShow}
-              setType={setType}
-            />
-            // </Protected>
+            <AccessoryProtected token={token} role={role}>
+              <Brands
+                token={token}
+                setMessage={setMessage}
+                setShow={setShow}
+                setType={setType}
+              />
+            </AccessoryProtected>
           }
         />
         <Route
           path="/*"
           element={
-            // <Protected token={token} role={role}>
-            <Categories
-              token={token}
-              setMessage={setMessage}
-              setShow={setShow}
-              setType={setType}
-            />
-            // </Protected>
+            <AccessoryProtected token={token} role={role}>
+              <Categories
+                categories={categories}
+                getCategories={getCategories}
+                token={token}
+                setMessage={setMessage}
+                setShow={setShow}
+                setType={setType}
+              />
+            </AccessoryProtected>
           }
         />
       </Routes>
-    </>
+    </div>
   );
 };
 
