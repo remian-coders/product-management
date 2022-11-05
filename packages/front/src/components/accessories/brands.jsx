@@ -1,73 +1,72 @@
 import React, { useCallback, useState, useRef, useEffect } from "react";
 import { createUser, deleteUser, fetchUsers } from "../../utils/api-calls";
 import { Container, Spinner } from "react-bootstrap";
+import { useParams } from "react-router-dom";
 
-const Products = ({ token, setMessage, setType, setShow }) => {
+const Brands = ({ token, setMessage, setType, setShow }) => {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const { category } = useParams();
 
   const nameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
   const roleRef = useRef();
 
-  const getUsers = useCallback(async () => {
-    const response = await fetchUsers(token);
-
-    if (response.status === 200 || response.status === 201) {
-      setUsers(response.data.data.users);
-      setIsLoading(false);
-    }
+  const getCategory = useCallback(async () => {
+    // const response = await fetchUsers(token);
+    // if (response.status === 200 || response.status === 201) {
+    //   setUsers(response.data.data.users);
+    //   setIsLoading(false);
+    // }
   }, [token]);
 
-  useEffect(() => {
-    getUsers();
-  }, [getUsers]);
+  // useEffect(() => {
+  //   getUsers();
+  // }, [getUsers]);
 
   const createUserHandler = async (e) => {
-    e.preventDefault();
-
-    const name = nameRef.current.value;
-    const email = emailRef.current.value;
-    const password = passwordRef.current.value;
-    const role = roleRef.current.value;
-
-    const response = await createUser(token, { name, email, password, role });
-
-    if (response.status === 200 || response.status === 201) {
-      emailRef.current.value = "";
-      nameRef.current.value = "";
-      passwordRef.current.value = "";
-      setMessage(response.data?.message);
-      setType("success");
-      setShow(true);
-      setIsLoading(true);
-      getUsers();
-    } else {
-      setMessage(response.data?.message);
-      setType("danger");
-      setShow(true);
-    }
+    // e.preventDefault();
+    // const name = nameRef.current.value;
+    // const email = emailRef.current.value;
+    // const password = passwordRef.current.value;
+    // const role = roleRef.current.value;
+    // const response = await createUser(token, { name, email, password, role });
+    // if (response.status === 200 || response.status === 201) {
+    //   emailRef.current.value = "";
+    //   nameRef.current.value = "";
+    //   passwordRef.current.value = "";
+    //   setMessage(response.data?.message);
+    //   setType("success");
+    //   setShow(true);
+    //   setIsLoading(true);
+    //   getUsers();
+    // } else {
+    //   setMessage(response.data?.message);
+    //   setType("danger");
+    //   setShow(true);
+    // }
   };
 
   const deleteUserHandler = async (id) => {
-    const response = await deleteUser(token, id);
-    if (response.status === 200 || response.status === 201) {
-      setMessage(response.data?.message);
-      setType("success");
-      setShow(true);
-      setIsLoading(true);
-      getUsers();
-    } else {
-      setMessage(response.data?.message);
-      setType("danger");
-      setShow(true);
-    }
+    // const response = await deleteUser(token, id);
+    // if (response.status === 200 || response.status === 201) {
+    //   setMessage(response.data?.message);
+    //   setType("success");
+    //   setShow(true);
+    //   setIsLoading(true);
+    //   getUsers();
+    // } else {
+    //   setMessage(response.data?.message);
+    //   setType("danger");
+    //   setShow(true);
+    // }
   };
 
   return (
     <>
-      <div className="container border p-5 rounded mt-3">
+      <div className="container-fluid border p-5 rounded mt-3">
         <form className="row g-3" onSubmit={createUserHandler}>
           <div className="col-md-6">
             <label htmlFor="validationDefault01" className="form-label">
@@ -177,4 +176,4 @@ const Products = ({ token, setMessage, setType, setShow }) => {
   );
 };
 
-export default Products;
+export default Brands;

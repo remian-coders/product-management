@@ -1,47 +1,66 @@
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Container, Spinner } from "react-bootstrap";
+import { addNewCategory, deleteCategory } from "../../utils/api-calls";
 
-const Categories = ({ token }) => {
-  const [categories, setCategories] = useState([]);
+const Categories = ({
+  categories,
+  getCategories,
+  token,
+  setMessage,
+  setShow,
+  setType,
+}) => {
   const [isLoading, setIsLoading] = useState(false);
-
-  const getCategories = useCallback(async () => {
-    // const response = await fetchCategories(token);
-    // if (response.status === 200 || response.status === 201) {
-    //   setCategories(response.data.data.categories);
-    //   setIsLoading(false);
-    // }
-  }, [token]);
+  const categoryRef = useRef();
 
   useEffect(() => {
     getCategories();
   }, [getCategories]);
 
-  const deleteIssueHandler = async (id) => {
-    // const response = await deleteIssue(token, id);
-    // if (response.status === 200 || response.status === 201) {
-    //   setMessage(response.data?.message);
-    //   setType("success");
-    //   setShow(true);
-    //   setIsLoading(true);
-    //   getCategories();
-    // } else {
-    //   setMessage(response.data?.message);
-    //   setType("danger");
-    //   setShow(true);
-    // }
+  const deleteCategoryHandler = async (id) => {
+    setIsLoading(true);
+    const response = await deleteCategory(token, id);
+    if (response.status === 200 || response.status === 201) {
+      setMessage(response.data?.message);
+      setType("success");
+      setShow(true);
+      getCategories();
+    } else {
+      setMessage(response.data?.message);
+      setType("danger");
+      setShow(true);
+    }
+    setIsLoading(false);
+  };
+  const addCategoryHandler = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    const name = categoryRef.current.value;
+    const response = await addNewCategory(token, { name });
+    if (response.status === 200 || response.status === 201) {
+      setMessage(response.data?.message);
+      categoryRef.current.value = "";
+      setType("success");
+      setShow(true);
+      getCategories();
+    } else {
+      setMessage(response.data?.message);
+      setType("danger");
+      setShow(true);
+    }
+    setIsLoading(false);
   };
   return (
-    <>
-      <div className="container mt-5 py-5">
-        <form>
+    <div className="container-fluid">
+      <div className="container p-5">
+        <form onSubmit={addCategoryHandler}>
           <div className="input-group mb-3">
             <input
-              //   ref={emailRef}
-              type="email"
+              ref={categoryRef}
+              type="text"
               className="form-control"
               placeholder="Add a new category"
-              aria-label="email"
+              aria-label="text"
               aria-describedby="button-addon2"
               required
               autoComplete="off"
@@ -51,7 +70,7 @@ const Categories = ({ token }) => {
               type="submit"
               id="button-addon2"
             >
-              Save
+              Add
             </button>
           </div>
         </form>
@@ -66,31 +85,25 @@ const Categories = ({ token }) => {
             <thead>
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">Date</th>
-                <th scope="col">Type</th>
-                <th scope="col">Description</th>
-                <th scope="col">Action</th>
+                <th scope="col">Name</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Remove</th>
               </tr>
             </thead>
             <tbody>
-              {categories.map(({ id, date, type, description }, index) => (
-                <tr
-                  key={index}
-                  className={
-                    (type === "cost-difference" && "bg-info") ||
-                    (type === "older-than-7-days" && "bg-warning")
-                  }
-                >
+              {categories.map(({ id, name }, index) => (
+                <tr key={index}>
                   <th>{index + 1}</th>
-                  <td>{new Date(date).toLocaleString()}</td>
-                  <td>{type}</td>
-                  <td>{description}</td>
+                  <td>{name}</td>
+                  <td>
+                    <a href={`/accessories/categories/${id}`}>view</a>
+                  </td>
                   <td>
                     <button
                       type="button"
                       className="btn btn-outline-danger"
                       onClick={() => {
-                        deleteIssueHandler(id);
+                        deleteCategoryHandler(id);
                       }}
                     >
                       Delete
@@ -102,7 +115,7 @@ const Categories = ({ token }) => {
           </table>
         )}
       </div>
-    </>
+    </div>
   );
 };
 

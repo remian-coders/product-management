@@ -352,3 +352,36 @@ export const checkToken = async function (token) {
     return error.response;
   }
 };
+
+export const fetchCategories = async function (token) {
+  try {
+    let response = await api.get("/accessory/category", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const addNewCategory = async function (token, data) {
+  try {
+    let response = await api.post("/accessory/category", data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const deleteCategory = async function (token, id) {
+  try {
+    let response = await api.delete(`/accessory/category/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};

@@ -117,7 +117,7 @@ function App() {
           onClose={() => setShow(false)}
           show={show}
           bg={type}
-          delay={4000}
+          delay={1000}
           autohide
         >
           <Toast.Header>
