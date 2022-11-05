@@ -12,7 +12,10 @@ export class AccessoriesRepository {
 	}
 
 	async find(query: {}) {
-		return await this.accessoryRepo.find({ where: query });
+		return await this.accessoryRepo.find({
+			where: query,
+			relations: { category: true },
+		});
 	}
 	async findOne(id: number) {
 		return await this.accessoryRepo.findOne({

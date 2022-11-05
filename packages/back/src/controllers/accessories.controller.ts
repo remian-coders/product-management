@@ -9,16 +9,9 @@ import { sendNotification } from '../utils/notification';
 
 export const addAccessory = catchAsyncError(
 	async (req: Request, res: Response, next: NextFunction) => {
-		const {
-			brand,
-			name,
-			price,
-			quantity,
-			location,
-			category: categoryName,
-		} = req.body;
+		const { brand, name, price, quantity, location, categoryId } = req.body;
 		const categoryRepo = new CategoriesRepository();
-		const category = await categoryRepo.findOneBy({ name: categoryName });
+		const category = await categoryRepo.findOneBy({ id: categoryId });
 		if (!category)
 			return next(
 				new CustomError('An accessory must have a category!', 404)
@@ -35,7 +28,7 @@ export const addAccessory = catchAsyncError(
 		const newAccessory = await accessoryRepo.create(accessory);
 		res.status(200).json({
 			message: 'New accessory is added!',
-			data: { accessory },
+			data: { accessory: newAccessory },
 		});
 	}
 );
@@ -165,14 +158,17 @@ export const getCategories = catchAsyncError(
 export const getBrands = catchAsyncError(
 	async (req: Request, res: Response, next: NextFunction) => {
 		const categoryId = req.params.categoryId;
-		console.log(categoryId);
+		const categoryRepo = new CategoriesRepository();
+		const category = await categoryRepo.findOneBy({ id: categoryId });
 		const accessoryRepo = new AccessoriesRepository();
 		const accessoryBrands = await accessoryRepo.getBrands(categoryId);
 		const brands = accessoryBrands.map((acceesory) => acceesory.brand);
-		console.log(brands);
 		res.status(200).json({
 			message: 'Brands are fetched!',
-			data: { brands },
+			data: {
+				brands,
+				category,
+			},
 		});
 	}
 );
