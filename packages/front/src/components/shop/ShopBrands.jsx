@@ -85,7 +85,12 @@ const Brands = ({ token, setAccessory, setIncasare }) => {
                       className="btn btn-primary"
                       onClick={() => {
                         setIncasare(true);
-                        setAccessory({ id: id, name: category.name });
+                        setAccessory({
+                          id: id,
+                          name: name,
+                          cost: price * 1,
+                          quantity: quantity,
+                        });
                       }}
                     >
                       Sell

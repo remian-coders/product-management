@@ -61,6 +61,7 @@ const Shop = ({ role, token, setMessage, setShow, setType }) => {
         others: "",
         paymentAmount: "",
       });
+      setAccessory({});
       navigate(0);
     } else {
       setMessage(response.data?.message);

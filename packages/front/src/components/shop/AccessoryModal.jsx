@@ -66,7 +66,8 @@ const AccessoryModal = ({ show, submitHandler, onHide, accessory }) => {
           }}
         >
           <Modal.Title id="contained-modal-title-vcenter">
-            Accessory : {accessory?.name}
+            {accessory?.name} - Available: {accessory.quantity} - Cost: $
+            {formData.quantity && accessory.cost * formData.quantity}
           </Modal.Title>
         </Modal.Header>
         <Form>
