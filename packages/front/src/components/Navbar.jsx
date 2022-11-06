@@ -46,6 +46,7 @@ const NavbarM = ({ today, daily, setToken, setRole }) => {
           <Offcanvas.Body>
             <Nav className="justify-content-end flex-grow-1 pe-3">
               <NavLink to="./">Admin Incasare</NavLink>
+              <NavLink to="/accessories">Accessories</NavLink>
               <NavLink to="./emails">Email</NavLink>
               <NavLink to="./user">Create User</NavLink>
               <NavLink to="./csv">CSV File</NavLink>

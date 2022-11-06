@@ -385,3 +385,91 @@ export const deleteCategory = async function (token, id) {
     return error.response;
   }
 };
+
+export const fetchBrands = async function (token, id) {
+  try {
+    let response = await api.get(`/accessory/brands/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const editCategory = async function (token, id, data) {
+  try {
+    let response = await api.patch(`/accessory/category/${id}`, data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const addNewAccessory = async function (token, data) {
+  try {
+    let response = await api.post("/accessory", data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const fetchAccessories = async function (token, id = "", brand = "") {
+  try {
+    let response = await api.get(`/accessory?categoryId=${id}&brand=${brand}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const fetchAccessory = async function (token, id) {
+  try {
+    let response = await api.get(`/accessory/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const editAccessory = async function (token, id, data) {
+  try {
+    let response = await api.patch(`/accessory/${id}`, data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const deleteAccessory = async function (token, id) {
+  try {
+    let response = await api.delete(`/accessory/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const sellAccessory = async function (token, id, data) {
+  try {
+    let response = await api.patch(`/accessory/make-sale/${id}`, data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};

@@ -162,18 +162,24 @@ const Home = ({ setMessage, setType, setShow, token, role }) => {
               </div>
             </form>
           </div>
-          <Container className="p-0">
-            <HomeTable registers={registers} report={report} />
-          </Container>
-          <div className="container px-4 py-5">
+          <div className="container py-2">
             <div className="row">
-              <div className="col">
+              <div className="col ">
                 <button
                   type="button"
                   className="btn btn-primary "
                   onClick={() => setIncasare(true)}
                 >
                   Incasare
+                </button>
+              </div>
+              <div className="col d-flex justify-content-center">
+                <button
+                  type="button"
+                  className="btn btn-primary "
+                  onClick={() => navigate("/shop")}
+                >
+                  Sell Accessory
                 </button>
               </div>
               <div className="col">
@@ -187,6 +193,9 @@ const Home = ({ setMessage, setType, setShow, token, role }) => {
               </div>
             </div>
           </div>
+          <Container className="p-0">
+            <HomeTable registers={registers} report={report} />
+          </Container>
           <IncasareModal
             show={incasare}
             onHide={() => setIncasare(false)}

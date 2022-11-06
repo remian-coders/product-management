@@ -86,7 +86,6 @@ const AdminIncasare = ({
   }, [getAllTransactions]);
 
   const incasareHandle = async (formData, setFormData) => {
-    console.log(formData);
     const response = await postAdminRegister(token, formData);
 
     if (response.status === 200) {
@@ -296,6 +295,37 @@ const AdminIncasare = ({
             </button>
           </div>
         </form>
+        <div className="container py-2">
+          <div className="row">
+            <div className="col ">
+              <button
+                type="button"
+                className="btn btn-primary "
+                onClick={() => setIncasare(true)}
+              >
+                Incasare
+              </button>
+            </div>
+            <div className="col d-flex justify-content-center">
+              <button
+                type="button"
+                className="btn btn-primary "
+                onClick={() => navigate("/shop")}
+              >
+                Sell Accessory
+              </button>
+            </div>
+            <div className="col">
+              <button
+                type="button"
+                className="btn btn-primary  float-end"
+                onClick={() => setPlata(true)}
+              >
+                Plata
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
       {loading ? (
         <Loading height=" " />
@@ -321,28 +351,7 @@ const AdminIncasare = ({
           </Container>
         </>
       )}
-      <div className="container px-4 py-5">
-        <div className="row">
-          <div className="col">
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={() => setIncasare(true)}
-            >
-              Incasare
-            </button>
-          </div>
-          <div className="col">
-            <button
-              type="button"
-              className="btn btn-primary float-end"
-              onClick={() => setPlata(true)}
-            >
-              Plata
-            </button>
-          </div>
-        </div>
-      </div>
+
       <IncasareModal
         show={incasare}
         onHide={() => setIncasare(false)}

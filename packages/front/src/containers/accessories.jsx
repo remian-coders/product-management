@@ -4,6 +4,7 @@ import Categories from "../components/accessories/categories";
 import Brands from "../components/accessories/brands";
 import AccessoryProtected from "../utils/accessory-protected";
 import { fetchCategories } from "../utils/api-calls";
+import Accessory from "../components/accessories/accessory";
 
 const Accessories = ({
   role,
@@ -42,7 +43,7 @@ const Accessories = ({
       <div
         className="flex-column flex-shrink-0 p-3 bg-light sticky-top scrollspy-example-2"
         data-bs-smooth-scroll="true"
-        style={{ width: "280px", maxHeight: "100vh" }}
+        style={{ width: "280px", height: "100vh" }}
       >
         <a
           href="/accessories"
@@ -88,6 +89,20 @@ const Accessories = ({
           element={
             <AccessoryProtected token={token} role={role}>
               <Brands
+                getCategories={getCategories}
+                token={token}
+                setMessage={setMessage}
+                setShow={setShow}
+                setType={setType}
+              />
+            </AccessoryProtected>
+          }
+        />
+        <Route
+          path="/accessory/:accessoryId"
+          element={
+            <AccessoryProtected token={token} role={role}>
+              <Accessory
                 token={token}
                 setMessage={setMessage}
                 setShow={setShow}
