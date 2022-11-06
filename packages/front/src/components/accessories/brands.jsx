@@ -53,6 +53,7 @@ const Brands = ({ token, setMessage, setType, setShow, getCategories }) => {
       setMessage(response.data?.message);
       setType("success");
       setShow(true);
+      navigate(0);
     } else {
       setMessage(response.data?.message);
       setType("danger");
