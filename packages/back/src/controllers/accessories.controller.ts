@@ -51,13 +51,11 @@ export const getAccessories = catchAsyncError(
 
 export const getAccessory = catchAsyncError(
 	async (req: Request, res: Response, next: NextFunction) => {
-		const id = Number(req.params.id);
+		const { id } = req.params;
 		const accessoryRepo = new AccessoriesRepository();
 		const accessory = await accessoryRepo.findOne(id);
-		if (!accessory)
-			return next(new CustomError('Accessory not found!', 404));
 		res.status(200).json({
-			message: 'Accessory is fetched!',
+			message: 'Accessories are fetched!',
 			data: { accessory },
 		});
 	}
