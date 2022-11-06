@@ -15,19 +15,24 @@ import {
 } from '../controllers/accessories.controller';
 
 const router = Router();
-router.use(guard, authorize(['admin', 'accessory']));
-router.route('/').post(addAccessory).get(getAccessories);
-router.route('/:id').patch(updateAccessory).delete(deleteAccessory);
-router.patch('/make-sale/:accessoryId', makeSale);
-router.route('/category').post(addCategory).get(getCategories);
-router.route('/category/:id').patch(updateCategory).delete(deleteCategory);
+router.use(guard);
+
+router.get('/', getAccessories);
+router.get('/category', getCategories);
 router.get('/brands/:categoryId', getBrands);
-router.route('/category').post(addCategory).get(getCategories);
-router
-	.route('/:id')
-	.patch(updateAccessory)
-	.delete(deleteAccessory)
-	.get(getAccessory);
-router.route('/').post(addAccessory).get(getAccessories);
-router.patch('/make-sale/:accessoryId', makeSale);
+router.get('/:id', getAccessory);
+
+router.patch(
+	'/make-sale/:accessoryId',
+	authorize(['admin', 'cashier']),
+	makeSale
+);
+
+router.use(authorize(['admin', 'accessory']));
+router.post('/', addAccessory);
+router.route('/:id').patch(updateAccessory).delete(deleteAccessory);
+router.post('/category', addCategory);
+router.route('/category/:id').patch(updateCategory).delete(deleteCategory);
+router.route('/:id').patch(updateAccessory).delete(deleteAccessory);
+
 export default router;
