@@ -64,7 +64,7 @@ export const getAccessory = catchAsyncError(
 export const updateAccessory = catchAsyncError(
 	async (req: Request, res: Response, next: NextFunction) => {
 		const id = Number(req.params.id);
-		const { name, location, price, quantity } = req.body;
+		const { name, location, price, quantity, brand } = req.body;
 		const accessoryRepo = new AccessoriesRepository();
 		const accessory = await accessoryRepo.findOne(id);
 		if (!accessory)
@@ -73,6 +73,7 @@ export const updateAccessory = catchAsyncError(
 		accessory.location = location;
 		accessory.price = price;
 		accessory.quantity = quantity;
+		accessory.brand = brand;
 		const updatedAccessory = await accessoryRepo.update(accessory);
 		res.status(200).json({
 			message: 'Accessory is updated!',
