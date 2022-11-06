@@ -17,7 +17,7 @@ export class AccessoriesRepository {
 			relations: { category: true },
 		});
 	}
-	async findOne(id: number) {
+	async findOne(id) {
 		return await this.accessoryRepo.findOne({
 			where: { id },
 			relations: { category: true },

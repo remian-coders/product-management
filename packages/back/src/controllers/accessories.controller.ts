@@ -49,6 +49,18 @@ export const getAccessories = catchAsyncError(
 	}
 );
 
+export const getAccessory = catchAsyncError(
+	async (req: Request, res: Response, next: NextFunction) => {
+		const { id } = req.params;
+		const accessoryRepo = new AccessoriesRepository();
+		const accessory = await accessoryRepo.findOne(id);
+		res.status(200).json({
+			message: 'Accessories are fetched!',
+			data: { accessory },
+		});
+	}
+);
+
 export const updateAccessory = catchAsyncError(
 	async (req: Request, res: Response, next: NextFunction) => {
 		const id = Number(req.params.id);
