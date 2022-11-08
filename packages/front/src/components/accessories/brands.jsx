@@ -85,6 +85,7 @@ const Brands = ({ token, setMessage, setType, setShow, getCategories }) => {
     e.preventDefault();
     const brand = e.target.brand.value;
     const name = e.target.name.value;
+    const modal = e.target.modal.value;
     const price = e.target.price.value;
     const quantity = e.target.quantity.value;
     const location = e.target.location.value;
@@ -92,6 +93,7 @@ const Brands = ({ token, setMessage, setType, setShow, getCategories }) => {
     const response = await addNewAccessory(token, {
       brand,
       name,
+      modal,
       price,
       quantity,
       location,
@@ -138,7 +140,7 @@ const Brands = ({ token, setMessage, setType, setShow, getCategories }) => {
             </button>
           </div>
           <div className="col-md-6">
-            <label htmlFor="validationDefaultEmail" className="form-label">
+            <label htmlFor="validationDefaultBrand" className="form-label">
               Brand
             </label>
             <div className="input-group">
@@ -147,7 +149,7 @@ const Brands = ({ token, setMessage, setType, setShow, getCategories }) => {
                 className="form-control"
                 placeholder="Brand of the product"
                 name="brand"
-                id="validationDefaultEmail"
+                id="validationDefaultBrand"
                 aria-describedby="inputGroupPrepend2"
                 required
                 autoComplete="off"
@@ -155,7 +157,7 @@ const Brands = ({ token, setMessage, setType, setShow, getCategories }) => {
             </div>
           </div>
           <div className="col-md-6">
-            <label htmlFor="validationDefaultEmail" className="form-label">
+            <label htmlFor="validationDefaultName" className="form-label">
               Name
             </label>
             <div className="input-group">
@@ -164,7 +166,7 @@ const Brands = ({ token, setMessage, setType, setShow, getCategories }) => {
                 className="form-control"
                 placeholder="Name of the product"
                 name="name"
-                id="validationDefaultEmail"
+                id="validationDefaultName"
                 aria-describedby="inputGroupPrepend2"
                 required
                 autoComplete="off"
@@ -172,16 +174,33 @@ const Brands = ({ token, setMessage, setType, setShow, getCategories }) => {
             </div>
           </div>
           <div className="col-md-6">
-            <label htmlFor="validationDefaultEmail" className="form-label">
-              Price
+            <label htmlFor="validationDefaultModal" className="form-label">
+              Modal
+            </label>
+            <div className="input-group">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Modal of the product"
+                name="modal"
+                id="validationDefaultModal"
+                aria-describedby="inputGroupPrepend2"
+                required
+                autoComplete="off"
+              />
+            </div>
+          </div>
+          <div className="col-md-6">
+            <label htmlFor="validationDefaultPrice" className="form-label">
+              Price(RON)
             </label>
             <div className="input-group">
               <input
                 type="number"
                 className="form-control"
-                placeholder="Price of the product"
+                placeholder="Price of the product(RON)"
                 name="price"
-                id="validationDefaultEmail"
+                id="validationDefaultPrice"
                 aria-describedby="inputGroupPrepend2"
                 required
                 autoComplete="off"
@@ -189,7 +208,7 @@ const Brands = ({ token, setMessage, setType, setShow, getCategories }) => {
             </div>
           </div>
           <div className="col-md-6">
-            <label htmlFor="validationDefaultEmail" className="form-label">
+            <label htmlFor="validationDefaultQuantity" className="form-label">
               Quantity
             </label>
             <div className="input-group">
@@ -198,7 +217,7 @@ const Brands = ({ token, setMessage, setType, setShow, getCategories }) => {
                 className="form-control"
                 placeholder="Quantity of the product"
                 name="quantity"
-                id="validationDefaultEmail"
+                id="validationDefaultQuantity"
                 aria-describedby="inputGroupPrepend2"
                 required
                 autoComplete="off"
@@ -206,7 +225,7 @@ const Brands = ({ token, setMessage, setType, setShow, getCategories }) => {
             </div>
           </div>
           <div className="col-md-6">
-            <label htmlFor="validationDefaultEmail" className="form-label">
+            <label htmlFor="validationDefaultLocation" className="form-label">
               Location
             </label>
             <div className="input-group">
@@ -215,7 +234,7 @@ const Brands = ({ token, setMessage, setType, setShow, getCategories }) => {
                 className="form-control"
                 placeholder="Location of the product"
                 name="location"
-                id="validationDefaultEmail"
+                id="validationDefaultLocation"
                 aria-describedby="inputGroupPrepend2"
                 required
                 autoComplete="off"
@@ -254,7 +273,8 @@ const Brands = ({ token, setMessage, setType, setShow, getCategories }) => {
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
                 <th scope="col">Brand</th>
-                <th scope="col">Price</th>
+                <th scope="col">Modal</th>
+                <th scope="col">Price(RON)</th>
                 <th scope="col">Quantity</th>
                 <th scope="col">Location</th>
                 <th scope="col">Category</th>
@@ -264,13 +284,23 @@ const Brands = ({ token, setMessage, setType, setShow, getCategories }) => {
             <tbody>
               {accessories.map(
                 (
-                  { id, brand, name, price, quantity, location, category },
+                  {
+                    id,
+                    brand,
+                    name,
+                    modal,
+                    price,
+                    quantity,
+                    location,
+                    category,
+                  },
                   index
                 ) => (
                   <tr key={index}>
                     <th>{index + 1}</th>
                     <td>{name}</td>
                     <td>{brand}</td>
+                    <td>{modal}</td>
                     <td>{price}</td>
                     <td>{quantity}</td>
                     <td>{location}</td>

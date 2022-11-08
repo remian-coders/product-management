@@ -85,7 +85,7 @@ const SearchPage = ({ role, token, setMessage, setShow, setType }) => {
             <div className="d-flex mb-3">
               <div className="col-6">
                 <h6 className="">Ticket Number: {ticketNo} </h6>
-                <h6 className="mb-2">Cost: {register.cost}</h6>
+                <h6 className="mb-2">Cost: {register.cost}(RON)</h6>
                 <h6 className="mb-2">
                   Payment Status: {register.paymentStatus}
                 </h6>
@@ -95,8 +95,8 @@ const SearchPage = ({ role, token, setMessage, setShow, setType }) => {
                 <h6 className="mb-2">
                   Date: {new Date(register.date).toLocaleString()}
                 </h6>
-                <h6 className="mb-2">Paid: {register.paid}</h6>
-                <h6 className="mb-2">Unpaid: {register.unPaid}</h6>
+                <h6 className="mb-2">Paid: {register.paid}(RON)</h6>
+                <h6 className="mb-2">Unpaid: {register.unPaid}(RON)</h6>
               </div>
             </div>
             <div className="list-group mb-3">
@@ -108,7 +108,9 @@ const SearchPage = ({ role, token, setMessage, setShow, setType }) => {
                     key={id}
                   >
                     <div className="d-flex w-100 justify-content-between">
-                      <h5 className="mb-1">Amount Paid: {paymentAmount}</h5>
+                      <h5 className="mb-1">
+                        Amount Paid: {paymentAmount}(RON)
+                      </h5>
 
                       <small>{new Date(date).toLocaleString()}</small>
                     </div>
@@ -122,7 +124,7 @@ const SearchPage = ({ role, token, setMessage, setShow, setType }) => {
             <form className="row g-3" onSubmit={formHandler}>
               <div className="col-md-6">
                 <label htmlFor="paymentAmount" className="form-label">
-                  Payment Amount
+                  Payment Amount(RON)
                 </label>
                 <input
                   type="number"

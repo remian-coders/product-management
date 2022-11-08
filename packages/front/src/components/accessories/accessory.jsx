@@ -78,7 +78,7 @@ const Accessory = ({ token, setMessage, setType, setShow }) => {
       <div className="container border p-3 rounded mt-3">
         <form className="row g-3">
           <div className="col-md-6">
-            <label htmlFor="validationDefaultEmail" className="form-label">
+            <label htmlFor="validationDefaultBrand" className="form-label">
               Brand
             </label>
             <div className="input-group">
@@ -88,7 +88,7 @@ const Accessory = ({ token, setMessage, setType, setShow }) => {
                 className="form-control"
                 placeholder="Brand of the product"
                 name="brand"
-                id="validationDefaultEmail"
+                id="validationDefaultBrand"
                 aria-describedby="inputGroupPrepend2"
                 required
                 autoComplete="off"
@@ -96,7 +96,7 @@ const Accessory = ({ token, setMessage, setType, setShow }) => {
             </div>
           </div>
           <div className="col-md-6">
-            <label htmlFor="validationDefaultEmail" className="form-label">
+            <label htmlFor="validationDefaultName" className="form-label">
               Name
             </label>
             <div className="input-group">
@@ -106,7 +106,7 @@ const Accessory = ({ token, setMessage, setType, setShow }) => {
                 className="form-control"
                 placeholder="Name of the product"
                 name="name"
-                id="validationDefaultEmail"
+                id="validationDefaultName"
                 aria-describedby="inputGroupPrepend2"
                 required
                 autoComplete="off"
@@ -114,17 +114,17 @@ const Accessory = ({ token, setMessage, setType, setShow }) => {
             </div>
           </div>
           <div className="col-md-6">
-            <label htmlFor="validationDefaultEmail" className="form-label">
-              Price
+            <label htmlFor="validationDefaultPrice" className="form-label">
+              Price(RON)
             </label>
             <div className="input-group">
               <input
                 ref={priceRef}
                 type="number"
                 className="form-control"
-                placeholder="Price of the product"
+                placeholder="Price of the product(RON)"
                 name="price"
-                id="validationDefaultEmail"
+                id="validationDefaultPrice"
                 aria-describedby="inputGroupPrepend2"
                 required
                 autoComplete="off"
@@ -132,7 +132,7 @@ const Accessory = ({ token, setMessage, setType, setShow }) => {
             </div>
           </div>
           <div className="col-md-6">
-            <label htmlFor="validationDefaultEmail" className="form-label">
+            <label htmlFor="validationDefaultQuantity" className="form-label">
               Quantity
             </label>
             <div className="input-group">
@@ -142,7 +142,7 @@ const Accessory = ({ token, setMessage, setType, setShow }) => {
                 className="form-control"
                 placeholder="Quantity of the product"
                 name="quantity"
-                id="validationDefaultEmail"
+                id="validationDefaultQuantity"
                 aria-describedby="inputGroupPrepend2"
                 required
                 autoComplete="off"
@@ -150,7 +150,7 @@ const Accessory = ({ token, setMessage, setType, setShow }) => {
             </div>
           </div>
           <div className="col-md-6">
-            <label htmlFor="validationDefaultEmail" className="form-label">
+            <label htmlFor="validationDefaultLocation" className="form-label">
               Location
             </label>
             <div className="input-group">
@@ -160,7 +160,7 @@ const Accessory = ({ token, setMessage, setType, setShow }) => {
                 className="form-control"
                 placeholder="Location of the product"
                 name="location"
-                id="validationDefaultEmail"
+                id="validationDefaultLocation"
                 aria-describedby="inputGroupPrepend2"
                 required
                 autoComplete="off"
