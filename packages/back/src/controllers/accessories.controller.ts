@@ -9,7 +9,8 @@ import { sendNotification } from '../utils/notification';
 
 export const addAccessory = catchAsyncError(
 	async (req: Request, res: Response, next: NextFunction) => {
-		const { brand, name, price, quantity, location, categoryId } = req.body;
+		const { brand, name, price, quantity, location, categoryId, model } =
+			req.body;
 		const categoryRepo = new CategoriesRepository();
 		const category = await categoryRepo.findOneBy({ id: categoryId });
 		if (!category)
@@ -23,6 +24,7 @@ export const addAccessory = catchAsyncError(
 			quantity,
 			location,
 			category,
+			model,
 		};
 		const accessoryRepo = new AccessoriesRepository();
 		const newAccessory = await accessoryRepo.create(accessory);
@@ -64,7 +66,7 @@ export const getAccessory = catchAsyncError(
 export const updateAccessory = catchAsyncError(
 	async (req: Request, res: Response, next: NextFunction) => {
 		const id = Number(req.params.id);
-		const { name, location, price, quantity, brand } = req.body;
+		const { name, location, price, quantity, brand, model } = req.body;
 		const accessoryRepo = new AccessoriesRepository();
 		const accessory = await accessoryRepo.findOne(id);
 		if (!accessory)
@@ -74,6 +76,7 @@ export const updateAccessory = catchAsyncError(
 		accessory.price = price;
 		accessory.quantity = quantity;
 		accessory.brand = brand;
+		accessory.model = model;
 		const updatedAccessory = await accessoryRepo.update(accessory);
 		res.status(200).json({
 			message: 'Accessory is updated!',
@@ -116,6 +119,7 @@ export const makeSale = catchAsyncError(
 			registerType: 'accessory',
 			date: new Date(),
 			payments: [],
+			accessoryName: accessory.name,
 		};
 		const registerRepo = new RegisterRepository();
 		const register = await registerRepo.create(registerObj);

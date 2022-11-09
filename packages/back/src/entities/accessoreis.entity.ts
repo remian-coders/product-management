@@ -28,6 +28,9 @@ export class Accessory {
 	@Column()
 	location: string;
 
+	@Column()
+	model: string;
+
 	@ManyToOne(() => Category, (category) => category.accessories)
 	category: Category;
 }
