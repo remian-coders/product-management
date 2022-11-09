@@ -114,7 +114,9 @@ const SearchPage = ({ role, token, setMessage, setShow, setType }) => {
 
                       <small>{new Date(date).toLocaleString()}</small>
                     </div>
-                    <p className="mb-1">Payment recorded by: {admin}</p>
+                    <p className="mb-1">
+                      Payment recorded by: {admin ? admin : "cashier"}
+                    </p>
                     <small>Payment Type: {paymentType}</small>
                   </div>
                 )

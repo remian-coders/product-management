@@ -45,16 +45,13 @@ const Shop = ({ role, token, setMessage, setShow, setType }) => {
   }, [getCategories, getAccessories]);
 
   const incasareHandle = async (formData, setFormData, id) => {
-    console.log(formData);
     const response = await sellAccessory(token, accessory.id, formData);
-
-    console.log(response);
 
     if (response.status === 200) {
       setMessage(response.data?.message);
+      setIncasare(false);
       setType("success");
       setShow(true);
-      setIncasare(false);
       setFormData({
         quantity: "",
         paymentType: "",
@@ -62,7 +59,9 @@ const Shop = ({ role, token, setMessage, setShow, setType }) => {
         paymentAmount: "",
       });
       setAccessory({});
-      navigate(0);
+      setTimeout(() => {
+        navigate(0);
+      }, 2000);
     } else {
       setMessage(response.data?.message);
       setType("danger");

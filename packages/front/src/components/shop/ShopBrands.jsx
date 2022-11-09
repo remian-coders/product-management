@@ -58,7 +58,7 @@ const Brands = ({ token, setAccessory, setIncasare }) => {
               <th scope="col">#</th>
               <th scope="col">Name</th>
               <th scope="col">Brand</th>
-              <th scope="col">Modal</th>
+              <th scope="col">Model</th>
               <th scope="col">Price(RON)</th>
               <th scope="col">Quantity</th>
               <th scope="col">Location</th>
@@ -69,14 +69,14 @@ const Brands = ({ token, setAccessory, setIncasare }) => {
           <tbody>
             {accessories.map(
               (
-                { id, brand, name, modal, price, quantity, location, category },
+                { id, brand, name, model, price, quantity, location, category },
                 index
               ) => (
                 <tr key={index}>
                   <th>{index + 1}</th>
                   <td>{name}</td>
                   <td>{brand}</td>
-                  <td>{modal}</td>
+                  <td>{model}</td>
                   <td>{price}</td>
                   <td>{quantity}</td>
                   <td>{location}</td>

@@ -85,7 +85,7 @@ const Brands = ({ token, setMessage, setType, setShow, getCategories }) => {
     e.preventDefault();
     const brand = e.target.brand.value;
     const name = e.target.name.value;
-    const modal = e.target.modal.value;
+    const model = e.target.model.value;
     const price = e.target.price.value;
     const quantity = e.target.quantity.value;
     const location = e.target.location.value;
@@ -93,7 +93,7 @@ const Brands = ({ token, setMessage, setType, setShow, getCategories }) => {
     const response = await addNewAccessory(token, {
       brand,
       name,
-      modal,
+      model,
       price,
       quantity,
       location,
@@ -175,14 +175,14 @@ const Brands = ({ token, setMessage, setType, setShow, getCategories }) => {
           </div>
           <div className="col-md-6">
             <label htmlFor="validationDefaultModal" className="form-label">
-              Modal
+              Model
             </label>
             <div className="input-group">
               <input
                 type="text"
                 className="form-control"
                 placeholder="Modal of the product"
-                name="modal"
+                name="model"
                 id="validationDefaultModal"
                 aria-describedby="inputGroupPrepend2"
                 required
@@ -273,7 +273,7 @@ const Brands = ({ token, setMessage, setType, setShow, getCategories }) => {
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
                 <th scope="col">Brand</th>
-                <th scope="col">Modal</th>
+                <th scope="col">Model</th>
                 <th scope="col">Price(RON)</th>
                 <th scope="col">Quantity</th>
                 <th scope="col">Location</th>
@@ -288,7 +288,7 @@ const Brands = ({ token, setMessage, setType, setShow, getCategories }) => {
                     id,
                     brand,
                     name,
-                    modal,
+                    model,
                     price,
                     quantity,
                     location,
@@ -300,7 +300,7 @@ const Brands = ({ token, setMessage, setType, setShow, getCategories }) => {
                     <th>{index + 1}</th>
                     <td>{name}</td>
                     <td>{brand}</td>
-                    <td>{modal}</td>
+                    <td>{model}</td>
                     <td>{price}</td>
                     <td>{quantity}</td>
                     <td>{location}</td>
