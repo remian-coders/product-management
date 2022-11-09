@@ -13,7 +13,7 @@ const Step3 = ({ step, values, handleChange }) => {
           className="col-5 col-form-label"
           style={{ fontSize: "26pt" }}
         >
-          Payment Amount
+          Payment Amount(RON)
         </label>
         <input
           value={values.paymentAmount}

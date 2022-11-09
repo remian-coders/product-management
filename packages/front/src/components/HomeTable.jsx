@@ -16,7 +16,7 @@ const HomeTable = forwardRef(({ registers, report, token }, ref) => {
               <th scope="col">Tichet Nr.</th>
               <th scope="col">Payment type</th>
               <th scope="col">Time</th>
-              <th scope="col">Payment Amount</th>
+              <th scope="col">Payment Amount(RON)</th>
               <th scope="col">Others</th>
               <th scope="col">Status</th>
             </tr>

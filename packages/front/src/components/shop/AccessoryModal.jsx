@@ -18,8 +18,6 @@ const AccessoryModal = ({ show, submitHandler, onHide, accessory }) => {
     paymentAmount: "",
   });
 
-  // console.log(formData)
-
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -66,8 +64,8 @@ const AccessoryModal = ({ show, submitHandler, onHide, accessory }) => {
           }}
         >
           <Modal.Title id="contained-modal-title-vcenter">
-            {accessory?.name} - Available: {accessory.quantity} - Cost: $
-            {formData.quantity && accessory.cost * formData.quantity}
+            {accessory?.name} - Available: {accessory.quantity} - Cost:
+            {formData.quantity && accessory.cost * formData.quantity}(RON)
           </Modal.Title>
         </Modal.Header>
         <Form>
