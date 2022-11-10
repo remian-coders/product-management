@@ -17,6 +17,7 @@ const Accessory = ({ token, setMessage, setType, setShow }) => {
   const priceRef = useRef();
   const quantityRef = useRef();
   const locationRef = useRef();
+  const modelRef = useRef();
 
   const getAccessory = useCallback(async () => {
     const response = await fetchAccessory(token, accessoryId);
@@ -28,6 +29,7 @@ const Accessory = ({ token, setMessage, setType, setShow }) => {
       priceRef.current.value = response.data.data.accessory.price;
       quantityRef.current.value = response.data.data.accessory.quantity;
       locationRef.current.value = response.data.data.accessory.location;
+      modelRef.current.value = response.data.data.accessory.model;
       setCategoryId(response.data.data.accessory.category.id);
     }
   }, [token, accessoryId, navigate]);
@@ -59,6 +61,7 @@ const Accessory = ({ token, setMessage, setType, setShow }) => {
       price: priceRef.current.value,
       quantity: quantityRef.current.value,
       location: locationRef.current.value,
+      model: modelRef.current.value,
     });
 
     if (response.status === 200) {
@@ -107,6 +110,24 @@ const Accessory = ({ token, setMessage, setType, setShow }) => {
                 placeholder="Name of the product"
                 name="name"
                 id="validationDefaultName"
+                aria-describedby="inputGroupPrepend2"
+                required
+                autoComplete="off"
+              />
+            </div>
+          </div>
+          <div className="col-md-6">
+            <label htmlFor="validationDefaultModel" className="form-label">
+              Model
+            </label>
+            <div className="input-group">
+              <input
+                ref={modelRef}
+                type="text"
+                className="form-control"
+                placeholder="Name of the product"
+                name="model"
+                id="validationDefaultModel"
                 aria-describedby="inputGroupPrepend2"
                 required
                 autoComplete="off"

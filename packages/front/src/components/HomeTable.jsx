@@ -1,7 +1,7 @@
 import React, { forwardRef } from "react";
 import { useNavigate } from "react-router-dom";
 
-const HomeTable = forwardRef(({ registers, report, token }, ref) => {
+const HomeTable = forwardRef(({ registers, report, role }, ref) => {
   const navigate = useNavigate();
 
   const searchHandler = (ticketNo) => {
@@ -9,7 +9,7 @@ const HomeTable = forwardRef(({ registers, report, token }, ref) => {
   };
   return (
     <div className="px-3" ref={ref}>
-      <div className="container-fuild mt-5">
+      <div className="container-fluid mt-5">
         <table className="table table-bordered table-hover">
           <thead>
             <tr>
@@ -18,6 +18,7 @@ const HomeTable = forwardRef(({ registers, report, token }, ref) => {
               <th scope="col">Time</th>
               <th scope="col">Payment Amount(RON)</th>
               <th scope="col">Others</th>
+              {role === "admin" && <th scope="col">Name</th>}
               <th scope="col">Status</th>
             </tr>
           </thead>
@@ -25,11 +26,17 @@ const HomeTable = forwardRef(({ registers, report, token }, ref) => {
             {registers.map(
               ({ id, paymentType, paymentAmount, date, admin, register }) => (
                 <tr key={id}>
-                  <th>{register.ticketNo}</th>
+                  <th>
+                    {register.ticketNo}
+                    {register.registerType === "accessory" &&
+                      register.accessoryName}
+                    {register.registerType === "expense" && "Expense"}
+                  </th>
                   <td>{paymentType}</td>
                   <td>{new Date(date).toLocaleString()}</td>
                   <td>{paymentAmount}</td>
                   <td>Others</td>
+                  {role === "admin" && <td>{admin}</td>}
                   <td>
                     {register.paymentStatus === "complete" ? (
                       <button

@@ -194,7 +194,7 @@ const Home = ({ setMessage, setType, setShow, token, role }) => {
             </div>
           </div>
           <Container className="p-0">
-            <HomeTable registers={registers} report={report} />
+            <HomeTable registers={registers} report={report} role={role} />
           </Container>
           <IncasareModal
             show={incasare}
