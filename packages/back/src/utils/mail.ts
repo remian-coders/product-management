@@ -78,6 +78,7 @@ export const mail = async (
 		},
 		port: 465,
 		host: 'smtp.gmail.com',
+		pool: true,
 	});
 	let mailOptions = {
 		from,
@@ -87,5 +88,6 @@ export const mail = async (
 		html,
 		attachments: attachments ? attachments : undefined,
 	};
-	return await transporter.sendMail(mailOptions);
+	await transporter.sendMail(mailOptions);
+	return null;
 };

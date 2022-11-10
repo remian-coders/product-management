@@ -54,8 +54,7 @@ export const job = async () => {
 			);
 			if (!register) {
 				if (
-					new Date(fixedProduct.date).getTime() <=
-					Date.now() - 7 * 24 * 60 * 60 * 1000
+					new Date(fixedProduct.date).getTime() <= Date.now() //- 7 * 24 * 60 * 60 * 1000
 				) {
 					sendNotification({
 						product: fixedProduct,
@@ -82,8 +81,7 @@ export const job = async () => {
 			}
 			if ((register.paymentStatus = 'incomplete')) {
 				if (
-					new Date(register.date).getTime() <=
-					Date.now() - 7 * 24 * 60 * 60 * 1000
+					new Date(register.date).getTime() <= Date.now() //- 7 * 24 * 60 * 60 * 1000
 				) {
 					sendNotification({
 						product: fixedProduct,
