@@ -48,7 +48,7 @@ const Home = ({ setMessage, setType, setShow, token, role }) => {
 	}, [token]);
 
 	useEffect(() => {
-		getRegisters(); // run it, run it
+		getRegisters();
 
 		return () => {
 			// this now gets called when the component unmounts
