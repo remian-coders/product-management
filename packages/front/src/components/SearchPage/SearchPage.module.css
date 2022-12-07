@@ -1,0 +1,41 @@
+.container {
+	margin-top: 5rem;
+}
+.cart {
+	border: 1px #ccc solid;
+	border-radius: 5px;
+	justify-content: flex-end;
+	padding: 1rem;
+}
+
+.cart > div > h6,
+p {
+	font-size: 1.2rem;
+}
+
+.form-input {
+	width: 15rem;
+	font-size: 1.5rem;
+}
+
+.form-radio-btns {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+}
+
+.form-check1 {
+	margin-left: 0.5rem;
+}
+.form-check2 {
+	margin-left: 3rem;
+}
+
+.form-label,
+.btn,
+.form-check1 > input,
+.form-check1 > label,
+.form-check2 > input,
+.form-check2 > label {
+	font-size: 1.6rem;
+}
