@@ -12,6 +12,7 @@ import {
 	getBrands,
 	makeSale,
 	getAccessory,
+	sellUnstoredProduct,
 } from '../controllers/accessories.controller';
 
 const router = Router();
@@ -26,6 +27,11 @@ router.patch(
 	'/make-sale/:accessoryId',
 	authorize(['admin', 'cashier']),
 	makeSale
+);
+router.post(
+	'/sell-unstored-accessory',
+	authorize(['admin', 'cashier']),
+	sellUnstoredProduct
 );
 
 router.use(authorize(['admin', 'accessory']));

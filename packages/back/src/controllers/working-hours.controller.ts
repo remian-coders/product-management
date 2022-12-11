@@ -76,7 +76,7 @@ export const finalizeDay = catchAsyncError(
 
 export const setTaskSchedulerState = catchAsyncError(
 	async (req: Request, res: Response, next: express.NextFunction) => {
-		const state = req.body.query.state;
+		const state = req.body.state;
 		const cronStateRepo = new CronStateRepository();
 		if (!state) {
 			return next(

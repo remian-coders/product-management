@@ -96,6 +96,51 @@ export const deleteAccessory = catchAsyncError(
 	}
 );
 
+export const sellUnstoredProduct = catchAsyncError(
+	async (req: Request, res: Response, next: NextFunction) => {
+		let {
+			quantity,
+			paymentAmount,
+			others,
+			paymentType,
+			acceesoryName,
+			price,
+		} = req.body;
+		quantity = quantity * 1;
+		paymentAmount = paymentAmount * 1;
+		price = price * 1;
+		if (quantity * price != paymentAmount) {
+			return next(new CustomError('Payment amount is not correct!', 400));
+		}
+
+		const registerObj = {
+			ticketNo: null,
+			cost: paymentAmount as number,
+			paymentStatus: 'complete',
+			registerType: 'accessory',
+			date: new Date(),
+			payments: [],
+			accessoryName: acceesoryName,
+		};
+		const registerRepo = new RegisterRepository();
+		const register = await registerRepo.create(registerObj);
+		const admin = req.user.role === 'admin' ? req.user.name : null;
+		const paymentObj = {
+			paymentAmount,
+			paymentType,
+			date: new Date(),
+			register,
+			others,
+			admin,
+		};
+		const paymentRepo = new PaymentsRepository();
+		const payment = await paymentRepo.makePayment(paymentObj);
+		res.status(200).json({
+			message: 'Sale is made!',
+		});
+	}
+);
+
 export const makeSale = catchAsyncError(
 	async (req: Request, res: Response, next: NextFunction) => {
 		const id = Number(req.params.accessoryId);
