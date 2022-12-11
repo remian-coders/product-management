@@ -74,7 +74,7 @@ router.post(
 	uploadFile
 );
 router.route('/working-hours').patch(updateWorkingHours).get(getWorkingHours);
-router.patch('/set-scheduler-state', setTaskSchedulerState);
+router.patch('/toggle-scheduler', setTaskSchedulerState);
 router.route('/issues').get(getIssues);
 router.route('/issues/:id').delete(deleteIssue);
 router.get('/get-users', getUsers);
