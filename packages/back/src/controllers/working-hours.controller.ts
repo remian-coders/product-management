@@ -95,3 +95,17 @@ export const setTaskSchedulerState = catchAsyncError(
 		});
 	}
 );
+
+export const getTaskSchedulerState = catchAsyncError(
+	async (req: Request, res: Response, next: express.NextFunction) => {
+		const cronStateRepo = new CronStateRepository();
+		const taskSchedulerState = await cronStateRepo.getCronState();
+		res.status(200).json({
+			status: 'success',
+			message: `Scheduler is ${taskSchedulerState.state}`,
+			data: {
+				state: taskSchedulerState.state,
+			},
+		});
+	}
+);
