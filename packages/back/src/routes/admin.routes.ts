@@ -35,6 +35,7 @@ import {
 	getWorkingHours,
 	updateWorkingHours,
 	setTaskSchedulerState,
+	getTaskSchedulerState,
 } from '../controllers/working-hours.controller';
 
 import { getIssues, deleteIssue } from '../controllers/issue.controller';
@@ -74,7 +75,10 @@ router.post(
 	uploadFile
 );
 router.route('/working-hours').patch(updateWorkingHours).get(getWorkingHours);
-router.patch('/toggle-scheduler', setTaskSchedulerState);
+router
+	.route('/toggle-scheduler')
+	.patch(setTaskSchedulerState)
+	.get(getTaskSchedulerState);
 router.route('/issues').get(getIssues);
 router.route('/issues/:id').delete(deleteIssue);
 router.get('/get-users', getUsers);
