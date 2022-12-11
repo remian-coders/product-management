@@ -1,5 +1,6 @@
 import { CronJob } from 'cron';
 import { WorkingHoursRepository } from '../repository/working-hours.repository';
+import { CronStateRepository } from '../repository/cron-state.repository';
 import { date } from '../utils/date';
 import { job } from './job';
 
@@ -18,6 +19,22 @@ class CronManager {
 	stop(name) {
 		this.jobs[name].cron.stop();
 		delete this.jobs[name];
+	}
+	async stopAll() {
+		for (const job in this.jobs) {
+			this.stop(job);
+		}
+	}
+	async start() {
+		await this.setState();
+		await this.todaysCronJob();
+		await this.dailyCronJob();
+	}
+	async setState() {
+		const cronStateRepository = new CronStateRepository();
+		const cronState = await cronStateRepository.getCronState();
+		if (cronState) return;
+		await cronStateRepository.setCronState('on');
 	}
 	async todaysCronJob() {
 		const workingHoursRepo = new WorkingHoursRepository();
@@ -54,6 +71,7 @@ class CronManager {
 			}
 		);
 	}
+
 	async logRunningJobs() {
 		// console.log(
 		// 	'**** Daily Job *****',

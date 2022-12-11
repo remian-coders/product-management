@@ -3,6 +3,8 @@ import { WorkingHoursRepository } from '../repository/working-hours.repository';
 import { catchAsyncError } from './utils/catch-async-error';
 import { CustomError } from '../utils/custom-error';
 import { date } from '../utils/date';
+import { CronStateRepository } from '../repository/cron-state.repository';
+import { cronManager } from '../cron-job/cron-job';
 
 export const updateWorkingHours = catchAsyncError(
 	async (req: Request, res: Response, next: express.NextFunction) => {
@@ -68,6 +70,28 @@ export const finalizeDay = catchAsyncError(
 		res.status(200).json({
 			status: 'success',
 			message: `Today's register is closed!`,
+		});
+	}
+);
+
+export const setTaskSchedulerState = catchAsyncError(
+	async (req: Request, res: Response, next: express.NextFunction) => {
+		const state = req.body.query.state;
+		const cronStateRepo = new CronStateRepository();
+		if (!state) {
+			return next(
+				new CustomError(
+					'Please provide a state to turn on and of the state of scheduler!',
+					400
+				)
+			);
+		}
+		if (state === 'on') cronManager.start();
+		else if (state === 'off') cronManager.stopAll();
+		const taskSchedulerState = await cronStateRepo.setCronState(state);
+		res.status(200).json({
+			status: 'success',
+			message: `Scheduler is ${taskSchedulerState.state}`,
 		});
 	}
 );

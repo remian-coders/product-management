@@ -3,6 +3,7 @@ import { WorkingHours } from '../entities/working-hours.entity';
 import dataSource from '../data-source';
 import { date } from '../utils/date';
 import { cronManager } from '../cron-job/cron-job';
+import { CronStateRepository } from './cron-state.repository';
 export class WorkingHoursRepository {
 	workingHoursRepository: Repository<WorkingHours>;
 	constructor() {
@@ -50,9 +51,15 @@ export class WorkingHoursRepository {
 		const updatedSchedule = await this.workingHoursRepository.save(
 			workingHours
 		);
-		if (updatedSchedule.type === 'today') await cronManager.todaysCronJob();
-		if (updatedSchedule.type === 'daily') await cronManager.dailyCronJob();
-		await cronManager.logRunningJobs();
+		let cronStateRepository = new CronStateRepository();
+		let cronState = await cronStateRepository.getCronState();
+		if (cronState.state === 'on') {
+			if (updatedSchedule.type === 'today')
+				await cronManager.todaysCronJob();
+			if (updatedSchedule.type === 'daily')
+				await cronManager.dailyCronJob();
+			await cronManager.logRunningJobs();
+		}
 		return updatedSchedule;
 	}
 }

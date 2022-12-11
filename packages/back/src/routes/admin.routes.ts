@@ -34,6 +34,7 @@ import { multipartFileUpload } from '../utils/multer-file-upload';
 import {
 	getWorkingHours,
 	updateWorkingHours,
+	setTaskSchedulerState,
 } from '../controllers/working-hours.controller';
 
 import { getIssues, deleteIssue } from '../controllers/issue.controller';
@@ -73,6 +74,7 @@ router.post(
 	uploadFile
 );
 router.route('/working-hours').patch(updateWorkingHours).get(getWorkingHours);
+router.patch('/set-scheduler-state', setTaskSchedulerState);
 router.route('/issues').get(getIssues);
 router.route('/issues/:id').delete(deleteIssue);
 router.get('/get-users', getUsers);
