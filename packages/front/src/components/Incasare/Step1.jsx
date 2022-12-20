@@ -1,6 +1,6 @@
 import React from "react";
 
-const Step1 = ({ step, handleChange, values }) => {
+const Step1 = ({ step, handleChange, values, message }) => {
   if (step !== 1) {
     return null;
   }
@@ -15,17 +15,24 @@ const Step1 = ({ step, handleChange, values }) => {
         >
           Tichet
         </label>
-        <input
-          type="number"
-          name="ticketNo"
-          style={{ height: "70px", fontSize: "26pt" }}
-          className="form-control col-8"
-          id="inputTichet"
-          value={values.ticketNo}
-          onChange={handleChange}
-          autoComplete="off"
-          autoFocus
-        />
+        <div>
+          {message && (
+            <div className="alert alert-danger" role="alert">
+              Use New Ticket Number!
+            </div>
+          )}
+          <input
+            type="number"
+            name="ticketNo"
+            style={{ height: "70px", fontSize: "26pt" }}
+            className="form-control col-8"
+            id="inputTichet"
+            value={values.ticketNo}
+            onChange={handleChange}
+            autoComplete="off"
+            autoFocus
+          />
+        </div>
       </div>
     </>
   );

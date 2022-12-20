@@ -5,7 +5,11 @@ import Admin from "./containers/admin";
 import Home from "./containers/home";
 import Login from "./containers/login";
 import { Toast, ToastContainer } from "react-bootstrap";
-import { checkToken } from "./utils/api-calls";
+import {
+  checkToken,
+  getToggleScheduler,
+  setToggleScheduler,
+} from "./utils/api-calls";
 import SearchPage from "./components/SearchPage/SearchPage";
 import Accessories from "./containers/accessories";
 import Shop from "./containers/shop";
@@ -19,6 +23,7 @@ function App() {
   const [type, setType] = useState("success");
   const [token, setToken] = useState(localStorage.getItem("user_token"));
   const [role, setRole] = useState(localStorage.getItem("user_role"));
+  const [scheduler, setScheduler] = useState(null);
 
   const handleToken = useCallback(async () => {
     const response = await checkToken(token);
@@ -34,9 +39,37 @@ function App() {
     }
   }, [token]);
 
+  const toggleScheduler = useCallback(async () => {
+    const response = await getToggleScheduler(token);
+
+    if (response.status === 200) {
+      setScheduler(response.data?.data?.state);
+    } else {
+      console.log(response);
+    }
+  }, [token]);
+
   useEffect(() => {
     handleToken();
-  }, [handleToken]);
+    toggleScheduler();
+  }, [handleToken, toggleScheduler]);
+
+  const updateScheduler = async (state) => {
+    const response = await setToggleScheduler(token, {
+      state: state,
+    });
+
+    if (response.status === 200) {
+      setMessage(response.data?.message);
+      setType("success");
+      setShow(true);
+      toggleScheduler();
+    } else {
+      setMessage(response.data?.message);
+      setType("danger");
+      setShow(true);
+    }
+  };
 
   return (
     <div className="App">
@@ -100,6 +133,8 @@ function App() {
           path="/admin/*"
           element={
             <Admin
+              scheduler={scheduler}
+              updateScheduler={updateScheduler}
               setIsLoggedIn={setIsLoggedIn}
               isLoggedIn={isLoggedIn}
               token={token}

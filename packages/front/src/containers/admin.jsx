@@ -20,6 +20,8 @@ const Admin = ({
   setToken,
   role,
   setRole,
+  updateScheduler,
+  scheduler,
 }) => {
   const [today, setToday] = useState(null);
   const [daily, setDaily] = useState(null);
@@ -121,6 +123,9 @@ const Admin = ({
           element={
             <Protected token={token} role={role}>
               <AdminIncasare
+                scheduler={scheduler}
+                updateScheduler={updateScheduler}
+                role={role}
                 setDaily={setDaily}
                 setToday={setToday}
                 token={token}

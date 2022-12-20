@@ -9,8 +9,9 @@ import Step4 from "./Incasare/Step4";
 import Step5 from "./Incasare/Step5";
 import MultiStepProgressBar from "./Incasare/ProgressBar";
 
-const IncasareModal = ({ show, submitHandler, onHide }) => {
+const IncasareModal = ({ show, submitHandler, onHide, getTicketNumber }) => {
   const [step, setStep] = useState(1);
+  const [message, setMessage] = useState(false);
 
   const [formData, setFormData] = useState({
     registerType: "service",
@@ -31,10 +32,22 @@ const IncasareModal = ({ show, submitHandler, onHide }) => {
   };
   // Test current step with ternary
   // _next and _previous functions will be called on button click
-  const next = () => {
+  const next = async () => {
     let currentStep = step;
+    setMessage(false);
+    if (step === 1) {
+      let res = await getTicketNumber(formData.ticketNo);
+      if (res === false) {
+        // If the current step is 1 or 2, then add one on "next" button click
+        currentStep = currentStep >= 4 ? 5 : currentStep + 1;
+        setStep(currentStep);
+        return;
+      } else {
+        setMessage(true);
+        return;
+      }
+    }
 
-    // If the current step is 1 or 2, then add one on "next" button click
     currentStep = currentStep >= 4 ? 5 : currentStep + 1;
     setStep(currentStep);
   };
@@ -66,6 +79,7 @@ const IncasareModal = ({ show, submitHandler, onHide }) => {
               others: "",
               paymentAmount: "",
             });
+            setMessage(false);
           }}
         >
           <Modal.Title id="contained-modal-title-vcenter">
@@ -76,7 +90,12 @@ const IncasareModal = ({ show, submitHandler, onHide }) => {
           <Modal.Body className="fs-5">
             <MultiStepProgressBar step={step} />
 
-            <Step1 step={step} values={formData} handleChange={handleChange} />
+            <Step1
+              step={step}
+              values={formData}
+              handleChange={handleChange}
+              message={message}
+            />
             <Step2 step={step} values={formData} handleChange={handleChange} />
             <Step3 step={step} values={formData} handleChange={handleChange} />
             <Step4 step={step} values={formData} handleChange={handleChange} />
