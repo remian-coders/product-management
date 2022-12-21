@@ -45,7 +45,7 @@ function App() {
     if (response.status === 200) {
       setScheduler(response.data?.data?.state);
     } else {
-      console.log(response);
+      console.log("error");
     }
   }, [token]);
 

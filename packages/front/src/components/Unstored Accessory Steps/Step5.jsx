@@ -1,0 +1,35 @@
+import React from "react";
+
+const Step5 = ({ step, values, handleChange }) => {
+  if (step !== 5) {
+    return null;
+  }
+
+  return (
+    <>
+      <div className="row my-4 input-group input-group-lg">
+        <label
+          htmlFor="inputCost"
+          className="col-5 col-form-label"
+          style={{ fontSize: "26pt" }}
+        >
+          Payment Amount(RON)
+        </label>
+        <input
+          value={values.paymentAmount}
+          onChange={handleChange}
+          style={{ height: "70px", fontSize: "26pt" }}
+          name="paymentAmount"
+          type="number"
+          className="form-control col-7"
+          id="inputCost"
+          min="0"
+          autoComplete="off"
+          autoFocus
+        />
+      </div>
+    </>
+  );
+};
+
+export default Step5;

@@ -495,3 +495,14 @@ export const getToggleScheduler = async function (token) {
     return error.response;
   }
 };
+
+export const sellUnstoredAccessory = async function (token, data) {
+  try {
+    let response = await api.post("/accessory/sell-unstored-accessory", data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
