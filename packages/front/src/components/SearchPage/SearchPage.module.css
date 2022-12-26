@@ -39,3 +39,8 @@ p {
 .form-check2 > label {
   font-size: 1.6rem;
 }
+
+.btn{
+  margin-left: 8rem;
+  margin-bottom: 1rem;
+}

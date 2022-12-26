@@ -136,18 +136,19 @@ const SearchPage = ({ role, token, setMessage, setShow, setType }) => {
                       <label className="form-check-label" htmlFor="gridRadios2">
                         Card
                       </label>
+
+                    </div>
+                    <button
+                          type="submit"
+                          className={`${classes.btn} btn btn-success right`}
+                          disabled={register.paymentStatus === "complete"}
+                        >
+                          Complete
+                    </button>
+                    <div className="col-2 pt-3">
+                        
                     </div>
                   </div>
-                </div>
-
-                <div className="col-2 pt-3">
-                  <button
-                    type="submit"
-                    className={`${classes.btn} btn btn-success right`}
-                    disabled={register.paymentStatus === "complete"}
-                  >
-                    Complete
-                  </button>
                 </div>
               </form>
             </div>
