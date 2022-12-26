@@ -71,17 +71,6 @@ class CronManager {
 			}
 		);
 	}
-
-	async logRunningJobs() {
-		// console.log(
-		// 	'**** Daily Job *****',
-		// 	this.jobs['dailyCronJob'].cron.nextDates()
-		// );
-		// console.log(
-		// 	'**** Today`s Job *****',
-		// 	this.jobs['todaysCronJob'].cron.nextDates()
-		// );
-	}
 }
 
 export const cronManager = new CronManager();
