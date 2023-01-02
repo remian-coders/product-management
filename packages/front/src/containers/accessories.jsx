@@ -5,6 +5,7 @@ import Brands from '../components/accessories/brands';
 import AccessoryProtected from '../utils/accessory-protected';
 import { fetchCategories } from '../utils/api-calls';
 import Accessory from '../components/accessories/accessory';
+import classes from './shop.module.css';
 
 const Accessories = ({
 	role,
@@ -45,6 +46,14 @@ const Accessories = ({
 				data-bs-smooth-scroll="true"
 				style={{ width: '280px', height: '100vh' }}
 			>
+				<div>
+					<a
+						href={role === 'admin' ? '/admin' : '/accessories'}
+						className={`btn btn-outline-secondary right d-flex align-items-center mt-4 mb-5 me-md-auto link-dark text-decoration-none`}
+					>
+						<span> ❮ Home </span>
+					</a>
+				</div>
 				<a
 					href="/accessories"
 					className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"

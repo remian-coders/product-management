@@ -13,7 +13,7 @@ const Step2 = ({ step, handleChange, values }) => {
           className="col-4 col-form-label"
           style={{ fontSize: "26pt" }}
         >
-          Price
+          Per Unit Price
         </label>
         <input
           type="number"

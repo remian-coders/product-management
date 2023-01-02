@@ -1,3 +1,16 @@
+.nav{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	padding: 15px 0	;
+}
+.nav-div1{
+	width: 40%;
+}
+.nav-div2{
+	width: 60%;
+}
 .home-link {
 	position: absolute;
 	left: 30px;
@@ -8,30 +21,27 @@
 	font-size: medium;
 	font-weight: 600;
 }
-.nav {
-	margin: 1rem 0;
-	box-sizing: border-box;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: row;
-	margin: 2.5rem;
-}
 
-.nav > h3 {
+h3 {
 	font-size: 1.5rem;
 	font-weight: 600;
+	display: inline;
 }
 
 .list {
 	margin: 0;
 	padding: 0;
+	display: flex;
+    align-items: flex-start;
+    justify-content: start;
+	flex-direction: row;
+	flex-wrap: wrap;
 }
 
-.list > li {
-	list-style: none;
+.list > div {
+	display: block;
+	width: 33%;	
 }
-.list > li > a {
-	text-decoration: none;
+.list > div > a {
 	font-size: 1.5rem;
 }
