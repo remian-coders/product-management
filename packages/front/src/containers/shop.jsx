@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Link } from 'react-router-dom';
 import { useCallback, useEffect, useState } from "react";
 import ShopCategories from "../components/shop/ShopCategories";
 import ShopBrands from "../components/shop/ShopBrands";
@@ -99,84 +99,97 @@ const Shop = ({ role, token, setMessage, setShow, setType }) => {
     }
   };
 
-  return (
-    <div className={`${classes.container} container`}>
-      <a
-        href={role === "admin" ? "/admin" : "/"}
-        className={`${classes["home-link"]} btn btn-outline-primary`}
-      >
-        <span className={classes["home-text"]}> ❮ Home</span>
-      </a>
-      <div className={classes.nav}>
-        <h3 className={classes.head3}> Accessory</h3>
-      </div>
-      <div className="container">
-        <div className="container border p-3 rounded mt-3">
-          <ul className={classes.list}>
-            <li className="btn btn-link" onClick={() => setUnstored(true)}>
-              Unstored Accessory
-            </li>
-          </ul>
-          <ul className={classes.list}>
-            {categories.map(({ id, name }) => (
-              <li key={id}>
-                <a
-                  className="btn btn-link"
-                  href={`/shop/categories/${id}`}
-                  aria-current="page"
-                >
-                  {name}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
+	return (
+		<div>
+			<nav className={`${classes.nav} bg-light border-bottom`}>
+				<div className={`${classes['nav-div1']} container-fluid`}>
+					<span className="navbar-brand mb-0 h1">
+						<Link to={role === 'admin' ? '/admin' : '/'}>
+							<button
+								className={`btn btn-outline-secondary right`}
+							>
+								Go Back
+							</button>
+						</Link>
+					</span>
+				</div>
+				<div className={`${classes['nav-div2']} container-fluid`}>
+					<h3> Vanzare Accesorii</h3>
+				</div>
+			</nav>
+			<div className={`container`}>
+				<div className="container">
+					<div className="container border p-3 rounded mt-3">
+						<div>
+							<div
+								className="btn btn-link"
+								style={{ fontSize: '1.5rem', color: 'red' }}
+								onClick={() => setUnstored(true)}
+							>
+								Accesorii nelistate
+							</div>
+						</div>
+						<div className={classes.list}>
+							{categories.map(({ id, name }) => (
+								<div key={id}>
+									<a
+										className="btn btn-link"
+										href={`/shop/categories/${id}`}
+										aria-current="page"
+									>
+										{name}
+									</a>
+								</div>
+							))}
+						</div>
+					</div>
+				</div>
 
-      <Routes>
-        <Route
-          path="/categories/:category"
-          element={
-            <ShopProtected token={token} role={role}>
-              <ShopBrands
-                setAccessory={setAccessory}
-                setIncasare={setIncasare}
-                token={token}
-              />
-            </ShopProtected>
-          }
-        />
-        <Route
-          path="/*"
-          element={
-            <ShopProtected token={token} role={role}>
-              <ShopCategories
-                setAccessory={setAccessory}
-                setIncasare={setIncasare}
-                accessories={accessories}
-              />
-            </ShopProtected>
-          }
-        />
-      </Routes>
-      <AccessoryModal
-        accessory={accessory}
-        show={incasare}
-        onHide={() => {
-          setIncasare(false);
-          setAccessory({});
-        }}
-        submitHandler={incasareHandle}
-      />
-      <UnstoredAccessoryModal
-        show={unstored}
-        onHide={() => {
-          setUnstored(false);
-        }}
-        submitHandler={unstoredHandle}
-      />
-    </div>
-  );
+				<Routes>
+					<Route
+						path="/categories/:category"
+						element={
+							<ShopProtected token={token} role={role}>
+								<ShopBrands
+									setAccessory={setAccessory}
+									setIncasare={setIncasare}
+									token={token}
+								/>
+							</ShopProtected>
+						}
+					/>
+					<Route
+						path="/*"
+						element={
+							<ShopProtected token={token} role={role}>
+								<ShopCategories
+									setAccessory={setAccessory}
+									setIncasare={setIncasare}
+									accessories={accessories}
+								/>
+							</ShopProtected>
+						}
+					/>
+				</Routes>
+				<AccessoryModal
+					accessory={accessory}
+					show={incasare}
+					onHide={() => {
+						setIncasare(false);
+						setAccessory({});
+					}}
+					submitHandler={incasareHandle}
+				/>
+				<UnstoredAccessoryModal
+					show={unstored}
+					onHide={() => {
+						setUnstored(false);
+					}}
+					submitHandler={unstoredHandle}
+				/>
+			</div>
+		</div>
+	);
 };
 
 export default Shop;
